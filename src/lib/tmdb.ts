@@ -99,7 +99,7 @@ export function normalizeMediaItem(raw: any, explicitType?: MediaType): MediaIte
       type: "embed" as const,
       url: isMovie
         ? `https://0vidads.top/embed/movie/${raw.id}?color=E50914&branding=StreamFlix`
-        : `https://0vidads.top/embed/tv/${raw.id}/1/1?color=E50914&nextEpisode=true&autoplayNextEpisode=true&episodeSelector=true&overlay=true&branding=StreamFlix`,
+        : `https://0vidads.top/embed/tv/${raw.id}/1/1?color=E50914&nextEpisode=true&autoplayNextEpisode=true&episodeSelector=false&overlay=true&branding=StreamFlix`,
       isEmbed: true,
     },
     {

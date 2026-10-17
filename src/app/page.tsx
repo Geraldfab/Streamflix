@@ -40,7 +40,6 @@ export default async function HomePage() {
         {/* Trending Now */}
         <ContentRail
           title="Trending Now"
-          subtitle="The most-watched movies and television shows this week"
           items={trending}
           seeAllHref="/movies?sort=popularity.desc"
           badge="Hot"
@@ -49,7 +48,6 @@ export default async function HomePage() {
         {/* Popular Blockbuster Movies */}
         <ContentRail
           title="Popular Movies"
-          subtitle="Top rated cinema releases making waves worldwide"
           items={popularMovies.results}
           seeAllHref="/movies"
         />
@@ -57,7 +55,6 @@ export default async function HomePage() {
         {/* Binge-Worthy TV Series */}
         <ContentRail
           title="Critically Acclaimed TV Series"
-          subtitle="Award-winning television dramas, thrillers, and series"
           items={popularTv.results}
           seeAllHref="/series"
         />
@@ -65,7 +62,6 @@ export default async function HomePage() {
         {/* Top Rated Masterpieces */}
         <ContentRail
           title="All-Time Masterpieces"
-          subtitle="Highest user-rated cinematic achievements in film history"
           items={topRated}
           seeAllHref="/movies?sort=vote_average.desc&minRating=8"
           badge="Must Watch"
@@ -74,7 +70,6 @@ export default async function HomePage() {
         {/* Sci-Fi & Speculative Worlds */}
         <ContentRail
           title="Sci-Fi & Futuristic Realities"
-          subtitle="Dystopian futures, interstellar exploration, and mind-bending concepts"
           items={sciFiItems}
           seeAllHref="/genre/sci-fi"
         />
@@ -82,7 +77,6 @@ export default async function HomePage() {
         {/* Animation & Anime */}
         <ContentRail
           title="Visual Masterpieces & Animation"
-          subtitle="Hand-crafted animation, anime, and groundbreaking visual stories"
           items={animationItems}
           seeAllHref="/genre/animation"
         />
@@ -90,7 +84,6 @@ export default async function HomePage() {
         {/* Drama & Gripping Stories */}
         <ContentRail
           title="Deep Drama & Intrigue"
-          subtitle="Compelling character-driven narratives and gripping tension"
           items={dramaItems}
           seeAllHref="/genre/drama"
         />

@@ -15,7 +15,6 @@ import {
   Minimize,
   Settings,
   Subtitles,
-  ListVideo,
   ArrowLeft,
   ChevronRight,
   Server,
@@ -91,7 +90,7 @@ export function VideoPlayer({
   const [hoverPosition, setHoverPosition] = useState<number>(0);
 
   // Menus
-  const [activeMenu, setActiveMenu] = useState<"none" | "settings" | "servers" | "episodes" | "subtitles">("none");
+  const [activeMenu, setActiveMenu] = useState<"none" | "settings" | "servers" | "subtitles">("none");
   const [selectedServer, setSelectedServer] = useState<string>(() => {
     const pref = preferences.preferredStreamServer;
     return pref === "zxcstream" || pref === "0vidads" ? pref : "0vidads";
@@ -183,7 +182,7 @@ export function VideoPlayer({
       return {
         url: isMovie
           ? `https://0vidads.top/embed/movie/${media.id}?color=E50914&branding=StreamFlix`
-          : `https://0vidads.top/embed/tv/${media.id}/${currentSeason}/${currentEpisode}?color=E50914&nextEpisode=true&autoplayNextEpisode=true&episodeSelector=true&overlay=true&branding=StreamFlix`,
+          : `https://0vidads.top/embed/tv/${media.id}/${currentSeason}/${currentEpisode}?color=E50914&nextEpisode=true&autoplayNextEpisode=true&episodeSelector=false&overlay=true&branding=StreamFlix`,
         type: "embed" as const,
       };
     }
@@ -202,7 +201,7 @@ export function VideoPlayer({
     return {
       url: isMovie
         ? `https://0vidads.top/embed/movie/${media.id}?color=E50914&branding=StreamFlix`
-        : `https://0vidads.top/embed/tv/${media.id}/${currentSeason}/${currentEpisode}?color=E50914&nextEpisode=true&autoplayNextEpisode=true&episodeSelector=true&overlay=true&branding=StreamFlix`,
+        : `https://0vidads.top/embed/tv/${media.id}/${currentSeason}/${currentEpisode}?color=E50914&nextEpisode=true&autoplayNextEpisode=true&episodeSelector=false&overlay=true&branding=StreamFlix`,
       type: "embed" as const,
     };
   }, [media, currentSeason, currentEpisode, selectedServer]);
@@ -818,19 +817,9 @@ export function VideoPlayer({
               </span>
             </button>
 
-            {/* In Embed Mode: Place Episodes, Theater, Mini-Player, and Fullscreen here so bottom of iframe is 100% unobstructed */}
+            {/* In Embed Mode: Place Theater, Mini-Player, and Fullscreen here so bottom of iframe is 100% unobstructed */}
             {isEmbedMode && (
               <>
-                {media.mediaType === "tv" && seasons.length > 0 && (
-                  <button
-                    onClick={() => setActiveMenu(activeMenu === "episodes" ? "none" : "episodes")}
-                    className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl glass-panel hover:bg-white/10 text-xs font-medium text-white border border-white/10 transition-colors"
-                    title="Select Episode"
-                  >
-                    <ListVideo className="w-3.5 h-3.5 text-rose-400" />
-                    <span className="hidden sm:inline">Episodes</span>
-                  </button>
-                )}
 
                 <button
                   onClick={toggleTheaterMode}
@@ -1067,20 +1056,8 @@ export function VideoPlayer({
               </div>
             </div>
 
-            {/* Right Controls: TV Episodes, Speed, Theater, Mini, Fullscreen */}
+            {/* Right Controls: Speed, Subtitles, Theater, Mini, Fullscreen */}
             <div className="flex items-center gap-1 sm:gap-2">
-              {/* Episodes drawer trigger for TV */}
-              {media.mediaType === "tv" && seasons.length > 0 && (
-                <button
-                  onClick={() => setActiveMenu(activeMenu === "episodes" ? "none" : "episodes")}
-                  className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl glass-panel hover:bg-white/10 text-xs font-medium text-white transition-colors active:scale-95"
-                  title="Episodes"
-                >
-                  <ListVideo className="w-4 h-4 text-rose-400" />
-                  <span className="hidden sm:inline">Episodes</span>
-                </button>
-              )}
-
               {/* Subtitles Toggle */}
               <button
                 onClick={() => setSubtitlesEnabled(!subtitlesEnabled)}
@@ -1164,80 +1141,6 @@ export function VideoPlayer({
         </div>
       )}
 
-        {/* TV Series Episode Drawer Overlay */}
-        {activeMenu === "episodes" && (
-          <>
-            {/* Click-away backdrop */}
-            <div
-              className="absolute inset-0 z-30 bg-black/60 backdrop-blur-xs cursor-pointer"
-              onClick={() => setActiveMenu("none")}
-              aria-hidden="true"
-            />
-
-            <div className="absolute top-0 right-0 bottom-0 z-40 w-full sm:w-96 shadow-2xl animate-fade-in p-3 bg-zinc-950/95 backdrop-blur-2xl border-l border-white/10 flex flex-col">
-              <div className="flex items-center justify-between pb-3 border-b border-white/10">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-bold text-white">Select Episode</span>
-                  {seasons.length > 1 && (
-                    <select
-                      value={currentSeason}
-                      onChange={(e) => {
-                        const newSeason = Number(e.target.value);
-                        setCurrentSeason(newSeason);
-                        setCurrentEpisode(1);
-                        if (onEpisodeChange) onEpisodeChange(newSeason, 1);
-                      }}
-                      className="bg-zinc-900 border border-white/20 text-white rounded-lg px-2 py-0.5 text-xs focus:outline-none"
-                    >
-                      {seasons.map((s) => (
-                        <option key={s.id || s.seasonNumber} value={s.seasonNumber}>
-                          {s.name || `Season ${s.seasonNumber}`}
-                        </option>
-                      ))}
-                    </select>
-                  )}
-                </div>
-                <button
-                  onClick={() => setActiveMenu("none")}
-                  className="px-2 py-1 text-xs text-zinc-400 hover:text-white"
-                >
-                  Close ✕
-                </button>
-              </div>
-
-              <div className="flex-1 overflow-y-auto mt-2 space-y-1">
-                {resolvedEpisodeList.map((ep) => {
-                  const isCurrent = ep.episodeNumber === currentEpisode && ep.seasonNumber === currentSeason;
-                  return (
-                    <button
-                      key={ep.id || ep.episodeNumber}
-                      onClick={() => {
-                        setCurrentEpisode(ep.episodeNumber);
-                        if (onEpisodeChange) onEpisodeChange(currentSeason, ep.episodeNumber);
-                        setActiveMenu("none");
-                      }}
-                      className={`w-full text-left p-2.5 rounded-xl transition-all flex items-center justify-between gap-2 ${
-                        isCurrent
-                          ? "bg-rose-600/30 text-white border border-rose-500/40 shadow-sm"
-                          : "hover:bg-white/5 text-zinc-300 border border-transparent"
-                      }`}
-                    >
-                      <div className="min-w-0">
-                        <div className="text-xs font-semibold truncate">
-                          E{ep.episodeNumber}: {ep.name}
-                        </div>
-                        <div className="text-[10px] text-zinc-500">
-                          {ep.runtime ? `${ep.runtime}m` : "45m"}
-                        </div>
-                      </div>
-                      {isCurrent && <Check className="w-4 h-4 text-rose-400 flex-shrink-0" />}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </>
-        )}
       </div>
 
       {/* Keyboard Shortcuts Dialog */}

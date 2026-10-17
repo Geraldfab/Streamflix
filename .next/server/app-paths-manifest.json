@@ -1,6 +1,8 @@
 {
   "/page": "app/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/title/[id]/page": "app/title/[id]/page.js",
+  "/api/media/[id]/route": "app/api/media/[id]/route.js",
   "/watch/[id]/page": "app/watch/[id]/page.js",
-  "/continue-watching/page": "app/continue-watching/page.js",
-  "/settings/page": "app/settings/page.js"
+  "/api/media/trending/route": "app/api/media/trending/route.js"
 }

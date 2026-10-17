@@ -30,7 +30,7 @@ export const STREAM_SERVERS = [
     name: "0VIDADS (Default / No Ads)",
     description: "Ultra-fast streaming API with custom theme, subtitles, and smart episode selector",
     movieTemplate: "https://0vidads.top/embed/movie/{id}?color=E50914&branding=StreamFlix",
-    tvTemplate: "https://0vidads.top/embed/tv/{id}/{season}/{episode}?color=E50914&nextEpisode=true&autoplayNextEpisode=true&episodeSelector=true&overlay=true&branding=StreamFlix",
+    tvTemplate: "https://0vidads.top/embed/tv/{id}/{season}/{episode}?color=E50914&nextEpisode=true&autoplayNextEpisode=true&episodeSelector=false&overlay=true&branding=StreamFlix",
     type: "embed",
   },
   {
