@@ -1,0 +1,43 @@
+import React from "react";
+import { cn } from "@/lib/utils";
+
+export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
+  variant?: "default" | "accent" | "success" | "warning" | "glass" | "outline";
+  size?: "sm" | "md";
+}
+
+export function Badge({
+  className,
+  variant = "default",
+  size = "md",
+  children,
+  ...props
+}: BadgeProps) {
+  const variants = {
+    default: "bg-zinc-800/80 text-zinc-300 border border-zinc-700/50",
+    accent: "bg-rose-500/20 text-rose-600 dark:text-rose-300 border border-rose-500/30",
+    success: "bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30",
+    warning: "bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30",
+    glass: "glass-panel text-zinc-700 dark:text-zinc-300",
+    outline: "border border-zinc-300 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400",
+  };
+
+  const sizes = {
+    sm: "px-2 py-0.5 text-[10px] font-semibold tracking-wider uppercase rounded-md",
+    md: "px-2.5 py-1 text-xs font-medium rounded-lg",
+  };
+
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center gap-1 font-medium transition-colors",
+        variants[variant],
+        sizes[size],
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </span>
+  );
+}

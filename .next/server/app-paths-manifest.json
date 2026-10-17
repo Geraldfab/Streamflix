@@ -1,0 +1,6 @@
+{
+  "/page": "app/page.js",
+  "/watch/[id]/page": "app/watch/[id]/page.js",
+  "/continue-watching/page": "app/continue-watching/page.js",
+  "/settings/page": "app/settings/page.js"
+}
