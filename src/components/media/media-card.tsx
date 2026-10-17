@@ -43,7 +43,7 @@ export function MediaCard({ item, priority = false }: MediaCardProps) {
   };
 
   return (
-    <div className="group relative flex flex-col rounded-2xl overflow-hidden glass-panel border border-white/5 hover:border-rose-500/40 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-rose-950/20 select-none">
+    <div className="group relative flex flex-col rounded-2xl overflow-hidden bg-white dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-white/10 shadow-sm hover:shadow-xl hover:shadow-zinc-300/40 dark:hover:shadow-rose-950/20 hover:border-purple-500/50 dark:hover:border-rose-500/40 transition-all duration-300 hover:-translate-y-1.5 select-none">
       {/* Poster Image Container */}
       <Link
         href={`/title/${item.id}?type=${item.mediaType}`}
@@ -63,12 +63,12 @@ export function MediaCard({ item, priority = false }: MediaCardProps) {
 
         {/* Shimmer skeleton while loading */}
         {!imageLoaded && (
-          <div className="absolute inset-0 bg-zinc-800/60 animate-pulse" />
+          <div className="absolute inset-0 bg-zinc-200/60 dark:bg-zinc-800/60 animate-pulse" />
         )}
 
         {/* Top Badges: Media Type & Rating */}
         <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between z-10 pointer-events-none">
-          <span className="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider glass-panel-elevated text-zinc-200 border border-white/10 flex items-center gap-1">
+          <span className="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-black/60 text-white border border-white/20 backdrop-blur-md flex items-center gap-1 shadow-sm">
             {item.mediaType === "movie" ? (
               <>
                 <Film className="w-2.5 h-2.5 text-rose-400" />
@@ -83,7 +83,7 @@ export function MediaCard({ item, priority = false }: MediaCardProps) {
           </span>
 
           {item.voteAverage > 0 && (
-            <span className="px-2 py-0.5 rounded-md text-[10px] font-bold glass-panel-elevated text-amber-300 border border-amber-500/30 flex items-center gap-1 shadow-sm">
+            <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-black/60 text-amber-300 border border-amber-500/30 backdrop-blur-md flex items-center gap-1 shadow-sm">
               <Star className="w-2.5 h-2.5 fill-amber-400 text-amber-400" />
               {item.voteAverage.toFixed(1)}
             </span>
@@ -96,7 +96,7 @@ export function MediaCard({ item, priority = false }: MediaCardProps) {
             {/* Play Button */}
             <button
               onClick={handlePlayClick}
-              className="p-3 rounded-full bg-rose-600 hover:bg-rose-500 text-white shadow-xl shadow-rose-950/50 transform transition-transform hover:scale-110 active:scale-95"
+              className="p-3 rounded-full bg-purple-600 hover:bg-purple-500 dark:bg-rose-600 dark:hover:bg-rose-500 text-white shadow-xl shadow-black/40 transform transition-transform hover:scale-110 active:scale-95"
               title="Play Now"
               aria-label={`Play ${item.title}`}
             >
@@ -106,7 +106,7 @@ export function MediaCard({ item, priority = false }: MediaCardProps) {
             {/* Quick View Button */}
             <button
               onClick={handleQuickViewClick}
-              className="p-2.5 rounded-full glass-panel hover:bg-white/20 text-white shadow-lg transform transition-transform hover:scale-110 active:scale-95"
+              className="p-2.5 rounded-full bg-black/60 hover:bg-black/80 border border-white/20 text-white shadow-lg backdrop-blur-md transform transition-transform hover:scale-110 active:scale-95"
               title="Quick Preview"
               aria-label={`Quick view ${item.title}`}
             >
@@ -116,10 +116,10 @@ export function MediaCard({ item, priority = false }: MediaCardProps) {
             {/* Add to Watchlist */}
             <button
               onClick={handleWatchlistClick}
-              className={`p-2.5 rounded-full transition-transform hover:scale-110 active:scale-95 ${
+              className={`p-2.5 rounded-full border transition-transform hover:scale-110 active:scale-95 ${
                 inWatchlist
-                  ? "bg-rose-600/80 text-white"
-                  : "glass-panel hover:bg-white/20 text-white"
+                  ? "bg-purple-600 dark:bg-rose-600/90 text-white border-purple-500 dark:border-rose-500"
+                  : "bg-black/60 hover:bg-black/80 border-white/20 text-white backdrop-blur-md"
               }`}
               title={inWatchlist ? "Remove from List" : "Add to My List"}
               aria-label={inWatchlist ? "Remove from My List" : "Add to My List"}
@@ -141,11 +141,11 @@ export function MediaCard({ item, priority = false }: MediaCardProps) {
       </Link>
 
       {/* Card Info (Below Poster) */}
-      <div className="p-3 flex flex-col justify-between flex-1">
+      <div className="p-3 bg-white dark:bg-zinc-900/40 flex flex-col justify-between flex-1 border-t border-zinc-100 dark:border-white/5">
         <div>
           <Link
             href={`/title/${item.id}?type=${item.mediaType}`}
-            className="text-xs sm:text-sm font-semibold text-zinc-900 dark:text-zinc-100 hover:text-rose-500 dark:hover:text-rose-400 transition-colors line-clamp-1"
+            className="text-xs sm:text-sm font-semibold text-zinc-900 dark:text-zinc-100 hover:text-purple-600 dark:hover:text-rose-400 transition-colors line-clamp-1"
             title={item.title}
           >
             {item.title}

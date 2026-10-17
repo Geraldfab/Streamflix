@@ -15,11 +15,11 @@ export default function ContinueWatchingPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
         <div>
-          <div className="flex items-center gap-2 text-rose-500 font-semibold text-xs uppercase tracking-wider">
+          <div className="flex items-center gap-2 text-purple-600 dark:text-rose-500 font-semibold text-xs uppercase tracking-wider">
             <Clock className="w-4 h-4" />
             <span>Resume Playback</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black text-zinc-900 dark:text-zinc-100 tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-black text-zinc-900 dark:text-zinc-100 tracking-tight mt-1">
             Continue Watching
           </h1>
           <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
@@ -30,7 +30,7 @@ export default function ContinueWatchingPage() {
         {continueWatching.length > 0 && (
           <button
             onClick={clearContinueWatching}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 border border-rose-500/20 transition-colors"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-purple-600 dark:text-rose-400 hover:text-purple-700 dark:hover:text-rose-300 hover:bg-purple-50 dark:hover:bg-rose-500/10 border border-purple-200 dark:border-rose-500/20 transition-colors"
           >
             <Trash2 className="w-3.5 h-3.5" />
             <span>Clear History</span>
@@ -40,8 +40,8 @@ export default function ContinueWatchingPage() {
 
       {/* Grid or Empty */}
       {continueWatching.length === 0 ? (
-        <div className="text-center py-20 space-y-4 glass-panel rounded-3xl p-8 border border-white/10 max-w-lg mx-auto">
-          <div className="w-16 h-16 rounded-2xl bg-rose-600/10 border border-rose-500/20 flex items-center justify-center text-rose-400 mx-auto">
+        <div className="text-center py-20 space-y-4 bg-white dark:bg-zinc-900/60 rounded-3xl p-8 border border-zinc-200/80 dark:border-white/10 shadow-sm max-w-lg mx-auto">
+          <div className="w-16 h-16 rounded-2xl bg-purple-50 dark:bg-rose-600/10 border border-purple-200 dark:border-rose-500/20 flex items-center justify-center text-purple-600 dark:text-rose-400 mx-auto">
             <Clock className="w-8 h-8" />
           </div>
           <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
@@ -53,7 +53,7 @@ export default function ContinueWatchingPage() {
           <div className="pt-2">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs tracking-wider uppercase transition-all hover:scale-105"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-semibold text-xs tracking-wider uppercase shadow-md shadow-purple-600/20 dark:bg-rose-600 dark:hover:bg-rose-500 dark:shadow-rose-600/30 transition-all hover:scale-105"
             >
               <span>Start Watching</span>
               <ArrowRight className="w-4 h-4" />
@@ -70,7 +70,7 @@ export default function ContinueWatchingPage() {
             return (
               <div
                 key={item.id}
-                className="group rounded-2xl glass-panel border border-white/10 overflow-hidden relative transition-all duration-300 hover:-translate-y-1 hover:border-rose-500/40"
+                className="group rounded-2xl bg-white dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-white/10 shadow-sm overflow-hidden relative transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-purple-500/40 dark:hover:border-rose-500/40"
               >
                 {/* Backdrop Image */}
                 <Link href={watchHref} className="relative aspect-video w-full block bg-zinc-900 overflow-hidden">
@@ -82,7 +82,7 @@ export default function ContinueWatchingPage() {
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                    <div className="p-3.5 rounded-full bg-rose-600/90 text-white shadow-xl group-hover:scale-110 transition-transform">
+                    <div className="p-3.5 rounded-full bg-purple-600/90 dark:bg-rose-600/90 text-white shadow-xl group-hover:scale-110 transition-transform">
                       <Play className="w-5 h-5 fill-white translate-x-0.5" />
                     </div>
                   </div>
@@ -90,7 +90,7 @@ export default function ContinueWatchingPage() {
                   {/* Progress Bar */}
                   <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-black/80">
                     <div
-                      className="h-full bg-rose-600 transition-all"
+                      className="h-full bg-purple-600 dark:bg-rose-600 transition-all"
                       style={{ width: `${item.percentage}%` }}
                     />
                   </div>
@@ -111,7 +111,7 @@ export default function ContinueWatchingPage() {
                   <div>
                     <Link
                       href={watchHref}
-                      className="text-sm font-bold text-zinc-900 dark:text-zinc-100 truncate block hover:text-rose-400 transition-colors"
+                      className="text-sm font-bold text-zinc-900 dark:text-zinc-100 truncate block hover:text-purple-600 dark:hover:text-rose-400 transition-colors"
                     >
                       {item.title}
                     </Link>
@@ -122,9 +122,9 @@ export default function ContinueWatchingPage() {
                     </p>
                   </div>
 
-                  <div className="flex items-center justify-between text-xs text-zinc-500 mt-4 pt-3 border-t border-white/5">
+                  <div className="flex items-center justify-between text-xs text-zinc-500 mt-4 pt-3 border-t border-zinc-100 dark:border-white/5">
                     <span>{formatTime(item.currentTime)} / {formatTime(item.duration)}</span>
-                    <span className="font-semibold text-rose-400">{item.percentage}%</span>
+                    <span className="font-semibold text-purple-600 dark:text-rose-400">{item.percentage}%</span>
                   </div>
                 </div>
               </div>

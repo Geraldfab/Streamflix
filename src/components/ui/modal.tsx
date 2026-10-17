@@ -59,7 +59,7 @@ export function Modal({
       {/* Modal Dialog */}
       <div
         className={cn(
-          "relative z-10 w-full overflow-hidden rounded-2xl glass-panel-elevated shadow-2xl border border-white/10 dark:border-white/10 animate-scale-up text-zinc-900 dark:text-zinc-100 flex flex-col",
+          "relative z-10 w-full overflow-hidden rounded-2xl bg-white dark:bg-zinc-900 shadow-2xl border border-zinc-200 dark:border-white/10 animate-scale-up text-zinc-900 dark:text-zinc-100 flex flex-col",
           sizes[size],
           className
         )}
@@ -68,13 +68,13 @@ export function Modal({
       >
         {/* Header */}
         {(Boolean(title) || typeof onClose === "function") && (
-          <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 dark:border-white/10">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-200 dark:border-white/10">
             {title ? (
               <h3 className="text-lg font-semibold tracking-tight">{title}</h3>
             ) : <span />}
             <button
               onClick={onClose}
-              className="p-1.5 rounded-full hover:bg-white/10 text-zinc-400 hover:text-white transition-colors"
+              className="p-1.5 rounded-full hover:bg-zinc-100 dark:hover:bg-white/10 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />

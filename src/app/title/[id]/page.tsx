@@ -106,7 +106,7 @@ export default function TitleDetailsPage() {
   return (
     <div className="pb-24">
       {/* Cinematic Hero Backdrop */}
-      <div className="relative w-full aspect-video sm:aspect-[21/9] md:h-[65vh] bg-black overflow-hidden select-none">
+      <div className="relative w-full h-[45vh] min-h-[320px] sm:h-[55vh] sm:min-h-[420px] md:h-[65vh] bg-black overflow-hidden select-none">
         <Image
           src={getTmdbImageUrl(item.backdropPath, "original", "backdrop")}
           alt={item.title}
@@ -117,14 +117,16 @@ export default function TitleDetailsPage() {
         />
 
         {/* Gradients */}
-        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-black/30" />
-        <div className="absolute inset-0 side-fade-gradient" />
+        <div className="absolute inset-0 hero-gradient-overlay" />
+        <div className="absolute inset-0 side-fade-gradient hidden sm:block opacity-60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent dark:block hidden" />
 
         {/* Back navigation button */}
-        <div className="absolute top-20 left-4 sm:left-8 z-20">
+        <div className="absolute top-20 sm:top-24 left-4 sm:left-8 z-30">
           <button
             onClick={() => router.back()}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-xl glass-panel hover:bg-white/10 text-white text-xs font-semibold shadow-lg transition-colors"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-black/60 hover:bg-black/80 text-white text-xs font-semibold shadow-xl border border-white/20 backdrop-blur-md transition-all active:scale-95 hover:scale-105"
+            aria-label="Go back"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back</span>
@@ -133,7 +135,7 @@ export default function TitleDetailsPage() {
       </div>
 
       {/* Main Title Info Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 sm:-mt-36 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 sm:-mt-24 md:-mt-32 relative z-10">
         <div className="flex flex-col md:flex-row items-start gap-8">
           {/* Floating Poster */}
           <div className="w-44 sm:w-56 md:w-64 aspect-[2/3] rounded-3xl overflow-hidden glass-panel-elevated shadow-2xl border border-white/15 flex-shrink-0 relative hidden sm:block">
@@ -149,23 +151,23 @@ export default function TitleDetailsPage() {
           {/* Details Column */}
           <div className="flex-1 space-y-4">
             {/* Badges */}
-            <div className="flex flex-wrap items-center gap-2.5">
-              <span className="px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider bg-rose-600 text-white shadow">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+              <span className="inline-flex items-center h-6 px-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-purple-600 dark:bg-rose-600 text-white shadow-sm">
                 {item.mediaType === "movie" ? "Feature Film" : "TV Series"}
               </span>
 
               {item.voteAverage > 0 && (
-                <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                <span className="inline-flex items-center gap-1.5 h-6 px-2.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-500 dark:text-amber-300 border border-amber-500/30 backdrop-blur-md">
                   <Star className="w-3.5 h-3.5 fill-amber-400" />
-                  {item.voteAverage.toFixed(1)} / 10
-                  <span className="text-[10px] text-zinc-400 font-normal">
+                  <span>{item.voteAverage.toFixed(1)} / 10</span>
+                  <span className="text-[10px] text-zinc-500 dark:text-zinc-400 font-normal">
                     ({item.voteCount.toLocaleString()} votes)
                   </span>
                 </span>
               )}
 
               {item.maturityRating && (
-                <span className="px-2 py-0.5 rounded border border-white/20 text-[10px] font-mono text-zinc-300 font-bold">
+                <span className="inline-flex items-center h-6 px-2.5 rounded-full border border-zinc-300 dark:border-white/20 text-[10px] font-mono text-zinc-700 dark:text-zinc-300 font-bold bg-white/70 dark:bg-black/40 backdrop-blur-md">
                   {item.maturityRating}
                 </span>
               )}
@@ -177,7 +179,7 @@ export default function TitleDetailsPage() {
                 {item.title}
               </h1>
               {item.tagline && (
-                <p className="text-sm sm:text-base text-rose-500 dark:text-rose-300 italic mt-1 font-medium">
+                <p className="text-sm sm:text-base text-purple-600 dark:text-rose-300 italic mt-1 font-medium">
                   &ldquo;{item.tagline}&rdquo;
                 </p>
               )}
@@ -218,7 +220,7 @@ export default function TitleDetailsPage() {
                   <Link
                     key={g.id}
                     href={`/genre/${g.slug || g.name.toLowerCase()}`}
-                    className="px-3 py-1 rounded-xl glass-panel text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white border border-zinc-200/80 dark:border-white/10 hover:border-rose-500/40 transition-colors"
+                    className="px-3 py-1 rounded-xl bg-white dark:bg-zinc-900/60 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:text-purple-600 dark:hover:text-white border border-zinc-200/80 dark:border-white/10 hover:border-purple-500/40 dark:hover:border-rose-500/40 shadow-sm transition-colors"
                   >
                     {g.name}
                   </Link>
@@ -231,7 +233,7 @@ export default function TitleDetailsPage() {
               {/* Play Now / Resume Button */}
               <Link
                 href={`/watch/${item.id}?type=${item.mediaType}${progress?.season ? `&season=${progress.season}&episode=${progress.episode}` : ""}`}
-                className="px-8 py-3.5 rounded-2xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-sm flex items-center gap-2.5 shadow-xl shadow-rose-600/30 transition-all hover:scale-105 active:scale-95"
+                className="px-8 py-3.5 rounded-2xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm flex items-center gap-2.5 shadow-md shadow-purple-600/20 dark:bg-rose-600 dark:hover:bg-rose-500 dark:shadow-rose-600/30 transition-all hover:scale-105 active:scale-95"
               >
                 <Play className="w-4 h-4 fill-white translate-x-0.5" />
                 <span>{progress ? `Resume (${progress.percentage}%)` : "Play Now"}</span>
@@ -241,9 +243,9 @@ export default function TitleDetailsPage() {
               {item.trailerKey && (
                 <button
                   onClick={() => setShowTrailerModal(true)}
-                  className="px-5 py-3.5 rounded-2xl glass-panel hover:bg-zinc-100 dark:hover:bg-white/10 text-zinc-800 dark:text-white font-semibold text-sm flex items-center gap-2 border border-zinc-200/80 dark:border-white/10 transition-all hover:scale-105"
+                  className="px-5 py-3.5 rounded-2xl bg-white dark:bg-white/5 hover:bg-zinc-100 dark:hover:bg-white/10 text-zinc-800 dark:text-white font-semibold text-sm flex items-center gap-2 border border-zinc-200/80 dark:border-white/10 shadow-sm transition-all hover:scale-105"
                 >
-                  <Video className="w-4 h-4 text-rose-500 dark:text-rose-400" />
+                  <Video className="w-4 h-4 text-purple-600 dark:text-rose-400" />
                   <span>Official Trailer</span>
                 </button>
               )}
@@ -253,13 +255,13 @@ export default function TitleDetailsPage() {
                 onClick={() => toggleWatchlist(item)}
                 className={`px-5 py-3.5 rounded-2xl text-sm font-semibold flex items-center gap-2 transition-all ${
                   inWatchlist
-                    ? "bg-rose-600/30 text-rose-600 dark:text-rose-300 border border-rose-500/40"
-                    : "glass-panel text-zinc-800 dark:text-zinc-200 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/10 border border-zinc-200/80 dark:border-white/10"
+                    ? "bg-purple-50 text-purple-700 border border-purple-200 dark:bg-rose-600/30 dark:text-rose-300 dark:border-rose-500/40"
+                    : "bg-white dark:bg-white/5 text-zinc-800 dark:text-zinc-200 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/10 border border-zinc-200/80 dark:border-white/10 shadow-sm"
                 }`}
               >
                 {inWatchlist ? (
                   <>
-                    <Check className="w-4 h-4 text-rose-500" />
+                    <Check className="w-4 h-4 text-purple-600 dark:text-rose-500" />
                     <span>In My List</span>
                   </>
                 ) : (
@@ -273,7 +275,7 @@ export default function TitleDetailsPage() {
               {/* Share */}
               <button
                 onClick={handleShare}
-                className="p-3.5 rounded-2xl glass-panel hover:bg-zinc-100 dark:hover:bg-white/10 text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white border border-zinc-200/80 dark:border-white/10 transition-colors"
+                className="p-3.5 rounded-2xl bg-white dark:bg-white/5 hover:bg-zinc-100 dark:hover:bg-white/10 text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white border border-zinc-200/80 dark:border-white/10 shadow-sm transition-colors"
                 title="Share this title"
                 aria-label="Share title"
               >
@@ -297,7 +299,7 @@ export default function TitleDetailsPage() {
         {item.mediaType === "tv" && item.seasons && item.seasons.length > 0 && (
           <div className="mt-14 space-y-4">
             <h3 className="text-xl font-bold text-zinc-900 dark:text-white tracking-tight flex items-center gap-2">
-              <Tv className="w-5 h-5 text-rose-500 dark:text-rose-400" />
+              <Tv className="w-5 h-5 text-purple-600 dark:text-rose-400" />
               <span>Episodes Guide</span>
             </h3>
             <div className="max-w-4xl h-[420px]">
@@ -315,16 +317,16 @@ export default function TitleDetailsPage() {
         {item.cast && item.cast.length > 0 && (
           <div className="mt-14 space-y-4">
             <h3 className="text-xl font-bold text-zinc-900 dark:text-white tracking-tight flex items-center gap-2">
-              <Users className="w-5 h-5 text-rose-500 dark:text-rose-400" />
+              <Users className="w-5 h-5 text-purple-600 dark:text-rose-400" />
               <span>Top Billed Cast</span>
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
               {item.cast.slice(0, 6).map((actor) => (
                 <div
                   key={actor.id}
-                  className="glass-panel rounded-2xl p-3 border border-zinc-200/80 dark:border-white/5 flex flex-col items-center text-center space-y-2"
+                  className="bg-white dark:bg-zinc-900/60 rounded-2xl p-3 border border-zinc-200/80 dark:border-white/5 shadow-sm flex flex-col items-center text-center space-y-2"
                 >
-                  <div className="relative w-20 h-20 rounded-full overflow-hidden bg-zinc-800 border-2 border-rose-500/20">
+                  <div className="relative w-20 h-20 rounded-full overflow-hidden bg-zinc-200 dark:bg-zinc-800 border-2 border-purple-500/20 dark:border-rose-500/20">
                     <Image
                       src={getTmdbImageUrl(actor.profilePath, "w300", "profile")}
                       alt={actor.name}

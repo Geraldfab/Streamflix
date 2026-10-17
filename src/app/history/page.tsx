@@ -15,11 +15,11 @@ export default function HistoryPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
         <div>
-          <div className="flex items-center gap-2 text-rose-500 font-semibold text-xs uppercase tracking-wider">
+          <div className="flex items-center gap-2 text-purple-600 dark:text-rose-500 font-semibold text-xs uppercase tracking-wider">
             <Clock className="w-4 h-4" />
             <span>Activity Log</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black text-zinc-900 dark:text-zinc-100 tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-black text-zinc-900 dark:text-zinc-100 tracking-tight mt-1">
             Watch History
           </h1>
           <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
@@ -30,7 +30,7 @@ export default function HistoryPage() {
         {history.length > 0 && (
           <button
             onClick={clearHistory}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 border border-rose-500/20 transition-colors"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-purple-600 dark:text-rose-400 hover:text-purple-700 dark:hover:text-rose-300 hover:bg-purple-50 dark:hover:bg-rose-500/10 border border-purple-200 dark:border-rose-500/20 transition-colors"
           >
             <Trash2 className="w-3.5 h-3.5" />
             <span>Clear Watch History</span>
@@ -40,8 +40,8 @@ export default function HistoryPage() {
 
       {/* History List */}
       {history.length === 0 ? (
-        <div className="text-center py-20 space-y-4 glass-panel rounded-3xl p-8 border border-white/10 max-w-lg mx-auto">
-          <div className="w-16 h-16 rounded-2xl bg-rose-600/10 border border-rose-500/20 flex items-center justify-center text-rose-400 mx-auto">
+        <div className="text-center py-20 space-y-4 bg-white dark:bg-zinc-900/60 rounded-3xl p-8 border border-zinc-200/80 dark:border-white/10 shadow-sm max-w-lg mx-auto">
+          <div className="w-16 h-16 rounded-2xl bg-purple-50 dark:bg-rose-600/10 border border-purple-200 dark:border-rose-500/20 flex items-center justify-center text-purple-600 dark:text-rose-400 mx-auto">
             <Film className="w-8 h-8" />
           </div>
           <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
@@ -53,7 +53,7 @@ export default function HistoryPage() {
           <div className="pt-2">
             <Link
               href="/movies"
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs tracking-wider uppercase transition-all hover:scale-105"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-semibold text-xs tracking-wider uppercase shadow-md shadow-purple-600/20 dark:bg-rose-600 dark:hover:bg-rose-500 dark:shadow-rose-600/30 transition-all hover:scale-105"
             >
               <span>Discover Movies</span>
               <ArrowRight className="w-4 h-4" />
@@ -78,13 +78,13 @@ export default function HistoryPage() {
             return (
               <div
                 key={item.id}
-                className="flex items-center justify-between gap-4 p-3.5 rounded-2xl glass-panel border border-white/10 hover:border-rose-500/30 transition-all"
+                className="flex items-center justify-between gap-4 p-3.5 rounded-2xl bg-white dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-white/10 shadow-sm hover:border-purple-500/30 dark:hover:border-rose-500/30 transition-all"
               >
                 <div className="flex items-center gap-4 min-w-0">
                   {/* Poster Thumbnail */}
                   <Link
                     href={watchHref}
-                    className="relative w-14 h-20 rounded-xl overflow-hidden bg-zinc-900 flex-shrink-0 group"
+                    className="relative w-14 h-20 rounded-xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 flex-shrink-0 group"
                   >
                     <Image
                       src={getTmdbImageUrl(item.posterPath, "w300")}
@@ -102,7 +102,7 @@ export default function HistoryPage() {
                   <div className="min-w-0">
                     <Link
                       href={watchHref}
-                      className="text-sm font-bold text-zinc-900 dark:text-zinc-100 hover:text-rose-400 transition-colors truncate block"
+                      className="text-sm font-bold text-zinc-900 dark:text-zinc-100 hover:text-purple-600 dark:hover:text-rose-400 transition-colors truncate block"
                     >
                       {item.title}
                     </Link>
@@ -115,7 +115,7 @@ export default function HistoryPage() {
                       <Calendar className="w-3 h-3 text-zinc-400" />
                       <span>{dateStr}</span>
                       <span>•</span>
-                      <span className="text-rose-400 font-medium">
+                      <span className="text-purple-600 dark:text-rose-400 font-semibold">
                         {Math.round(item.completionRate * 100)}% Watched
                       </span>
                     </div>
@@ -125,7 +125,7 @@ export default function HistoryPage() {
                 {/* Remove from history button */}
                 <button
                   onClick={() => removeFromHistory(item.id)}
-                  className="p-2 rounded-xl text-zinc-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
+                  className="p-2 rounded-xl text-zinc-400 hover:text-purple-600 dark:hover:text-rose-400 hover:bg-purple-50 dark:hover:bg-rose-500/10 transition-colors"
                   title="Remove from history"
                   aria-label="Remove item"
                 >

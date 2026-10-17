@@ -87,7 +87,7 @@ export default function SeriesPage() {
     <div className="pt-24 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Page Header */}
       <div className="mb-8 space-y-2">
-        <div className="flex items-center gap-2 text-rose-500 font-semibold text-xs uppercase tracking-wider">
+        <div className="flex items-center gap-2 text-purple-600 dark:text-rose-500 font-semibold text-xs uppercase tracking-wider">
           <Tv className="w-4 h-4" />
           <span>Television & Serial Dramas</span>
         </div>
@@ -117,7 +117,7 @@ export default function SeriesPage() {
       {isLoading && series.length === 0 ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {Array.from({ length: 12 }).map((_, i) => (
-            <div key={i} className="aspect-[2/3] rounded-2xl bg-zinc-800/40 animate-pulse" />
+            <div key={i} className="aspect-[2/3] rounded-2xl bg-zinc-200/80 dark:bg-zinc-800/40 animate-pulse" />
           ))}
         </div>
       ) : (
@@ -130,7 +130,7 @@ export default function SeriesPage() {
           <button
             onClick={handleLoadMore}
             disabled={isLoading}
-            className="px-8 py-3 rounded-2xl glass-panel hover:bg-rose-600 hover:text-white font-semibold text-xs tracking-wider uppercase border border-white/10 transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
+            className="px-8 py-3 rounded-2xl bg-white hover:bg-purple-600 hover:text-white dark:bg-white/5 dark:hover:bg-rose-600 text-zinc-800 dark:text-zinc-200 font-semibold text-xs tracking-wider uppercase border border-zinc-200/80 dark:border-white/10 shadow-sm transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
           >
             {isLoading ? "Loading more series..." : "Load More TV Series"}
           </button>

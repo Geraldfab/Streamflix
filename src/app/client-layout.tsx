@@ -18,7 +18,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
     <ThemeProvider>
       <MediaProvider>
         <PlayerProvider>
-          <div className="min-h-screen flex flex-col bg-zinc-50 dark:bg-[#09090B] text-zinc-900 dark:text-[#FAFAFA] antialiased selection:bg-rose-500/30 selection:text-rose-200">
+          <div className="min-h-screen flex flex-col bg-[#F5F5F7] dark:bg-[#09090B] text-zinc-900 dark:text-[#FAFAFA] antialiased selection:bg-purple-500/20 selection:text-purple-900 dark:selection:bg-rose-500/30 dark:selection:text-rose-200">
             {/* Sticky Navigation */}
             <Navbar onOpenSearch={() => setIsSearchOpen(true)} />
 

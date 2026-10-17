@@ -16,8 +16,8 @@ export function MediaGrid({
 }: MediaGridProps) {
   if (items.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-center space-y-4 glass-panel rounded-3xl p-8 border border-white/5 my-6">
-        <div className="w-16 h-16 rounded-2xl bg-rose-600/10 border border-rose-500/20 flex items-center justify-center text-rose-400">
+      <div className="flex flex-col items-center justify-center py-20 text-center space-y-4 bg-white dark:bg-zinc-900/60 rounded-3xl p-8 border border-zinc-200/80 dark:border-white/10 shadow-sm my-6">
+        <div className="w-16 h-16 rounded-2xl bg-purple-50 dark:bg-rose-600/10 border border-purple-200 dark:border-rose-500/20 flex items-center justify-center text-purple-600 dark:text-rose-400">
           <Film className="w-8 h-8" />
         </div>
         <div>

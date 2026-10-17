@@ -144,10 +144,10 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
       />
 
       {/* Search container */}
-      <div className="relative z-10 w-full max-w-3xl glass-panel-elevated rounded-3xl shadow-2xl border border-zinc-200 dark:border-white/10 overflow-hidden flex flex-col max-h-[85vh]">
+      <div className="relative z-10 w-full max-w-3xl bg-white dark:bg-zinc-900 rounded-3xl shadow-2xl border border-zinc-200 dark:border-white/10 overflow-hidden flex flex-col max-h-[85vh]">
         {/* Input Bar */}
         <form onSubmit={handleSubmitSearch} className="relative flex items-center px-6 py-4 border-b border-zinc-200 dark:border-white/10">
-          <Search className="w-5 h-5 text-rose-500 mr-3 flex-shrink-0" />
+          <Search className="w-5 h-5 text-purple-600 dark:text-rose-500 mr-3 flex-shrink-0" />
           <input
             ref={inputRef}
             type="text"
@@ -161,7 +161,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
             className="w-full bg-transparent text-lg text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none"
           />
           {isLoading && (
-            <div className="w-5 h-5 border-2 border-rose-500 border-r-transparent rounded-full animate-spin mr-3 flex-shrink-0" />
+            <div className="w-5 h-5 border-2 border-purple-600 dark:border-rose-500 border-r-transparent rounded-full animate-spin mr-3 flex-shrink-0" />
           )}
           {query && (
             <button
@@ -176,7 +176,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
           <button
             type="button"
             onClick={onClose}
-            className="px-2.5 py-1 text-xs font-medium rounded-lg bg-zinc-100 dark:bg-white/5 hover:bg-zinc-200 dark:hover:bg-white/10 text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white border border-zinc-200 dark:border-white/10 transition-colors"
+            className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-700 dark:bg-white/10 dark:hover:bg-white/15 dark:text-zinc-300 border border-zinc-200 dark:border-white/10 transition-colors"
           >
             ESC
           </button>
@@ -191,12 +191,12 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                 <div>
                   <div className="flex items-center justify-between mb-3 text-xs font-semibold text-zinc-500 dark:text-zinc-400">
                     <span className="flex items-center gap-1.5">
-                      <Clock className="w-3.5 h-3.5 text-rose-500" />
+                      <Clock className="w-3.5 h-3.5 text-purple-600 dark:text-rose-500" />
                       Recent Searches
                     </span>
                     <button
                       onClick={handleClearRecents}
-                      className="text-zinc-500 hover:text-rose-500 transition-colors"
+                      className="text-zinc-500 hover:text-purple-600 dark:hover:text-rose-500 transition-colors"
                     >
                       Clear
                     </button>
@@ -206,7 +206,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                       <button
                         key={idx}
                         onClick={() => handleSelectRecent(term)}
-                        className="px-3 py-1.5 rounded-xl bg-zinc-100 dark:bg-white/5 hover:bg-zinc-200 dark:hover:bg-white/10 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white border border-zinc-200 dark:border-white/5 transition-all hover:scale-105"
+                        className="px-3 py-1.5 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-xs font-medium text-zinc-800 dark:bg-white/5 dark:hover:bg-white/10 dark:text-zinc-300 border border-zinc-200 dark:border-white/5 transition-all hover:scale-105"
                       >
                         {term}
                       </button>
@@ -226,7 +226,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                       <button
                         key={tag}
                         onClick={() => handleSelectRecent(tag)}
-                        className="px-3 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-xs font-medium text-rose-600 dark:text-rose-300 border border-rose-500/20 transition-all hover:scale-105"
+                        className="px-3 py-1.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-xs font-semibold text-purple-700 border border-purple-200 dark:bg-rose-500/10 dark:hover:bg-rose-500/20 dark:text-rose-300 dark:border-rose-500/20 transition-all hover:scale-105"
                       >
                         {tag}
                       </button>
@@ -251,7 +251,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                     onClick={onClose}
                     className={`flex items-center gap-4 p-2.5 rounded-2xl transition-all duration-150 ${
                       isSelected
-                        ? "bg-rose-500/15 dark:bg-rose-600/30 border border-rose-500/40"
+                        ? "bg-purple-50 dark:bg-rose-600/30 border border-purple-300 dark:border-rose-500/40"
                         : "hover:bg-zinc-100 dark:hover:bg-white/5 border border-transparent"
                     }`}
                   >
@@ -272,7 +272,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                         <span className="text-sm font-semibold text-zinc-900 dark:text-white truncate">
                           {item.title}
                         </span>
-                        <span className="px-1.5 py-0.5 rounded text-[10px] font-medium uppercase bg-zinc-200 dark:bg-white/10 text-zinc-700 dark:text-zinc-300">
+                        <span className="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase bg-zinc-100 dark:bg-white/10 text-zinc-700 dark:text-zinc-300 border border-zinc-200/70 dark:border-transparent">
                           {item.mediaType === "movie" ? "Movie" : "TV"}
                         </span>
                       </div>
@@ -297,7 +297,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
 
               <button
                 onClick={() => handleSubmitSearch()}
-                className="w-full mt-4 py-2.5 text-center text-xs font-semibold text-rose-600 dark:text-rose-300 hover:text-rose-700 dark:hover:text-white glass-panel rounded-xl hover:bg-rose-500/10 dark:hover:bg-rose-600/20 border border-rose-500/20 transition-colors"
+                className="w-full mt-4 py-2.5 text-center text-xs font-semibold text-purple-700 hover:text-purple-800 bg-purple-50 hover:bg-purple-100 dark:text-rose-300 dark:hover:text-white dark:bg-rose-600/20 dark:hover:bg-rose-600/30 border border-purple-200 dark:border-rose-500/30 rounded-xl transition-colors shadow-sm"
               >
                 View all search results for &quot;{query}&quot; →
               </button>
@@ -305,8 +305,8 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
           ) : !isLoading ? (
             /* No results state */
             <div className="text-center py-12 space-y-3">
-              <Film className="w-10 h-10 text-zinc-600 mx-auto" />
-              <p className="text-sm font-medium text-zinc-300">
+              <Film className="w-10 h-10 text-zinc-400 dark:text-zinc-600 mx-auto" />
+              <p className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
                 No matching movies or series found for &quot;{query}&quot;
               </p>
               <p className="text-xs text-zinc-500">

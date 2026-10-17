@@ -44,7 +44,7 @@ export function FilterBar({
     (mediaType !== "all" && !hideMediaType);
 
   return (
-    <div className="w-full glass-panel rounded-2xl p-4 mb-8 border border-zinc-200/80 dark:border-white/10 flex flex-wrap items-center justify-between gap-4">
+    <div className="w-full bg-white dark:bg-zinc-900/60 rounded-2xl p-4 mb-8 border border-zinc-200/80 dark:border-white/10 shadow-sm flex flex-wrap items-center justify-between gap-4">
       <div className="flex flex-wrap items-center gap-3">
         {/* Media Type Toggle */}
         {!hideMediaType && onMediaTypeChange && (
@@ -53,7 +53,7 @@ export function FilterBar({
               onClick={() => onMediaTypeChange("all")}
               className={`px-3 py-1.5 rounded-lg transition-all ${
                 mediaType === "all"
-                  ? "bg-rose-600 text-white font-semibold shadow"
+                  ? "bg-purple-600 dark:bg-rose-600 text-white font-semibold shadow-sm"
                   : "text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
               }`}
             >
@@ -63,7 +63,7 @@ export function FilterBar({
               onClick={() => onMediaTypeChange("movie")}
               className={`px-3 py-1.5 rounded-lg transition-all ${
                 mediaType === "movie"
-                  ? "bg-rose-600 text-white font-semibold shadow"
+                  ? "bg-purple-600 dark:bg-rose-600 text-white font-semibold shadow-sm"
                   : "text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
               }`}
             >
@@ -73,7 +73,7 @@ export function FilterBar({
               onClick={() => onMediaTypeChange("tv")}
               className={`px-3 py-1.5 rounded-lg transition-all ${
                 mediaType === "tv"
-                  ? "bg-rose-600 text-white font-semibold shadow"
+                  ? "bg-purple-600 dark:bg-rose-600 text-white font-semibold shadow-sm"
                   : "text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
               }`}
             >
@@ -87,7 +87,7 @@ export function FilterBar({
           <select
             value={selectedGenreId || ""}
             onChange={(e) => onGenreChange(e.target.value ? Number(e.target.value) : null)}
-            className="appearance-none bg-zinc-100 dark:bg-black/40 border border-zinc-200/80 dark:border-white/10 hover:border-rose-500/50 rounded-xl px-3.5 py-2 pr-8 text-xs font-medium text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-1 focus:ring-rose-500 cursor-pointer shadow-sm"
+            className="appearance-none bg-zinc-50 hover:bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 hover:border-purple-500/50 dark:hover:border-rose-500/50 rounded-xl px-3.5 py-2 pr-8 text-xs font-medium text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-1 focus:ring-purple-500 dark:focus:ring-rose-500 cursor-pointer shadow-sm"
           >
             <option value="" className="bg-white text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100">
               All Genres
@@ -106,7 +106,7 @@ export function FilterBar({
           <select
             value={selectedYear || ""}
             onChange={(e) => onYearChange(e.target.value ? Number(e.target.value) : null)}
-            className="appearance-none bg-zinc-100 dark:bg-black/40 border border-zinc-200/80 dark:border-white/10 hover:border-rose-500/50 rounded-xl px-3.5 py-2 pr-8 text-xs font-medium text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-1 focus:ring-rose-500 cursor-pointer shadow-sm"
+            className="appearance-none bg-zinc-50 hover:bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 hover:border-purple-500/50 dark:hover:border-rose-500/50 rounded-xl px-3.5 py-2 pr-8 text-xs font-medium text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-1 focus:ring-purple-500 dark:focus:ring-rose-500 cursor-pointer shadow-sm"
           >
             <option value="" className="bg-white text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100">
               All Years
@@ -125,7 +125,7 @@ export function FilterBar({
           <select
             value={selectedRating || ""}
             onChange={(e) => onRatingChange(e.target.value ? Number(e.target.value) : null)}
-            className="appearance-none bg-zinc-100 dark:bg-black/40 border border-zinc-200/80 dark:border-white/10 hover:border-rose-500/50 rounded-xl px-3.5 py-2 pr-8 text-xs font-medium text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-1 focus:ring-rose-500 cursor-pointer shadow-sm"
+            className="appearance-none bg-zinc-50 hover:bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 hover:border-purple-500/50 dark:hover:border-rose-500/50 rounded-xl px-3.5 py-2 pr-8 text-xs font-medium text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-1 focus:ring-purple-500 dark:focus:ring-rose-500 cursor-pointer shadow-sm"
           >
             <option value="" className="bg-white text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100">
               Any Rating
@@ -151,7 +151,7 @@ export function FilterBar({
           <select
             value={sortBy}
             onChange={(e) => onSortChange(e.target.value)}
-            className="appearance-none bg-zinc-100 dark:bg-black/40 border border-zinc-200/80 dark:border-white/10 hover:border-rose-500/50 rounded-xl px-3.5 py-2 pr-8 text-xs font-medium text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-1 focus:ring-rose-500 cursor-pointer shadow-sm"
+            className="appearance-none bg-zinc-50 hover:bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 hover:border-purple-500/50 dark:hover:border-rose-500/50 rounded-xl px-3.5 py-2 pr-8 text-xs font-medium text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-1 focus:ring-purple-500 dark:focus:ring-rose-500 cursor-pointer shadow-sm"
           >
             <option value="popularity.desc" className="bg-white text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100">
               Most Popular
@@ -173,7 +173,7 @@ export function FilterBar({
         {hasActiveFilters && (
           <button
             onClick={onReset}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 transition-colors border border-rose-500/30"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-purple-600 hover:bg-purple-50 border border-purple-200 dark:text-rose-400 dark:hover:bg-rose-500/10 dark:border-rose-500/30 transition-colors shadow-sm"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             <span>Reset</span>

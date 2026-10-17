@@ -55,7 +55,7 @@ export function QuickViewModal() {
       />
 
       {/* Modal Dialog */}
-      <div className="relative z-10 w-full max-w-3xl rounded-3xl glass-panel-elevated border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-scale-up">
+      <div className="relative z-10 w-full max-w-3xl rounded-3xl bg-white dark:bg-zinc-950/95 border border-zinc-200/80 dark:border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-scale-up">
         {/* Backdrop / Trailer Header */}
         <div className="relative aspect-video sm:aspect-[21/9] w-full bg-zinc-950 overflow-hidden flex-shrink-0">
           {showTrailer && quickViewItem.trailerKey ? (
@@ -188,7 +188,7 @@ export function QuickViewModal() {
             <div className="flex items-center gap-3">
               <button
                 onClick={handlePlayNow}
-                className="px-6 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-rose-600/30 transition-all hover:scale-105 active:scale-95"
+                className="px-6 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-semibold text-xs sm:text-sm flex items-center gap-2 shadow-md shadow-purple-600/20 dark:bg-rose-600 dark:hover:bg-rose-500 dark:shadow-rose-600/30 transition-all hover:scale-105 active:scale-95"
               >
                 <Play className="w-4 h-4 fill-white translate-x-0.5" />
                 <span>Play Now</span>
@@ -198,13 +198,13 @@ export function QuickViewModal() {
                 onClick={() => toggleWatchlist(quickViewItem)}
                 className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium flex items-center gap-2 transition-all ${
                   inWatchlist
-                    ? "bg-rose-600/30 text-rose-600 dark:text-rose-300 border border-rose-500/40"
-                    : "glass-panel text-zinc-800 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/10 border border-zinc-200/80 dark:border-white/10"
+                    ? "bg-purple-50 text-purple-700 border border-purple-200 dark:bg-rose-600/30 dark:text-rose-300 dark:border-rose-500/40"
+                    : "bg-zinc-100 hover:bg-zinc-200 text-zinc-800 dark:text-zinc-300 dark:bg-white/5 border border-zinc-200/80 dark:border-white/10"
                 }`}
               >
                 {inWatchlist ? (
                   <>
-                    <Check className="w-4 h-4 text-rose-500" />
+                    <Check className="w-4 h-4 text-purple-600 dark:text-rose-500" />
                     <span>In My List</span>
                   </>
                 ) : (
@@ -219,7 +219,7 @@ export function QuickViewModal() {
             <Link
               href={`/title/${quickViewItem.id}?type=${quickViewItem.mediaType}`}
               onClick={closeQuickView}
-              className="text-xs font-semibold text-rose-600 dark:text-rose-400 hover:text-rose-500 flex items-center gap-1.5 transition-colors"
+              className="text-xs font-semibold text-purple-600 dark:text-rose-400 hover:text-purple-700 dark:hover:text-rose-500 flex items-center gap-1.5 transition-colors"
             >
               <span>View Full Details</span>
               <ExternalLink className="w-3.5 h-3.5" />

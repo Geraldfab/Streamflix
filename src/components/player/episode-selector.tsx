@@ -81,12 +81,12 @@ export function EpisodeSelector({
       : []);
 
   return (
-    <div className={`flex flex-col h-full bg-zinc-950/90 border border-white/10 rounded-2xl overflow-hidden ${className}`}>
+    <div className={`flex flex-col h-full bg-white dark:bg-zinc-950/90 border border-zinc-200/80 dark:border-white/10 rounded-2xl overflow-hidden shadow-sm ${className}`}>
       {/* Header with Season Selector */}
-      <div className="p-4 border-b border-white/10 flex items-center justify-between gap-3 bg-white/5">
+      <div className="p-4 border-b border-zinc-200/80 dark:border-white/10 flex items-center justify-between gap-3 bg-zinc-50/80 dark:bg-white/5">
         <div>
-          <h4 className="text-sm font-semibold text-white">Episodes & Seasons</h4>
-          <p className="text-[11px] text-zinc-400">
+          <h4 className="text-sm font-semibold text-zinc-900 dark:text-white">Episodes & Seasons</h4>
+          <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
             {activeSeason?.name || `Season ${selectedSeasonNumber}`} • {resolvedEpisodes.length} Episodes
           </p>
         </div>
@@ -97,7 +97,7 @@ export function EpisodeSelector({
             <select
               value={selectedSeasonNumber}
               onChange={(e) => setSelectedSeasonNumber(Number(e.target.value))}
-              className="appearance-none bg-zinc-900 border border-white/20 hover:border-rose-500 rounded-xl px-3 py-1.5 pr-8 text-xs font-medium text-white focus:outline-none cursor-pointer"
+              className="appearance-none bg-zinc-100 dark:bg-zinc-900 border border-zinc-300 dark:border-white/20 hover:border-purple-500 dark:hover:border-rose-500 rounded-xl px-3 py-1.5 pr-8 text-xs font-medium text-zinc-800 dark:text-white focus:outline-none cursor-pointer"
             >
               {seasons.map((season) => (
                 <option key={season.id || season.seasonNumber} value={season.seasonNumber}>
@@ -105,15 +105,15 @@ export function EpisodeSelector({
                 </option>
               ))}
             </select>
-            <ChevronDown className="w-3.5 h-3.5 text-zinc-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <ChevronDown className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           </div>
         )}
       </div>
 
       {/* Episodes List */}
-      <div className="flex-1 overflow-y-auto divide-y divide-white/5 p-2 space-y-1">
+      <div className="flex-1 overflow-y-auto divide-y divide-zinc-100 dark:divide-white/5 p-2 space-y-1">
         {isLoadingEpisodes && resolvedEpisodes.length === 0 ? (
-          <div className="text-center py-10 text-xs text-zinc-400 animate-pulse">
+          <div className="text-center py-10 text-xs text-zinc-500 dark:text-zinc-400 animate-pulse">
             Loading episodes...
           </div>
         ) : resolvedEpisodes.length === 0 ? (
@@ -131,12 +131,12 @@ export function EpisodeSelector({
                 onClick={() => onSelectEpisode(ep.seasonNumber, ep.episodeNumber)}
                 className={`w-full text-left p-2.5 rounded-xl transition-all flex items-start gap-3 group ${
                   isPlaying
-                    ? "bg-rose-600/20 border border-rose-500/40 shadow-sm"
-                    : "hover:bg-white/5 border border-transparent"
+                    ? "bg-purple-50 dark:bg-rose-600/20 border border-purple-300 dark:border-rose-500/40 shadow-sm"
+                    : "hover:bg-zinc-100/80 dark:hover:bg-white/5 border border-transparent"
                 }`}
               >
                 {/* Thumbnail */}
-                <div className="relative w-24 h-14 rounded-lg overflow-hidden bg-zinc-900 flex-shrink-0">
+                <div className="relative w-24 h-14 rounded-lg overflow-hidden bg-zinc-200 dark:bg-zinc-900 flex-shrink-0">
                   <Image
                     src={getTmdbImageUrl(ep.stillPath, "w300", "backdrop")}
                     alt={ep.name}
@@ -145,11 +145,11 @@ export function EpisodeSelector({
                     sizes="96px"
                   />
                   {isPlaying ? (
-                    <div className="absolute inset-0 bg-rose-950/70 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-purple-950/70 dark:bg-rose-950/70 flex items-center justify-center">
                       <div className="flex items-end gap-0.5 h-4">
-                        <span className="w-1 bg-rose-400 rounded-full animate-pulse h-3" />
-                        <span className="w-1 bg-rose-400 rounded-full animate-pulse h-4 delay-75" />
-                        <span className="w-1 bg-rose-400 rounded-full animate-pulse h-2 delay-150" />
+                        <span className="w-1 bg-purple-300 dark:bg-rose-400 rounded-full animate-pulse h-3" />
+                        <span className="w-1 bg-purple-300 dark:bg-rose-400 rounded-full animate-pulse h-4 delay-75" />
+                        <span className="w-1 bg-purple-300 dark:bg-rose-400 rounded-full animate-pulse h-2 delay-150" />
                       </div>
                     </div>
                   ) : (
@@ -165,22 +165,22 @@ export function EpisodeSelector({
                 {/* Details */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-[11px] font-bold text-rose-400">
+                    <span className="text-[11px] font-bold text-purple-600 dark:text-rose-400">
                       E{ep.episodeNumber}
                     </span>
-                    <span className="text-xs font-semibold text-zinc-100 truncate">
+                    <span className="text-xs font-semibold text-zinc-900 dark:text-zinc-100 truncate">
                       {ep.name}
                     </span>
                   </div>
 
-                  <p className="text-[11px] text-zinc-400 line-clamp-2 mt-0.5 leading-relaxed">
+                  <p className="text-[11px] text-zinc-600 dark:text-zinc-400 line-clamp-2 mt-0.5 leading-relaxed">
                     {ep.overview || "No overview available for this episode."}
                   </p>
 
                   <div className="flex items-center gap-3 text-[10px] text-zinc-500 mt-1">
                     {ep.airDate && <span>{ep.airDate}</span>}
                     {ep.voteAverage > 0 && (
-                      <span className="flex items-center gap-0.5 text-amber-400">
+                      <span className="flex items-center gap-0.5 text-amber-500 dark:text-amber-400 font-medium">
                         <Star className="w-2.5 h-2.5 fill-amber-400" />
                         {ep.voteAverage.toFixed(1)}
                       </span>

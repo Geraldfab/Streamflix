@@ -171,27 +171,27 @@ export default function WatchPage() {
           {/* Main Info */}
           <div className="flex-1 space-y-4">
             <div className="flex flex-wrap items-center gap-2.5">
-              <span className="px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-rose-600/90 text-white">
+              <span className="px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-purple-600 dark:bg-rose-600/90 text-white">
                 {item.mediaType === "movie" ? "Feature Film" : "TV Series"}
               </span>
 
               {item.voteAverage > 0 && (
-                <span className="flex items-center gap-1 text-xs font-bold text-amber-400 glass-panel px-2 py-0.5 rounded-md border border-amber-500/20">
+                <span className="flex items-center gap-1 text-xs font-bold text-amber-500 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/20">
                   <Star className="w-3.5 h-3.5 fill-amber-400" />
                   {item.voteAverage.toFixed(1)}
                 </span>
               )}
 
               {item.releaseYear ? (
-                <span className="text-xs text-zinc-400 flex items-center gap-1">
-                  <Calendar className="w-3.5 h-3.5" />
+                <span className="text-xs text-zinc-500 dark:text-zinc-400 flex items-center gap-1">
+                  <Calendar className="w-3.5 h-3.5 text-zinc-400" />
                   {item.releaseYear}
                 </span>
               ) : null}
 
               {item.runtime ? (
-                <span className="text-xs text-zinc-400 flex items-center gap-1">
-                  <Clock className="w-3.5 h-3.5" />
+                <span className="text-xs text-zinc-500 dark:text-zinc-400 flex items-center gap-1">
+                  <Clock className="w-3.5 h-3.5 text-zinc-400" />
                   {formatRuntime(item.runtime)}
                 </span>
               ) : null}
@@ -208,13 +208,13 @@ export default function WatchPage() {
             <div className="flex items-center gap-3 pt-2">
               <Link
                 href={`/title/${item.id}?type=${item.mediaType}`}
-                className="px-4 py-2 rounded-xl glass-panel hover:bg-zinc-100 dark:hover:bg-white/10 text-xs font-semibold text-zinc-800 dark:text-white border border-zinc-200/80 dark:border-white/10 transition-colors shadow-sm"
+                className="px-4 py-2 rounded-xl bg-white dark:bg-white/5 hover:bg-zinc-100 dark:hover:bg-white/10 text-xs font-semibold text-zinc-800 dark:text-white border border-zinc-200/80 dark:border-white/10 transition-colors shadow-sm"
               >
                 View Full Details & Cast
               </Link>
               <button
                 onClick={handleShare}
-                className="p-2 rounded-xl glass-panel hover:bg-zinc-100 dark:hover:bg-white/10 text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white border border-zinc-200/80 dark:border-white/10 transition-colors shadow-sm"
+                className="p-2 rounded-xl bg-white dark:bg-white/5 hover:bg-zinc-100 dark:hover:bg-white/10 text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white border border-zinc-200/80 dark:border-white/10 transition-colors shadow-sm"
                 title="Share link"
               >
                 <Share2 className="w-4 h-4" />
@@ -238,7 +238,7 @@ export default function WatchPage() {
 
         {/* Recommended & More Like This */}
         {recommendations.length > 0 && (
-          <div className="pt-8 border-t border-white/10">
+          <div className="pt-8 border-t border-zinc-200/80 dark:border-white/10">
             <ContentRail
               title="More You May Like"
               subtitle="Titles recommended based on current viewing"

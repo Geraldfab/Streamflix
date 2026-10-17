@@ -4,31 +4,49 @@
 
 @layer base {
   :root {
-    --bg-main: #f8fafc;
-    --bg-secondary: #ffffff;
-    --bg-elevated: #f1f5f9;
-    --glass-bg: rgba(255, 255, 255, 0.72);
-    --glass-border: rgba(15, 23, 42, 0.08);
-    --text-primary: #18181b;
-    --text-secondary: #52525b;
-    --text-muted: #71717a;
-    --accent: #e50914;
-    --accent-hover: #b91c1c;
-    --accent-glow: rgba(229, 9, 20, 0.25);
+    color-scheme: light;
+    --bg-main: #F5F5F7;
+    --bg-secondary: #F8FAFC;
+    --bg-elevated: #F1F5F9;
+    --glass-bg: rgba(255, 255, 255, 0.82);
+    --glass-border: rgba(24, 24, 27, 0.08);
+    --card-bg: #FFFFFF;
+    --card-border: #E4E4E7;
+    --text-primary: #18181B;
+    --text-secondary: #52525B;
+    --text-muted: #71717A;
+    --border: #E4E4E7;
+    --input: #D4D4D8;
+    --accent: #6D28D9;
+    --accent-hover: #5B21B6;
+    --accent-subtle: #F3E8FF;
+    --accent-glow: rgba(109, 40, 217, 0.22);
+    --success: #047857;
+    --warning: #92400E;
+    --error: #B91C1C;
   }
 
   .dark {
-    --bg-main: #09090b;
+    color-scheme: dark;
+    --bg-main: #09090B;
     --bg-secondary: #111114;
-    --bg-elevated: #18181b;
+    --bg-elevated: #18181B;
     --glass-bg: rgba(255, 255, 255, 0.06);
     --glass-border: rgba(255, 255, 255, 0.12);
-    --text-primary: #fafafa;
-    --text-secondary: #a1a1aa;
-    --text-muted: #71717a;
-    --accent: #e50914;
-    --accent-hover: #f87171;
+    --card-bg: rgba(24, 24, 27, 0.7);
+    --card-border: rgba(255, 255, 255, 0.1);
+    --text-primary: #FAFAFA;
+    --text-secondary: #A1A1AA;
+    --text-muted: #71717A;
+    --border: rgba(255, 255, 255, 0.12);
+    --input: rgba(255, 255, 255, 0.15);
+    --accent: #E50914;
+    --accent-hover: #F87171;
+    --accent-subtle: rgba(229, 9, 20, 0.15);
     --accent-glow: rgba(229, 9, 20, 0.35);
+    --success: #34D399;
+    --warning: #FBBF24;
+    --error: #F87171;
   }
 
   body {
@@ -36,7 +54,7 @@
     color: var(--text-primary);
     overflow-x: hidden;
     font-feature-settings: "rlig" 1, "calt" 1;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
 }
 
@@ -48,22 +66,23 @@
   border: 1px solid var(--glass-border);
 }
 
+:root:not(.dark) .glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(24, 24, 27, 0.08);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+}
+
 .glass-panel-elevated {
-  background: rgba(24, 24, 27, 0.75);
+  background: rgba(24, 24, 27, 0.78);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(255, 255, 255, 0.14);
 }
 
-.dark .glass-panel-elevated {
-  background: rgba(24, 24, 27, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-}
-
 :root:not(.dark) .glass-panel-elevated {
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(15, 23, 42, 0.1);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(24, 24, 27, 0.08);
+  box-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
 }
 
 .glass-input {
@@ -74,7 +93,9 @@
 }
 
 :root:not(.dark) .glass-input {
-  background: rgba(255, 255, 255, 0.9);
+  background: #FFFFFF;
+  border: 1px solid var(--input);
+  color: var(--text-primary);
 }
 
 .glass-input:focus {
@@ -85,6 +106,16 @@
 
 /* Cinematic Gradients */
 .hero-gradient-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.3) 35%,
+    rgba(0, 0, 0, 0.75) 75%,
+    rgba(0, 0, 0, 0.95) 100%
+  );
+}
+
+.dark .hero-gradient-overlay {
   background: linear-gradient(
     180deg,
     rgba(0, 0, 0, 0.4) 0%,
@@ -112,6 +143,19 @@
 .card-hover-glow:hover {
   transform: translateY(-4px) scale(1.02);
   box-shadow: 0 12px 30px -10px var(--accent-glow);
+}
+
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2.5s ease-in-out infinite;
 }
 
 /* Custom minimal scrollbar */

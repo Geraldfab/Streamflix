@@ -19,11 +19,14 @@ import {
   Menu,
   X,
   Play,
+  Coffee,
+  Heart,
 } from "lucide-react";
 import { useTheme } from "@/components/providers/theme-provider";
 import { useMedia } from "@/components/providers/media-context";
 import { GENRES_LIST } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { SupportDevModal } from "@/components/modals/support-dev-modal";
 
 interface NavbarProps {
   onOpenSearch: () => void;
@@ -38,6 +41,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
   const [isGenreOpen, setIsGenreOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,9 +69,11 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
       <header
         className={cn(
           "fixed top-0 left-0 right-0 z-40 transition-all duration-300",
-          isScrolled
-            ? "glass-panel shadow-lg shadow-black/10 py-3"
-            : "bg-gradient-to-b from-black/80 via-black/40 to-transparent py-4"
+          resolvedTheme === "light"
+            ? "bg-white/85 backdrop-blur-xl border-b border-zinc-200/80 shadow-sm shadow-zinc-950/5 py-3"
+            : isScrolled
+              ? "glass-panel shadow-lg shadow-black/20 py-3"
+              : "bg-gradient-to-b from-black/85 via-black/40 to-transparent py-4"
         )}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -90,14 +96,19 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                 </div>
                 <div className="flex flex-col">
                   <span className={cn(
-                    "text-xl font-bold tracking-tight bg-clip-text text-transparent",
-                    isScrolled
-                      ? "bg-gradient-to-r from-zinc-950 via-zinc-800 to-rose-600 dark:from-white dark:via-zinc-200 dark:to-rose-400"
-                      : "bg-gradient-to-r from-white via-zinc-100 to-rose-400"
+                    "text-xl font-black tracking-tight bg-clip-text text-transparent",
+                    resolvedTheme === "light"
+                      ? "bg-gradient-to-r from-zinc-950 via-zinc-800 to-purple-600"
+                      : isScrolled
+                        ? "bg-gradient-to-r from-white via-zinc-200 to-rose-400"
+                        : "bg-gradient-to-r from-white via-zinc-100 to-rose-400"
                   )}>
                     StreamFlix
                   </span>
-                  <span className="text-[9px] tracking-widest uppercase font-semibold text-rose-500 -mt-1">
+                  <span className={cn(
+                    "text-[9px] tracking-widest uppercase font-bold -mt-1",
+                    resolvedTheme === "light" ? "text-purple-600" : "text-rose-500"
+                  )}>
                     Cinema Studio
                   </span>
                 </div>
@@ -112,17 +123,24 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                       key={link.name}
                       href={link.href}
                       className={cn(
-                        "relative px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all duration-150 flex items-center gap-1.5",
+                        "relative px-3.5 py-1.5 rounded-xl text-sm font-medium transition-all duration-150 flex items-center gap-1.5",
                         isActive
-                          ? "text-rose-600 dark:text-white bg-rose-500/10 dark:bg-white/10 shadow-sm font-semibold"
-                          : isScrolled
-                            ? "text-zinc-700 hover:text-zinc-950 hover:bg-zinc-900/5 dark:text-zinc-300 dark:hover:text-white dark:hover:bg-white/5"
-                            : "text-zinc-200 hover:text-white hover:bg-white/10"
+                          ? resolvedTheme === "light"
+                            ? "text-purple-700 font-bold bg-purple-50 shadow-sm border border-purple-100"
+                            : "text-white bg-white/10 shadow-sm font-semibold"
+                          : resolvedTheme === "light"
+                            ? "text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100/80"
+                            : isScrolled
+                              ? "text-zinc-300 hover:text-white hover:bg-white/10"
+                              : "text-zinc-200 hover:text-white hover:bg-white/10"
                       )}
                     >
                       {link.name}
                       {link.badge ? (
-                        <span className="px-1.5 py-0.2 text-[10px] font-bold bg-rose-600 text-white rounded-full">
+                        <span className={cn(
+                          "px-1.5 py-0.2 text-[10px] font-bold text-white rounded-full",
+                          resolvedTheme === "light" ? "bg-purple-600" : "bg-rose-600"
+                        )}>
                           {link.badge}
                         </span>
                       ) : null}
@@ -136,10 +154,12 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                     onClick={() => setIsGenreOpen(!isGenreOpen)}
                     onBlur={() => setTimeout(() => setIsGenreOpen(false), 200)}
                     className={cn(
-                      "px-3 py-1.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-1",
-                      isScrolled
-                        ? "text-zinc-700 hover:text-zinc-950 hover:bg-zinc-900/5 dark:text-zinc-300 dark:hover:text-white dark:hover:bg-white/5"
-                        : "text-zinc-200 hover:text-white hover:bg-white/10"
+                      "px-3 py-1.5 rounded-xl text-sm font-medium transition-colors flex items-center gap-1",
+                      resolvedTheme === "light"
+                        ? "text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100/80"
+                        : isScrolled
+                          ? "text-zinc-300 hover:text-white hover:bg-white/10"
+                          : "text-zinc-200 hover:text-white hover:bg-white/10"
                     )}
                   >
                     <span>Genres</span>
@@ -152,7 +172,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                   </button>
 
                   {isGenreOpen && (
-                    <div className="absolute top-full left-0 mt-2 w-64 p-2 rounded-2xl glass-panel-elevated shadow-2xl border border-zinc-200 dark:border-white/10 grid grid-cols-2 gap-1 animate-scale-up z-50">
+                    <div className="absolute top-full left-0 mt-2 w-64 p-2 rounded-2xl bg-white dark:bg-zinc-900 shadow-2xl border border-zinc-200 dark:border-white/10 grid grid-cols-2 gap-1 animate-scale-up z-50">
                       {GENRES_LIST.slice(0, 12).map((genre) => (
                         <Link
                           key={genre.id}
@@ -174,9 +194,14 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
               <button
                 onClick={handleSurpriseMe}
                 title="Surprise Me (Random title)"
-                className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-rose-600 dark:text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 transition-all hover:scale-105 active:scale-95 shadow-sm"
+                className={cn(
+                  "hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all hover:scale-105 active:scale-95 shadow-sm",
+                  resolvedTheme === "light"
+                    ? "text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200"
+                    : "text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30"
+                )}
               >
-                <Shuffle className="w-3.5 h-3.5 text-rose-500 dark:text-rose-400" />
+                <Shuffle className={cn("w-3.5 h-3.5", resolvedTheme === "light" ? "text-purple-600" : "text-rose-400")} />
                 <span>Surprise Me</span>
               </button>
 
@@ -184,16 +209,18 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
               <button
                 onClick={onOpenSearch}
                 className={cn(
-                  "flex items-center gap-2 px-3 py-1.5 rounded-xl glass-panel transition-all group",
-                  isScrolled
-                    ? "text-xs text-zinc-700 hover:text-zinc-950 border-zinc-200/80 hover:bg-zinc-900/5 dark:text-zinc-300 dark:hover:text-white dark:border-white/10 dark:hover:bg-white/10"
-                    : "text-xs text-zinc-200 hover:text-white border-white/20 hover:bg-white/10"
+                  "flex items-center gap-2 px-3 py-1.5 rounded-xl transition-all group",
+                  resolvedTheme === "light"
+                    ? "text-xs text-zinc-700 hover:text-zinc-950 bg-zinc-100/80 hover:bg-zinc-100 border border-zinc-200/90"
+                    : isScrolled
+                      ? "text-xs text-zinc-300 hover:text-white border-white/10 hover:bg-white/10 glass-panel"
+                      : "text-xs text-zinc-200 hover:text-white border-white/20 hover:bg-white/10 glass-panel"
                 )}
                 aria-label="Search movies and series"
               >
-                <Search className={cn("w-4 h-4 transition-colors group-hover:text-rose-500", isScrolled ? "text-zinc-500 dark:text-zinc-400" : "text-zinc-300")} />
+                <Search className={cn("w-4 h-4 transition-colors", resolvedTheme === "light" ? "text-purple-600 group-hover:text-purple-700" : "text-zinc-400 group-hover:text-rose-400")} />
                 <span className="hidden sm:inline">Search...</span>
-                <kbd className={cn("hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono rounded", isScrolled ? "bg-zinc-200/80 text-zinc-600 dark:bg-white/10 dark:text-zinc-400" : "bg-white/10 text-zinc-300")}>
+                <kbd className={cn("hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono rounded", resolvedTheme === "light" ? "bg-zinc-200 text-zinc-700" : "bg-white/10 text-zinc-300")}>
                   Ctrl+K
                 </kbd>
               </button>
@@ -203,17 +230,19 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                 onClick={toggleTheme}
                 title={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
                 className={cn(
-                  "p-2 rounded-xl glass-panel transition-all hover:scale-105 active:scale-95",
-                  isScrolled
-                    ? "text-zinc-700 hover:text-zinc-950 border-zinc-200/80 hover:bg-zinc-900/5 dark:text-zinc-300 dark:hover:text-white dark:border-white/10 dark:hover:bg-white/10"
-                    : "text-zinc-200 hover:text-white border-white/20 hover:bg-white/10"
+                  "p-2 rounded-xl transition-all hover:scale-105 active:scale-95",
+                  resolvedTheme === "light"
+                    ? "text-zinc-700 hover:text-zinc-950 bg-zinc-100/80 hover:bg-zinc-100 border border-zinc-200/90 shadow-sm"
+                    : isScrolled
+                      ? "text-zinc-300 hover:text-white border-white/10 hover:bg-white/10 glass-panel"
+                      : "text-zinc-200 hover:text-white border-white/20 hover:bg-white/10 glass-panel"
                 )}
                 aria-label="Toggle theme"
               >
                 {resolvedTheme === "dark" ? (
                   <Sun className="w-4 h-4 text-amber-400 animate-spin-once" />
                 ) : (
-                  <Moon className="w-4 h-4 text-rose-600" />
+                  <Moon className="w-4 h-4 text-purple-600" />
                 )}
               </button>
 
@@ -222,14 +251,19 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                 <button
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
                   onBlur={() => setTimeout(() => setIsProfileOpen(false), 200)}
-                  className="w-9 h-9 rounded-xl overflow-hidden border border-white/20 glass-panel hover:ring-2 hover:ring-rose-500/50 transition-all flex items-center justify-center bg-gradient-to-tr from-rose-950 via-zinc-900 to-red-900 text-white font-semibold text-xs shadow-md"
+                  className={cn(
+                    "w-9 h-9 rounded-xl overflow-hidden border transition-all flex items-center justify-center font-bold text-xs shadow-md",
+                    resolvedTheme === "light"
+                      ? "bg-gradient-to-tr from-purple-700 to-indigo-900 text-white border-purple-200 hover:ring-2 hover:ring-purple-500/50"
+                      : "bg-gradient-to-tr from-rose-950 via-zinc-900 to-red-900 text-white border-white/20 hover:ring-2 hover:ring-rose-500/50"
+                  )}
                   aria-label="User Account"
                 >
                   SF
                 </button>
 
                 {isProfileOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-56 p-2 rounded-2xl glass-panel-elevated shadow-2xl border border-zinc-200 dark:border-white/10 animate-scale-up z-50">
+                  <div className="absolute right-0 top-full mt-2 w-56 p-2 rounded-2xl bg-white dark:bg-zinc-900 shadow-2xl border border-zinc-200 dark:border-white/10 animate-scale-up z-50">
                     <div className="px-3 py-2 border-b border-zinc-200 dark:border-white/10">
                       <p className="text-xs font-semibold text-zinc-900 dark:text-white">VIP Guest</p>
                       <p className="text-[11px] text-zinc-500 dark:text-zinc-400">StreamFlix Premium 4K</p>
@@ -239,7 +273,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                         href="/my-list"
                         className="flex items-center gap-2.5 px-3 py-2 text-xs text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:text-white dark:hover:bg-white/10 rounded-lg transition-colors"
                       >
-                        <Bookmark className="w-3.5 h-3.5 text-rose-500" />
+                        <Bookmark className={cn("w-3.5 h-3.5", resolvedTheme === "light" ? "text-purple-600" : "text-rose-500")} />
                         <span>My List ({watchlist.length})</span>
                       </Link>
                       <Link
@@ -263,6 +297,24 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                         <Settings className="w-3.5 h-3.5 text-amber-500" />
                         <span>Settings & Servers</span>
                       </Link>
+
+                      {/* Support Dev Option */}
+                      <div className="pt-1 mt-1 border-t border-zinc-200 dark:border-white/10">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsProfileOpen(false);
+                            setIsSupportModalOpen(true);
+                          }}
+                          className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-amber-600 hover:text-amber-700 hover:bg-amber-50 dark:text-amber-400 dark:hover:text-amber-300 dark:hover:bg-amber-500/10 rounded-lg transition-colors group text-left"
+                        >
+                          <Coffee className="w-3.5 h-3.5 text-amber-500 group-hover:scale-110 transition-transform" />
+                          <span>Support Dev</span>
+                          <span className="ml-auto px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-500/15 text-amber-700 dark:text-amber-300">
+                            ☕ Tip
+                          </span>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -272,10 +324,12 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className={cn(
-                  "md:hidden p-2 rounded-xl glass-panel transition-colors",
-                  isScrolled
-                    ? "text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white"
-                    : "text-zinc-200 hover:text-white"
+                  "md:hidden p-2 rounded-xl transition-colors",
+                  resolvedTheme === "light"
+                    ? "text-zinc-700 hover:text-zinc-950 bg-zinc-100/80 border border-zinc-200/90"
+                    : isScrolled
+                      ? "text-zinc-300 hover:text-white glass-panel"
+                      : "text-zinc-200 hover:text-white glass-panel"
                 )}
                 aria-label="Toggle mobile menu"
               >
@@ -287,7 +341,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
 
         {/* Mobile Dropdown Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden mt-3 px-4 py-3 glass-panel-elevated border-t border-b border-zinc-200 dark:border-white/10 animate-fade-in flex flex-col gap-2">
+          <div className="md:hidden mt-3 px-4 py-3 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl border-t border-b border-zinc-200 dark:border-white/10 animate-fade-in flex flex-col gap-2 shadow-xl">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
@@ -296,13 +350,18 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                 className={cn(
                   "px-3 py-2 rounded-xl text-sm font-medium flex items-center justify-between",
                   pathname === link.href
-                    ? "bg-rose-500/10 text-rose-600 dark:bg-rose-600/30 dark:text-rose-300 font-semibold"
+                    ? resolvedTheme === "light"
+                      ? "bg-purple-50 text-purple-700 font-bold border border-purple-100"
+                      : "bg-rose-600/30 text-rose-300 font-semibold"
                     : "text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:text-white dark:hover:bg-white/5"
                 )}
               >
                 <span>{link.name}</span>
                 {link.badge ? (
-                  <span className="px-2 py-0.5 text-xs bg-rose-600 text-white rounded-full">
+                  <span className={cn(
+                    "px-2 py-0.5 text-xs text-white rounded-full font-bold",
+                    resolvedTheme === "light" ? "bg-purple-600" : "bg-rose-600"
+                  )}>
                     {link.badge}
                   </span>
                 ) : null}
@@ -320,9 +379,35 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                 </Link>
               ))}
             </div>
+
+            {/* Mobile Support Dev Button */}
+            <div className="pt-2 border-t border-zinc-200 dark:border-white/10">
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setIsSupportModalOpen(true);
+                }}
+                className="w-full px-3 py-2.5 rounded-xl text-xs font-bold flex items-center justify-between text-amber-800 dark:text-amber-300 bg-amber-50 hover:bg-amber-100 dark:bg-amber-500/15 dark:hover:bg-amber-500/25 border border-amber-200 dark:border-amber-500/30 transition-all active:scale-98 shadow-sm"
+              >
+                <span className="flex items-center gap-2">
+                  <Coffee className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                  Support StreamFlix Dev
+                </span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-800 dark:text-amber-200 font-bold">
+                  ☕ Tip Jar
+                </span>
+              </button>
+            </div>
           </div>
         )}
       </header>
+
+      {/* Support Dev Modal */}
+      <SupportDevModal
+        isOpen={isSupportModalOpen}
+        onClose={() => setIsSupportModalOpen(false)}
+      />
     </>
   );
 }
