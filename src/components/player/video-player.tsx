@@ -24,6 +24,7 @@ import {
   Check,
   AlertCircle,
   RefreshCw,
+  Cast,
 } from "lucide-react";
 import { MediaItem, Season, Episode, Chapter } from "@/types/media";
 import { formatTime, cn } from "@/lib/utils";
@@ -31,6 +32,7 @@ import { useMedia } from "@/components/providers/media-context";
 import { usePlayer } from "@/components/providers/player-context";
 import { STREAM_SERVERS } from "@/lib/constants";
 import { KeyboardShortcutsModal } from "./keyboard-shortcuts-modal";
+import { ScreenCastModal } from "./screen-cast-modal";
 
 interface VideoPlayerProps {
   media: MediaItem;
@@ -97,6 +99,8 @@ export function VideoPlayer({
   });
   const [subtitlesEnabled, setSubtitlesEnabled] = useState(preferences.subtitlesEnabled || false);
   const [showShortcutsModal, setShowShortcutsModal] = useState(false);
+  const [showCastModal, setShowCastModal] = useState(false);
+  const [isCasting, setIsCasting] = useState(false);
 
   // Autoplay next episode countdown
   const [nextEpisodeCountdown, setNextEpisodeCountdown] = useState<number | null>(null);
@@ -842,12 +846,16 @@ export function VideoPlayer({
                   <PictureInPicture className="w-4 h-4" />
                 </button>
 
+                {/* Screen Cast */}
                 <button
-                  onClick={toggleFullscreen}
-                  className="p-2 rounded-xl glass-panel hover:bg-white/10 text-zinc-300 hover:text-white border border-white/10 transition-colors"
-                  title="Fullscreen (F)"
+                  onClick={() => setShowCastModal(true)}
+                  className={cn(
+                    "p-2 rounded-xl glass-panel hover:bg-white/10 border border-white/10 transition-colors",
+                    isCasting ? "text-rose-400 bg-rose-500/20 border-rose-500/40" : "text-zinc-300 hover:text-white"
+                  )}
+                  title="Screen Cast to TV (Cast to larger screens)"
                 >
-                  {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
+                  <Cast className="w-4 h-4" />
                 </button>
               </>
             )}
@@ -1128,13 +1136,16 @@ export function VideoPlayer({
                 <PictureInPicture className="w-4 h-4" />
               </button>
 
-              {/* Fullscreen Toggle */}
+              {/* Screen Cast */}
               <button
-                onClick={toggleFullscreen}
-                className="p-2 rounded-xl glass-panel hover:bg-white/10 text-zinc-300 hover:text-white transition-colors"
-                title="Fullscreen (F)"
+                onClick={() => setShowCastModal(true)}
+                className={cn(
+                  "p-2 rounded-xl glass-panel hover:bg-white/10 transition-colors",
+                  isCasting ? "text-rose-400 bg-rose-500/20 border border-rose-500/40" : "text-zinc-300 hover:text-white"
+                )}
+                title="Screen Cast to TV (Cast to larger screens)"
               >
-                {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
+                <Cast className="w-4 h-4" />
               </button>
             </div>
           </div>
@@ -1142,6 +1153,22 @@ export function VideoPlayer({
       )}
 
       </div>
+
+      {/* Screen Cast Modal */}
+      <ScreenCastModal
+        isOpen={showCastModal}
+        onClose={() => setShowCastModal(false)}
+        media={media}
+        currentSeason={currentSeason}
+        currentEpisode={currentEpisode}
+        activeEpisodeTitle={activeEpisode?.name}
+        currentTime={currentTime}
+        videoRef={videoRef}
+        isEmbedMode={isEmbedMode}
+        streamUrl={streamSource.url}
+        isCasting={isCasting}
+        setIsCasting={setIsCasting}
+      />
 
       {/* Keyboard Shortcuts Dialog */}
       <KeyboardShortcutsModal
