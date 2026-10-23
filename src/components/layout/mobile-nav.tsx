@@ -3,9 +3,8 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Film, Tv, Bookmark, Search } from "lucide-react";
+import { Home, Film, Tv, Sparkles, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useMedia } from "@/components/providers/media-context";
 
 interface MobileNavProps {
   onOpenSearch: () => void;
@@ -13,13 +12,17 @@ interface MobileNavProps {
 
 export function MobileNav({ onOpenSearch }: MobileNavProps) {
   const pathname = usePathname();
-  const { watchlist } = useMedia();
 
-  const items = [
+  const items: Array<{
+    label: string;
+    href: string;
+    icon: React.ElementType;
+    badge?: number | string | null;
+  }> = [
     { label: "Home", href: "/", icon: Home },
     { label: "Movies", href: "/movies", icon: Film },
     { label: "Series", href: "/series", icon: Tv },
-    { label: "My List", href: "/my-list", icon: Bookmark, badge: watchlist.length > 0 ? watchlist.length : null },
+    { label: "Anime", href: "/anime", icon: Sparkles },
   ];
 
   // Do not render bottom navigation on the watch page to give full screen to video player controls

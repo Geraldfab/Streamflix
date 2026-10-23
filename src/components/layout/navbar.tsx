@@ -51,11 +51,15 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
+  const navLinks: Array<{
+    name: string;
+    href: string;
+    badge?: number | string | null;
+  }> = [
     { name: "Home", href: "/" },
     { name: "Movies", href: "/movies" },
     { name: "TV Series", href: "/series" },
-    { name: "My List", href: "/my-list", badge: watchlist.length > 0 ? watchlist.length : null },
+    { name: "Anime", href: "/anime" },
     { name: "Continue Watching", href: "/continue-watching" },
   ];
 

@@ -7,12 +7,14 @@ export const dynamic = "force-dynamic";
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const mediaType = (searchParams.get("type") as MediaType) || "movie";
+    const mediaType = (searchParams.get("type") as MediaType | "all") || "movie";
     const genreId = searchParams.get("genreId") ? Number(searchParams.get("genreId")) : null;
     const year = searchParams.get("year") ? Number(searchParams.get("year")) : null;
     const minRating = searchParams.get("minRating") ? Number(searchParams.get("minRating")) : null;
     const sortBy = searchParams.get("sortBy") || "popularity.desc";
     const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
+    const originalLanguage = searchParams.get("originalLanguage") || searchParams.get("language") || undefined;
+    const withKeywords = searchParams.get("withKeywords") || undefined;
 
     const response = await tmdbService.discover({
       mediaType,
@@ -21,6 +23,8 @@ export async function GET(request: NextRequest) {
       minRating,
       sortBy,
       page,
+      originalLanguage,
+      withKeywords,
     });
 
     return NextResponse.json(response);

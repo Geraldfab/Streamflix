@@ -227,13 +227,34 @@ export const tmdbService = {
 
   // Discover with filters (Genre, Year, Rating, Sort)
   async discover(options: {
-    mediaType?: MediaType;
+    mediaType?: MediaType | "all";
     genreId?: number | null;
     year?: number | null;
     minRating?: number | null;
     sortBy?: string;
     page?: number;
+    originalLanguage?: string;
+    withKeywords?: string;
   }): Promise<PaginationResponse<MediaItem>> {
+    if (options.mediaType === "all") {
+      const [movieData, tvData] = await Promise.all([
+        this.discover({ ...options, mediaType: "movie" }),
+        this.discover({ ...options, mediaType: "tv" }),
+      ]);
+      const combined = [...movieData.results, ...tvData.results];
+      if (options.sortBy?.includes("vote_average")) {
+        combined.sort((a, b) => b.voteAverage - a.voteAverage);
+      } else {
+        combined.sort((a, b) => b.popularity - a.popularity);
+      }
+      return {
+        page: options.page || 1,
+        totalPages: Math.max(movieData.totalPages, tvData.totalPages),
+        totalResults: movieData.totalResults + tvData.totalResults,
+        results: combined,
+      };
+    }
+
     const mediaType = options.mediaType || "movie";
     const endpoint = mediaType === "movie" ? "/discover/movie" : "/discover/tv";
     const params: Record<string, any> = {
@@ -244,6 +265,12 @@ export const tmdbService = {
 
     if (options.genreId) {
       params.with_genres = options.genreId;
+    }
+    if (options.originalLanguage) {
+      params.with_original_language = options.originalLanguage;
+    }
+    if (options.withKeywords) {
+      params.with_keywords = options.withKeywords;
     }
     if (options.year) {
       if (mediaType === "movie") params.primary_release_year = options.year;
