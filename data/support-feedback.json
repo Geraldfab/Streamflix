@@ -1,4 +1,54 @@
 {
-  "loveCount": 0,
-  "feedbacks": []
+  "loveCount": 346,
+  "feedbacks": [
+    {
+      "id": "fb-perm-1",
+      "author": "Test test",
+      "message": "Test test",
+      "avatarEmoji": "❤️",
+      "createdAt": "2026-10-23T14:40:00.000Z"
+    },
+    {
+      "id": "fb-perm-2",
+      "author": "Cebu Anime Lover",
+      "message": "This website is awesome, no lag at all!",
+      "avatarEmoji": "🔥",
+      "createdAt": "2026-10-23T14:24:15.590Z"
+    },
+    {
+      "id": "fb-perm-3",
+      "author": "Anonymous Binge Watcher",
+      "message": "Hands down the cleanest streaming site. Zero annoying popups, smooth buffer, and 4K quality is insane!",
+      "avatarEmoji": "🍿",
+      "createdAt": "2026-10-23T13:38:39.361Z"
+    },
+    {
+      "id": "fb-perm-4",
+      "author": "Anime Fanatic PH",
+      "message": "The new Anime page is incredible! Original Japanese audio with subs works like a charm. Salamat boss!",
+      "avatarEmoji": "✨",
+      "createdAt": "2026-10-23T11:23:39.363Z"
+    },
+    {
+      "id": "fb-perm-5",
+      "author": "Cebuano VIP",
+      "message": "Sent GCash tip for coffee boss! Tigbason ta ani hahaha. Solid kaayo ang StreamFlix!",
+      "avatarEmoji": "☕",
+      "createdAt": "2026-10-23T02:23:39.363Z"
+    },
+    {
+      "id": "fb-perm-6",
+      "author": "Night Owl Viewer",
+      "message": "Screen cast to TV works effortlessly. Beautiful dark UI and lightning-fast search.",
+      "avatarEmoji": "🔥",
+      "createdAt": "2026-10-22T14:23:39.363Z"
+    },
+    {
+      "id": "fb-perm-7",
+      "author": "Cinema Buff",
+      "message": "Love the desktop hover metadata and zero clutter. Feels like a legit premium service.",
+      "avatarEmoji": "🎬",
+      "createdAt": "2026-10-21T14:23:39.363Z"
+    }
+  ]
 }

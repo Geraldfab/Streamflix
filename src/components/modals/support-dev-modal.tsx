@@ -50,8 +50,8 @@ export function SupportDevModal({ isOpen, onClose }: SupportDevModalProps) {
   const [activeTab, setActiveTab] = useState<"wallets" | "feedback">("wallets");
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
-  // Love & Feedback State — Initialized to 0 and empty
-  const [loveCount, setLoveCount] = useState<number>(0);
+  // Love & Feedback State — Initialized to permanent baseline 345
+  const [loveCount, setLoveCount] = useState<number>(345);
   const [feedbacks, setFeedbacks] = useState<FeedbackItem[]>([]);
   const [isSendingLove, setIsSendingLove] = useState(false);
   const [hasCheered, setHasCheered] = useState(false);
@@ -62,13 +62,33 @@ export function SupportDevModal({ isOpen, onClose }: SupportDevModalProps) {
   const [selectedEmoji, setSelectedEmoji] = useState("🍿");
   const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false);
 
-  // Fetch initial data from database when modal opens
+  // Fetch data from database when modal opens, with client-side persistence
   const fetchSupportData = useCallback(async () => {
     try {
+      if (typeof window !== "undefined") {
+        const localSaved = localStorage.getItem("streamflix_support_permanent_v1");
+        if (localSaved) {
+          try {
+            const parsed = JSON.parse(localSaved);
+            if (typeof parsed.loveCount === "number" && parsed.loveCount >= 345) {
+              setLoveCount((prev) => Math.max(prev, parsed.loveCount));
+            }
+          } catch {}
+        }
+      }
+
       const res = await fetch("/api/support");
       if (res.ok) {
         const data = await res.json();
-        if (typeof data.loveCount === "number") setLoveCount(data.loveCount);
+        const serverCount = typeof data.loveCount === "number" ? data.loveCount : 345;
+        const finalCount = Math.max(345, serverCount);
+        setLoveCount((prev) => {
+          const resolved = Math.max(prev, finalCount);
+          if (typeof window !== "undefined") {
+            localStorage.setItem("streamflix_support_permanent_v1", JSON.stringify({ loveCount: resolved }));
+          }
+          return resolved;
+        });
         if (Array.isArray(data.feedbacks)) setFeedbacks(data.feedbacks);
       }
     } catch (err) {
@@ -105,7 +125,13 @@ export function SupportDevModal({ isOpen, onClose }: SupportDevModalProps) {
     if (isSendingLove) return;
 
     // Optimistic update
-    setLoveCount((prev) => prev + 1);
+    setLoveCount((prev) => {
+      const next = prev + 1;
+      if (typeof window !== "undefined") {
+        localStorage.setItem("streamflix_support_permanent_v1", JSON.stringify({ loveCount: next }));
+      }
+      return next;
+    });
     setHasCheered(true);
     setIsSendingLove(true);
     showToast("Salamat sa gugma! ☕ Daghang salamat, boss!", "info");
@@ -115,7 +141,14 @@ export function SupportDevModal({ isOpen, onClose }: SupportDevModalProps) {
       if (res.ok) {
         const data = await res.json();
         if (typeof data.loveCount === "number") {
-          setLoveCount(data.loveCount);
+          const finalCount = Math.max(345, data.loveCount);
+          setLoveCount((prev) => {
+            const resolved = Math.max(prev, finalCount);
+            if (typeof window !== "undefined") {
+              localStorage.setItem("streamflix_support_permanent_v1", JSON.stringify({ loveCount: resolved }));
+            }
+            return resolved;
+          });
         }
       }
     } catch (err) {
