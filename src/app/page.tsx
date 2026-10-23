@@ -3,7 +3,6 @@ import { tmdbService } from "@/lib/tmdb";
 import { HeroBanner } from "@/components/home/hero-banner";
 import { ContentRail } from "@/components/home/content-rail";
 import { SHOWCASE_CATALOG } from "@/lib/constants";
-import { ContinueWatchingRail } from "@/components/home/continue-watching-rail";
 import { MyListRail } from "@/components/home/my-list-rail";
 
 export const revalidate = 3600; // 1 hour ISR
@@ -31,9 +30,6 @@ export default async function HomePage() {
       <HeroBanner featuredItems={featured.length > 0 ? featured : SHOWCASE_CATALOG.slice(0, 5)} />
 
       <div className="space-y-6 sm:space-y-8 -mt-10 sm:-mt-16 relative z-20">
-        {/* Dynamic Continue Watching Rail (renders if user has in-progress titles) */}
-        <ContinueWatchingRail />
-
         {/* Dynamic My List Rail (renders if user has saved items) */}
         <MyListRail />
 
