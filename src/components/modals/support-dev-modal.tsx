@@ -50,8 +50,8 @@ export function SupportDevModal({ isOpen, onClose }: SupportDevModalProps) {
   const [activeTab, setActiveTab] = useState<"wallets" | "feedback">("wallets");
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
-  // Love & Feedback State — Initialized to permanent baseline 345
-  const [loveCount, setLoveCount] = useState<number>(345);
+  // Love & Feedback State — Sourced strictly from actual user database records
+  const [loveCount, setLoveCount] = useState<number>(0);
   const [feedbacks, setFeedbacks] = useState<FeedbackItem[]>([]);
   const [isSendingLove, setIsSendingLove] = useState(false);
   const [hasCheered, setHasCheered] = useState(false);
@@ -62,16 +62,18 @@ export function SupportDevModal({ isOpen, onClose }: SupportDevModalProps) {
   const [selectedEmoji, setSelectedEmoji] = useState("🍿");
   const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false);
 
-  // Fetch data from database when modal opens, with client-side persistence
+  // Fetch real user data from database when modal opens
   const fetchSupportData = useCallback(async () => {
     try {
       if (typeof window !== "undefined") {
-        const localSaved = localStorage.getItem("streamflix_support_permanent_v1");
+        // Clear any old automated mock cache
+        localStorage.removeItem("streamflix_support_permanent_v1");
+        const localSaved = localStorage.getItem("streamflix_support_actual");
         if (localSaved) {
           try {
             const parsed = JSON.parse(localSaved);
-            if (typeof parsed.loveCount === "number" && parsed.loveCount >= 345) {
-              setLoveCount((prev) => Math.max(prev, parsed.loveCount));
+            if (typeof parsed.loveCount === "number") {
+              setLoveCount(parsed.loveCount);
             }
           } catch {}
         }
@@ -80,16 +82,13 @@ export function SupportDevModal({ isOpen, onClose }: SupportDevModalProps) {
       const res = await fetch("/api/support");
       if (res.ok) {
         const data = await res.json();
-        const serverCount = typeof data.loveCount === "number" ? data.loveCount : 345;
-        const finalCount = Math.max(345, serverCount);
-        setLoveCount((prev) => {
-          const resolved = Math.max(prev, finalCount);
-          if (typeof window !== "undefined") {
-            localStorage.setItem("streamflix_support_permanent_v1", JSON.stringify({ loveCount: resolved }));
-          }
-          return resolved;
-        });
+        const count = typeof data.loveCount === "number" ? data.loveCount : 0;
+        setLoveCount(count);
         if (Array.isArray(data.feedbacks)) setFeedbacks(data.feedbacks);
+
+        if (typeof window !== "undefined") {
+          localStorage.setItem("streamflix_support_actual", JSON.stringify({ loveCount: count }));
+        }
       }
     } catch (err) {
       console.warn("Could not fetch support data:", err);
@@ -128,7 +127,7 @@ export function SupportDevModal({ isOpen, onClose }: SupportDevModalProps) {
     setLoveCount((prev) => {
       const next = prev + 1;
       if (typeof window !== "undefined") {
-        localStorage.setItem("streamflix_support_permanent_v1", JSON.stringify({ loveCount: next }));
+        localStorage.setItem("streamflix_support_actual", JSON.stringify({ loveCount: next }));
       }
       return next;
     });
@@ -141,14 +140,10 @@ export function SupportDevModal({ isOpen, onClose }: SupportDevModalProps) {
       if (res.ok) {
         const data = await res.json();
         if (typeof data.loveCount === "number") {
-          const finalCount = Math.max(345, data.loveCount);
-          setLoveCount((prev) => {
-            const resolved = Math.max(prev, finalCount);
-            if (typeof window !== "undefined") {
-              localStorage.setItem("streamflix_support_permanent_v1", JSON.stringify({ loveCount: resolved }));
-            }
-            return resolved;
-          });
+          setLoveCount(data.loveCount);
+          if (typeof window !== "undefined") {
+            localStorage.setItem("streamflix_support_actual", JSON.stringify({ loveCount: data.loveCount }));
+          }
         }
       }
     } catch (err) {
