@@ -69,6 +69,7 @@ export interface MediaItem {
   mediaType: MediaType;
   posterPath: string | null;
   backdropPath: string | null;
+  logoPath?: string | null;
   releaseDate: string;
   releaseYear: number;
   voteAverage: number;

@@ -21,13 +21,20 @@ export default async function HomePage() {
   const animationItems = SHOWCASE_CATALOG.filter((i) => i.genreIds?.includes(16));
   const dramaItems = SHOWCASE_CATALOG.filter((i) => i.genreIds?.includes(18));
 
-  // Top featured spotlight titles for Hero
-  const featured = trending.slice(0, 5);
+  // Top featured spotlight titles for Hero with logo arts fetched when available
+  const rawFeatured = (trending.length > 0 ? trending : SHOWCASE_CATALOG).slice(0, 5);
+  const featured = await Promise.all(
+    rawFeatured.map(async (item) => {
+      if (item.logoPath) return item;
+      const logoPath = await tmdbService.getLogo(item.id, item.mediaType);
+      return { ...item, logoPath };
+    })
+  );
 
   return (
     <div className="pb-16 overflow-hidden">
       {/* Featured Hero Banner Carousel */}
-      <HeroBanner featuredItems={featured.length > 0 ? featured : SHOWCASE_CATALOG.slice(0, 5)} />
+      <HeroBanner featuredItems={featured} />
 
       <div className="space-y-6 sm:space-y-8 -mt-10 sm:-mt-16 relative z-20">
         {/* Dynamic My List Rail (renders if user has saved items) */}

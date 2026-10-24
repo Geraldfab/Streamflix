@@ -31,9 +31,15 @@ export function HeroBanner({ featuredItems }: HeroBannerProps) {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [logoError, setLogoError] = useState(false);
 
   const items = featuredItems.length > 0 ? featuredItems.slice(0, 5) : [];
   const currentItem = items[currentIndex] || items[0];
+
+  // Reset logo error state when switching items
+  useEffect(() => {
+    setLogoError(false);
+  }, [currentItem?.id]);
 
   // Auto-rotation every 7 seconds when not paused
   useEffect(() => {
@@ -97,10 +103,27 @@ export function HeroBanner({ featuredItems }: HeroBannerProps) {
             )}
           </div>
 
-          {/* Title */}
-          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight drop-shadow-md line-clamp-2 md:line-clamp-none">
-            {currentItem.title}
-          </h1>
+          {/* Title - Title Art (Logo) if available, with responsive sizing & accessible fallback */}
+          {currentItem.logoPath && !logoError ? (
+            <div className="relative py-1">
+              <div className="relative h-14 sm:h-16 md:h-20 lg:h-24 w-auto max-w-[240px] sm:max-w-[320px] md:max-w-[420px] lg:max-w-[480px]">
+                <Image
+                  src={getTmdbImageUrl(currentItem.logoPath, "w500", "poster")}
+                  alt={currentItem.title}
+                  fill
+                  priority
+                  sizes="(max-width: 640px) 240px, (max-width: 768px) 320px, (max-width: 1024px) 420px, 480px"
+                  className="object-contain object-left drop-shadow-[0_4px_16px_rgba(0,0,0,0.85)] filter"
+                  onError={() => setLogoError(true)}
+                />
+              </div>
+              <h1 className="sr-only">{currentItem.title}</h1>
+            </div>
+          ) : (
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight drop-shadow-md line-clamp-2 md:line-clamp-none">
+              {currentItem.title}
+            </h1>
+          )}
 
           {/* Metadata Row */}
           <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] sm:text-xs md:text-sm text-zinc-300 font-medium">

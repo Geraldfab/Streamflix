@@ -71,6 +71,14 @@ export function normalizeMediaItem(raw: any, explicitType?: MediaType): MediaIte
   const trailerKey = trailer?.key;
   const trailerUrl = trailerKey ? `https://www.youtube.com/watch?v=${trailerKey}` : undefined;
 
+  // Title Art / Logo finding (if available in raw.images?.logos or raw.logos)
+  let logoPath: string | null = raw.logoPath || raw.logo_path || null;
+  const logos = raw.images?.logos || raw.logos;
+  if (!logoPath && Array.isArray(logos) && logos.length > 0) {
+    const englishLogo = logos.find((l: any) => l.iso_639_1 === "en" || l.iso_639_1 === null);
+    logoPath = englishLogo?.file_path || logos[0]?.file_path || null;
+  }
+
   // Seasons for TV
   const seasons: Season[] = (raw.seasons || []).map((s: any) => ({
     id: s.id,
@@ -122,6 +130,7 @@ export function normalizeMediaItem(raw: any, explicitType?: MediaType): MediaIte
     mediaType,
     posterPath: raw.poster_path || null,
     backdropPath: raw.backdrop_path || null,
+    logoPath,
     releaseDate,
     releaseYear: isNaN(releaseYear) ? 0 : releaseYear,
     voteAverage: raw.vote_average ? Number(raw.vote_average.toFixed(1)) : 0,
@@ -331,11 +340,30 @@ export const tmdbService = {
     );
   },
 
-  // Full Details (with credits, videos, similar)
+  // Get clearlogo for title art
+  async getLogo(id: number | string, mediaType: MediaType = "movie"): Promise<string | null> {
+    try {
+      const endpoint = `/${mediaType}/${id}/images`;
+      const data = await fetchFromTmdb<any>(endpoint, { include_image_language: "en,null" });
+      const logos = data?.logos || [];
+      if (logos.length > 0) {
+        const englishLogo =
+          logos.find((l: any) => l.iso_639_1 === "en") ||
+          logos.find((l: any) => l.iso_639_1 === null) ||
+          logos[0];
+        return englishLogo?.file_path || null;
+      }
+    } catch (err) {
+      console.warn(`Could not fetch logo for ${mediaType} ${id}:`, err);
+    }
+    return null;
+  },
+
+  // Full Details (with credits, videos, similar, images)
   async getDetails(id: string | number, mediaType: MediaType = "movie"): Promise<MediaItem | null> {
     const endpoint = `/${mediaType}/${id}`;
     const data = await fetchFromTmdb<any>(endpoint, {
-      append_to_response: "credits,videos,similar,recommendations",
+      append_to_response: "credits,videos,similar,recommendations,images",
     });
 
     if (data) {
