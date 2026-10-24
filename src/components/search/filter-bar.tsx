@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Filter, RotateCcw, ChevronDown } from "lucide-react";
+import { RotateCcw, ChevronDown } from "lucide-react";
 import { GENRES_LIST } from "@/lib/constants";
 import { MediaType } from "@/types/media";
 
@@ -37,21 +37,44 @@ export function FilterBar({
   const currentYear = new Date().getFullYear();
   const years = [currentYear, currentYear - 1, currentYear - 2, currentYear - 3, 2020, 2019, 2015, 2010, 2000];
 
+  const isGenreActive = Boolean(selectedGenreId);
+  const isYearActive = Boolean(selectedYear);
+  const isRatingActive = Boolean(selectedRating);
+  const isSortActive = sortBy !== "popularity.desc";
+  const isMediaTypeActive = !hideMediaType && mediaType !== "all";
+
   const hasActiveFilters =
-    Boolean(selectedGenreId) ||
-    Boolean(selectedYear) ||
-    Boolean(selectedRating) ||
-    (mediaType !== "all" && !hideMediaType);
+    isGenreActive ||
+    isYearActive ||
+    isRatingActive ||
+    isSortActive ||
+    isMediaTypeActive;
+
+  // Consistent control sizing and styling
+  const baseSelectClass =
+    "w-full lg:w-auto min-w-0 appearance-none h-12 lg:h-10 pl-3 sm:pl-3.5 pr-8 sm:pr-8 text-xs sm:text-sm lg:text-xs font-medium rounded-xl border transition-colors cursor-pointer shadow-sm focus:outline-none focus:ring-1 truncate";
+
+  const activeSelectClass =
+    "border-purple-500/60 dark:border-rose-500/60 text-purple-700 dark:text-rose-400 bg-purple-50/60 dark:bg-rose-500/10 focus:ring-purple-500 dark:focus:ring-rose-500";
+
+  const inactiveSelectClass =
+    "border-zinc-200 dark:border-white/10 text-zinc-800 dark:text-zinc-200 bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-900/90 dark:hover:bg-zinc-800/80 hover:border-purple-500/40 dark:hover:border-rose-500/40 focus:ring-purple-500 dark:focus:ring-rose-500";
+
+  const chevronClass = (isActive: boolean) =>
+    `w-3.5 h-3.5 sm:w-4 sm:h-4 absolute right-2.5 sm:right-3 top-1/2 -translate-y-1/2 pointer-events-none transition-colors ${
+      isActive ? "text-purple-600 dark:text-rose-400" : "text-zinc-400 dark:text-zinc-500"
+    }`;
 
   return (
-    <div className="w-full bg-white dark:bg-zinc-900/60 rounded-2xl p-4 mb-8 border border-zinc-200/80 dark:border-white/10 shadow-sm flex flex-wrap items-center justify-between gap-4">
-      <div className="flex flex-wrap items-center gap-3">
-        {/* Media Type Toggle */}
+    <div className="w-full bg-white dark:bg-[#121216] rounded-2xl p-3.5 sm:p-4 mb-6 sm:mb-8 border border-zinc-200/90 dark:border-white/10 shadow-sm">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:flex lg:items-center lg:gap-3 gap-2.5 sm:gap-3">
+        {/* Optional Media Type Toggle (Full width on mobile/tablet, inline left on desktop) */}
         {!hideMediaType && onMediaTypeChange && (
-          <div className="flex rounded-xl p-1 bg-zinc-100 dark:bg-black/40 border border-zinc-200/80 dark:border-white/10 text-xs font-medium">
+          <div className="col-span-2 md:col-span-4 lg:col-auto lg:w-auto flex rounded-xl p-1 bg-zinc-100 dark:bg-black/40 border border-zinc-200/80 dark:border-white/10 text-xs font-medium w-full">
             <button
+              type="button"
               onClick={() => onMediaTypeChange("all")}
-              className={`px-3 py-1.5 rounded-lg transition-all ${
+              className={`flex-1 lg:flex-none px-3 py-1.5 rounded-lg transition-all ${
                 mediaType === "all"
                   ? "bg-purple-600 dark:bg-rose-600 text-white font-semibold shadow-sm"
                   : "text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
@@ -60,8 +83,9 @@ export function FilterBar({
               All
             </button>
             <button
+              type="button"
               onClick={() => onMediaTypeChange("movie")}
-              className={`px-3 py-1.5 rounded-lg transition-all ${
+              className={`flex-1 lg:flex-none px-3 py-1.5 rounded-lg transition-all ${
                 mediaType === "movie"
                   ? "bg-purple-600 dark:bg-rose-600 text-white font-semibold shadow-sm"
                   : "text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
@@ -70,8 +94,9 @@ export function FilterBar({
               Movies
             </button>
             <button
+              type="button"
               onClick={() => onMediaTypeChange("tv")}
-              className={`px-3 py-1.5 rounded-lg transition-all ${
+              className={`flex-1 lg:flex-none px-3 py-1.5 rounded-lg transition-all ${
                 mediaType === "tv"
                   ? "bg-purple-600 dark:bg-rose-600 text-white font-semibold shadow-sm"
                   : "text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
@@ -82,12 +107,13 @@ export function FilterBar({
           </div>
         )}
 
-        {/* Genre Selector */}
-        <div className="relative">
+        {/* Row 1, Col 1 on Mobile: Genre Selector */}
+        <div className="relative w-full lg:w-auto min-w-0">
           <select
+            aria-label="Filter by genre"
             value={selectedGenreId || ""}
             onChange={(e) => onGenreChange(e.target.value ? Number(e.target.value) : null)}
-            className="appearance-none bg-zinc-50 hover:bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 hover:border-purple-500/50 dark:hover:border-rose-500/50 rounded-xl px-3.5 py-2 pr-8 text-xs font-medium text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-1 focus:ring-purple-500 dark:focus:ring-rose-500 cursor-pointer shadow-sm"
+            className={`${baseSelectClass} ${isGenreActive ? activeSelectClass : inactiveSelectClass}`}
           >
             <option value="" className="bg-white text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100">
               All Genres
@@ -98,15 +124,16 @@ export function FilterBar({
               </option>
             ))}
           </select>
-          <ChevronDown className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <ChevronDown className={chevronClass(isGenreActive)} />
         </div>
 
-        {/* Release Year Selector */}
-        <div className="relative">
+        {/* Row 1, Col 2 on Mobile: Release Year Selector */}
+        <div className="relative w-full lg:w-auto min-w-0">
           <select
+            aria-label="Filter by release year"
             value={selectedYear || ""}
             onChange={(e) => onYearChange(e.target.value ? Number(e.target.value) : null)}
-            className="appearance-none bg-zinc-50 hover:bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 hover:border-purple-500/50 dark:hover:border-rose-500/50 rounded-xl px-3.5 py-2 pr-8 text-xs font-medium text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-1 focus:ring-purple-500 dark:focus:ring-rose-500 cursor-pointer shadow-sm"
+            className={`${baseSelectClass} ${isYearActive ? activeSelectClass : inactiveSelectClass}`}
           >
             <option value="" className="bg-white text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100">
               All Years
@@ -117,15 +144,16 @@ export function FilterBar({
               </option>
             ))}
           </select>
-          <ChevronDown className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <ChevronDown className={chevronClass(isYearActive)} />
         </div>
 
-        {/* Minimum Rating Selector */}
-        <div className="relative">
+        {/* Row 2, Col 1 on Mobile: Minimum Rating Selector */}
+        <div className="relative w-full lg:w-auto min-w-0">
           <select
+            aria-label="Filter by rating"
             value={selectedRating || ""}
             onChange={(e) => onRatingChange(e.target.value ? Number(e.target.value) : null)}
-            className="appearance-none bg-zinc-50 hover:bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 hover:border-purple-500/50 dark:hover:border-rose-500/50 rounded-xl px-3.5 py-2 pr-8 text-xs font-medium text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-1 focus:ring-purple-500 dark:focus:ring-rose-500 cursor-pointer shadow-sm"
+            className={`${baseSelectClass} ${isRatingActive ? activeSelectClass : inactiveSelectClass}`}
           >
             <option value="" className="bg-white text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100">
               Any Rating
@@ -140,18 +168,16 @@ export function FilterBar({
               ★ 6.0+ Good
             </option>
           </select>
-          <ChevronDown className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <ChevronDown className={chevronClass(isRatingActive)} />
         </div>
-      </div>
 
-      {/* Right: Sort and Reset */}
-      <div className="flex items-center gap-3 ml-auto">
-        {/* Sort Selector */}
-        <div className="relative">
+        {/* Row 2, Col 2 on Mobile: Sort Selector (Pushed to right on desktop with ml-auto) */}
+        <div className="relative w-full lg:w-auto min-w-0 ml-0 lg:ml-auto">
           <select
+            aria-label="Sort titles"
             value={sortBy}
             onChange={(e) => onSortChange(e.target.value)}
-            className="appearance-none bg-zinc-50 hover:bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 hover:border-purple-500/50 dark:hover:border-rose-500/50 rounded-xl px-3.5 py-2 pr-8 text-xs font-medium text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-1 focus:ring-purple-500 dark:focus:ring-rose-500 cursor-pointer shadow-sm"
+            className={`${baseSelectClass} ${isSortActive ? activeSelectClass : inactiveSelectClass}`}
           >
             <option value="popularity.desc" className="bg-white text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100">
               Most Popular
@@ -166,18 +192,21 @@ export function FilterBar({
               Alphabetical (A-Z)
             </option>
           </select>
-          <ChevronDown className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <ChevronDown className={chevronClass(isSortActive)} />
         </div>
 
-        {/* Reset button */}
+        {/* Reset Button (Full width row on mobile, end-aligned on tablet, inline right on desktop) */}
         {hasActiveFilters && (
-          <button
-            onClick={onReset}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-purple-600 hover:bg-purple-50 border border-purple-200 dark:text-rose-400 dark:hover:bg-rose-500/10 dark:border-rose-500/30 transition-colors shadow-sm"
-          >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span>Reset</span>
-          </button>
+          <div className="col-span-2 md:col-span-4 lg:col-auto flex items-center justify-center md:justify-end lg:justify-start pt-1 md:pt-1.5 lg:pt-0">
+            <button
+              type="button"
+              onClick={onReset}
+              className="w-full sm:w-auto h-11 sm:h-12 lg:h-10 flex items-center justify-center gap-1.5 px-4 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 dark:text-rose-400 dark:hover:bg-rose-500/10 border border-rose-200/90 dark:border-rose-500/30 transition-all shadow-sm active:scale-95"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Reset Filters</span>
+            </button>
+          </div>
         )}
       </div>
     </div>

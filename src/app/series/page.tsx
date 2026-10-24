@@ -86,7 +86,7 @@ export default function SeriesPage() {
   return (
     <div className="pt-24 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Page Header */}
-      <div className="mb-8 space-y-2">
+      <div className="mb-6 sm:mb-8 space-y-2">
         <div className="flex items-center gap-2 text-purple-600 dark:text-rose-500 font-semibold text-xs uppercase tracking-wider">
           <Tv className="w-4 h-4" />
           <span>Television & Serial Dramas</span>
