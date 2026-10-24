@@ -643,6 +643,187 @@ export function VideoPlayer({
 
   return (
     <>
+      <div className={cn("w-full space-y-2.5 sm:space-y-3.5", theaterMode && "space-y-2")}>
+      {/* Streamflix Dedicated Player Header (Outside and above the video frame) */}
+      {(!isFullscreen || isEmbedMode) && (
+        <div
+          className={cn(
+            "w-full flex items-center justify-between gap-2.5 sm:gap-4 px-1 sm:px-2 py-1",
+            theaterMode && "px-4 sm:px-6 lg:px-8"
+          )}
+        >
+          {/* Left: Primary Back Navigation & Title / Viewing Status */}
+          <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0 flex-1">
+            <button
+              type="button"
+              onClick={() => {
+                if (typeof window !== "undefined" && window.history.length > 1) {
+                  router.back();
+                } else {
+                  router.push("/");
+                }
+              }}
+              className="p-2 sm:p-2.5 rounded-xl bg-zinc-900/80 hover:bg-white/10 active:scale-95 text-white border border-white/10 transition-all flex-shrink-0 shadow-sm"
+              title="Go Back"
+              aria-label="Go Back"
+            >
+              <ArrowLeft className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
+            </button>
+
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-rose-500 dark:text-rose-400">
+                  You&apos;re Watching
+                </span>
+                {media.mediaType === "tv" && (
+                  <span className="text-[10px] sm:text-[11px] font-medium text-zinc-400 truncate">
+                    • S{currentSeason}:E{currentEpisode}
+                    {activeEpisode?.name ? ` • ${activeEpisode.name}` : ""}
+                  </span>
+                )}
+              </div>
+              <h2 className="text-sm sm:text-base md:text-lg font-bold text-white tracking-tight truncate">
+                {media.title}
+              </h2>
+            </div>
+          </div>
+
+          {/* Right: Dedicated System Action Controls */}
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0 relative">
+            {/* Stream Server Switcher Pill */}
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setActiveMenu(activeMenu === "servers" ? "none" : "servers")}
+                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-zinc-900/80 hover:bg-white/10 active:scale-95 text-xs font-medium text-zinc-200 border border-white/10 transition-colors shadow-sm"
+                title="Change Streaming Server"
+              >
+                <Server className="w-3.5 h-3.5 text-rose-400" />
+                <span className="hidden sm:inline">
+                  {STREAM_SERVERS.find((s) => s.id === selectedServer)?.name || "Server"}
+                </span>
+              </button>
+
+              {/* Server Selector Popup / Mobile Drawer */}
+              {activeMenu === "servers" && (
+                <>
+                  {/* Backdrop for click-away dismissal on mobile and desktop */}
+                  <div
+                    className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs cursor-pointer"
+                    onClick={() => setActiveMenu("none")}
+                    aria-hidden="true"
+                  />
+
+                  <div className="fixed inset-x-4 top-20 sm:top-full sm:right-0 sm:left-auto sm:inset-x-auto sm:mt-2 z-50 w-auto sm:w-72 max-w-sm sm:max-w-none p-3 rounded-2xl bg-[#141418] border border-white/20 shadow-2xl animate-scale-up flex flex-col max-h-[calc(100vh-6rem)] overflow-hidden">
+                    <div className="flex items-center justify-between pb-2 border-b border-white/10 mb-2">
+                      <div className="text-xs font-bold text-white flex items-center gap-1.5">
+                        <Server className="w-3.5 h-3.5 text-rose-400" />
+                        <span>Streaming Server</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setActiveMenu("none")}
+                        className="p-1 rounded-lg text-zinc-400 hover:text-white hover:bg-white/10 text-xs transition-colors"
+                        aria-label="Close server selector"
+                      >
+                        ✕
+                      </button>
+                    </div>
+
+                    <div className="space-y-1.5 overflow-y-auto pr-0.5 no-scrollbar flex-1">
+                      {STREAM_SERVERS.map((server) => {
+                        const isSelected = selectedServer === server.id;
+                        return (
+                          <button
+                            key={server.id}
+                            type="button"
+                            onClick={() => {
+                              setSelectedServer(server.id);
+                              setActiveMenu("none");
+                            }}
+                            className={`w-full text-left p-2 sm:p-2.5 rounded-xl transition-all flex items-center justify-between gap-2.5 ${
+                              isSelected
+                                ? "bg-rose-600/30 border border-rose-500/50 text-white shadow-sm"
+                                : "hover:bg-white/5 border border-transparent text-zinc-300"
+                            }`}
+                          >
+                            <div className="min-w-0">
+                              <div className="text-xs font-semibold flex items-center gap-1.5">
+                                <span className="truncate">{server.name}</span>
+                                <span className="px-1.5 py-0.5 rounded text-[9px] uppercase font-mono bg-white/10 text-rose-300 flex-shrink-0">
+                                  {server.type}
+                                </span>
+                              </div>
+                              <div className="text-[10px] text-zinc-400 truncate mt-0.5">
+                                {server.description}
+                              </div>
+                            </div>
+                            {isSelected && (
+                              <div className="w-5 h-5 rounded-full bg-rose-600 flex items-center justify-center text-white flex-shrink-0">
+                                <Check className="w-3 h-3 text-white" />
+                              </div>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* Theater Mode Toggle */}
+            <button
+              type="button"
+              onClick={toggleTheaterMode}
+              className={cn(
+                "hidden sm:flex p-2 sm:p-2.5 rounded-xl border border-white/10 transition-colors shadow-sm",
+                theaterMode
+                  ? "bg-rose-600 text-white"
+                  : "bg-zinc-900/80 hover:bg-white/10 text-zinc-300 hover:text-white"
+              )}
+              title="Theater Mode (T)"
+            >
+              <Tv className="w-4 h-4" />
+            </button>
+
+            {/* Picture in Picture Mini-Player */}
+            <button
+              type="button"
+              onClick={handleLaunchMiniPlayer}
+              className="hidden sm:flex p-2 sm:p-2.5 rounded-xl bg-zinc-900/80 hover:bg-white/10 text-zinc-300 hover:text-white border border-white/10 transition-colors shadow-sm"
+              title="Picture-in-Picture Mini Player"
+            >
+              <PictureInPicture className="w-4 h-4" />
+            </button>
+
+            {/* Screen Cast Button */}
+            <button
+              type="button"
+              onClick={() => setShowCastModal(true)}
+              className={cn(
+                "p-2 sm:p-2.5 rounded-xl bg-zinc-900/80 hover:bg-white/10 border border-white/10 transition-colors shadow-sm",
+                isCasting ? "text-rose-400 bg-rose-500/20 border-rose-500/40" : "text-zinc-300 hover:text-white"
+              )}
+              title="Screen Cast to TV (Cast to larger screens)"
+            >
+              <Cast className="w-4 h-4" />
+            </button>
+
+            {/* Keyboard Shortcuts Trigger (Desktop only) */}
+            <button
+              type="button"
+              onClick={() => setShowShortcutsModal(true)}
+              className="hidden sm:flex p-2 sm:p-2.5 rounded-xl bg-zinc-900/80 hover:bg-white/10 text-zinc-300 hover:text-white border border-white/10 transition-colors shadow-sm"
+              title="Keyboard Shortcuts (?)"
+            >
+              <HelpCircle className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Central Video Frame */}
       <div
         ref={containerRef}
         onMouseMove={resetControlsTimeout}
@@ -650,7 +831,7 @@ export function VideoPlayer({
         onTouchStart={resetControlsTimeout}
         onClick={resetControlsTimeout}
         className={cn(
-          "relative w-full aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl group border border-white/10 touch-manipulation",
+          "relative w-full aspect-video bg-black rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl group border border-white/10 touch-manipulation",
           theaterMode && "max-w-none rounded-none aspect-[21/9] h-[85vh]",
           isFullscreen && "fixed inset-0 z-50 w-screen h-screen rounded-none aspect-auto max-w-none border-0",
           className
@@ -778,162 +959,36 @@ export function VideoPlayer({
           </div>
         )}
 
-        {/* Top Control Bar (Overlay) - Non-blocking wrapper, buttons only intercept clicks */}
-        <div
-          className={cn(
-            "absolute top-0 left-0 right-0 z-20 p-3 sm:p-5 bg-gradient-to-b from-black/80 via-black/20 to-transparent transition-opacity duration-300 flex items-center justify-between pointer-events-none",
-            isEmbedMode || showControls ? "opacity-100" : "opacity-0"
-          )}
-        >
-          {/* Back button and title */}
-          <div className="flex items-center gap-2.5 sm:gap-3 pointer-events-auto">
-            <button
-              onClick={() => router.back()}
-              className="p-2 rounded-xl glass-panel hover:bg-white/10 text-white border border-white/10 transition-colors"
-              title="Return"
-            >
-              <ArrowLeft className="w-4 h-4" />
-            </button>
-            <div className="min-w-0">
-              <h2 className="text-xs sm:text-sm md:text-base font-bold text-white tracking-tight flex items-center gap-2 truncate max-w-[140px] sm:max-w-xs md:max-w-md">
-                {media.title}
-              </h2>
-              {media.mediaType === "tv" && (
-                <p className="text-[10px] sm:text-xs text-rose-300 truncate">
-                  Season {currentSeason} Episode {currentEpisode}
-                  {activeEpisode?.name ? ` • ${activeEpisode.name}` : ""}
-                </p>
-              )}
-            </div>
-          </div>
-
-          {/* Top Right System Actions */}
-          <div className="flex items-center gap-1.5 sm:gap-2 pointer-events-auto flex-shrink-0">
-            {/* Stream Server Switcher Pill */}
-            <button
-              onClick={() => setActiveMenu(activeMenu === "servers" ? "none" : "servers")}
-              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl glass-panel hover:bg-white/10 text-xs font-medium text-zinc-200 border border-white/10 transition-colors"
-              title="Change Streaming Server"
-            >
-              <Server className="w-3.5 h-3.5 text-rose-400" />
-              <span className="hidden sm:inline">
-                {STREAM_SERVERS.find((s) => s.id === selectedServer)?.name || "Server"}
-              </span>
-            </button>
-
-            {/* In Embed Mode: Place Theater, Mini-Player, and Fullscreen here so bottom of iframe is 100% unobstructed */}
-            {isEmbedMode && (
-              <>
-
-                <button
-                  onClick={toggleTheaterMode}
-                  className={cn(
-                    "hidden sm:flex p-2 rounded-xl border border-white/10 transition-colors",
-                    theaterMode
-                      ? "bg-rose-600 text-white"
-                      : "glass-panel hover:bg-white/10 text-zinc-300 hover:text-white"
-                  )}
-                  title="Theater Mode (T)"
-                >
-                  <Tv className="w-4 h-4" />
-                </button>
-
-                <button
-                  onClick={handleLaunchMiniPlayer}
-                  className="hidden sm:flex p-2 rounded-xl glass-panel hover:bg-white/10 text-zinc-300 hover:text-white border border-white/10 transition-colors"
-                  title="Picture-in-Picture Mini Player"
-                >
-                  <PictureInPicture className="w-4 h-4" />
-                </button>
-
-                {/* Screen Cast */}
-                <button
-                  onClick={() => setShowCastModal(true)}
-                  className={cn(
-                    "p-2 rounded-xl glass-panel hover:bg-white/10 border border-white/10 transition-colors",
-                    isCasting ? "text-rose-400 bg-rose-500/20 border-rose-500/40" : "text-zinc-300 hover:text-white"
-                  )}
-                  title="Screen Cast to TV (Cast to larger screens)"
-                >
-                  <Cast className="w-4 h-4" />
-                </button>
-              </>
+        {/* Fullscreen Overlay Controls - ONLY for native direct streams in fullscreen */}
+        {!isEmbedMode && isFullscreen && (
+          <div
+            className={cn(
+              "absolute top-0 left-0 right-0 z-30 p-4 bg-gradient-to-b from-black/85 via-black/30 to-transparent transition-opacity duration-300 flex items-center justify-between pointer-events-none",
+              showControls ? "opacity-100" : "opacity-0"
             )}
-
-            {/* Keyboard Shortcuts Trigger */}
-            <button
-              onClick={() => setShowShortcutsModal(true)}
-              className="p-2 rounded-xl glass-panel hover:bg-white/10 text-zinc-300 hover:text-white border border-white/10 transition-colors"
-              title="Keyboard Shortcuts (?)"
-            >
-              <HelpCircle className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-
-        {/* Server Selector Popup / Mobile Drawer */}
-        {activeMenu === "servers" && (
-          <>
-            {/* Backdrop for click-away dismissal on mobile and desktop */}
-            <div
-              className="absolute inset-0 z-30 bg-black/75 backdrop-blur-xs cursor-pointer"
-              onClick={() => setActiveMenu("none")}
-              aria-hidden="true"
-            />
-
-            <div className="absolute inset-x-2.5 top-2.5 bottom-2.5 sm:top-14 sm:bottom-auto sm:right-4 sm:left-auto sm:inset-x-auto z-40 w-auto sm:w-72 max-w-sm sm:max-w-none mx-auto sm:mx-0 p-3 rounded-2xl glass-panel-elevated border border-white/20 shadow-2xl animate-scale-up flex flex-col max-h-[calc(100%-1.25rem)] overflow-hidden">
-              <div className="flex items-center justify-between pb-2 border-b border-white/10 mb-2">
-                <div className="text-xs font-bold text-white flex items-center gap-1.5">
-                  <Server className="w-3.5 h-3.5 text-rose-400" />
-                  <span>Streaming Server</span>
-                </div>
-                <button
-                  onClick={() => setActiveMenu("none")}
-                  className="p-1 rounded-lg text-zinc-400 hover:text-white hover:bg-white/10 text-xs transition-colors"
-                  aria-label="Close server selector"
-                >
-                  ✕
-                </button>
-              </div>
-
-              <div className="space-y-1.5 overflow-y-auto pr-0.5 no-scrollbar flex-1">
-                {STREAM_SERVERS.map((server) => {
-                  const isSelected = selectedServer === server.id;
-                  return (
-                    <button
-                      key={server.id}
-                      onClick={() => {
-                        setSelectedServer(server.id);
-                        setActiveMenu("none");
-                      }}
-                      className={`w-full text-left p-2 sm:p-2.5 rounded-xl transition-all flex items-center justify-between gap-2.5 ${
-                        isSelected
-                          ? "bg-rose-600/30 border border-rose-500/50 text-white shadow-sm"
-                          : "hover:bg-white/5 border border-transparent text-zinc-300"
-                      }`}
-                    >
-                      <div className="min-w-0">
-                        <div className="text-xs font-semibold flex items-center gap-1.5">
-                          <span className="truncate">{server.name}</span>
-                          <span className="px-1.5 py-0.2 rounded text-[9px] uppercase font-mono bg-white/10 text-rose-300 flex-shrink-0">
-                            {server.type}
-                          </span>
-                        </div>
-                        <div className="text-[10px] text-zinc-400 truncate mt-0.5">
-                          {server.description}
-                        </div>
-                      </div>
-                      {isSelected && (
-                        <div className="w-5 h-5 rounded-full bg-rose-600 flex items-center justify-center text-white flex-shrink-0">
-                          <Check className="w-3 h-3 text-white" />
-                        </div>
-                      )}
-                    </button>
-                  );
-                })}
+          >
+            <div className="flex items-center gap-3 pointer-events-auto">
+              <button
+                type="button"
+                onClick={toggleFullscreen}
+                className="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors"
+                title="Exit Fullscreen"
+              >
+                <Minimize className="w-4 h-4" />
+              </button>
+              <div className="min-w-0">
+                <h2 className="text-sm sm:text-base font-bold text-white tracking-tight truncate max-w-xs sm:max-w-md">
+                  {media.title}
+                </h2>
+                {media.mediaType === "tv" && (
+                  <p className="text-xs text-rose-300 truncate">
+                    Season {currentSeason} Episode {currentEpisode}
+                    {activeEpisode?.name ? ` • ${activeEpisode.name}` : ""}
+                  </p>
+                )}
               </div>
             </div>
-          </>
+          </div>
         )}
 
         {/* Bottom Control Bar - ONLY for Direct HLS/MP4 streams (Embed players have their own built-in controls) */}
@@ -1153,6 +1208,7 @@ export function VideoPlayer({
       )}
 
       </div>
+    </div>
 
       {/* Screen Cast Modal */}
       <ScreenCastModal
