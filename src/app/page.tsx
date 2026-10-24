@@ -3,7 +3,6 @@ import { tmdbService } from "@/lib/tmdb";
 import { HeroBanner } from "@/components/home/hero-banner";
 import { ContentRail } from "@/components/home/content-rail";
 import { SHOWCASE_CATALOG } from "@/lib/constants";
-import { MyListRail } from "@/components/home/my-list-rail";
 
 export const revalidate = 3600; // 1 hour ISR
 
@@ -37,9 +36,6 @@ export default async function HomePage() {
       <HeroBanner featuredItems={featured} />
 
       <div className="space-y-6 sm:space-y-8 -mt-10 sm:-mt-16 relative z-20">
-        {/* Dynamic My List Rail (renders if user has saved items) */}
-        <MyListRail />
-
         {/* Trending Now */}
         <ContentRail
           title="Trending Now"
