@@ -98,7 +98,7 @@ export default function AnimePage() {
   return (
     <div className="pt-24 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Page Header */}
-      <div className="mb-8 space-y-3">
+      <div className="mb-3.5 sm:mb-6 lg:mb-8 space-y-2 sm:space-y-3">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-rose-500/10 border border-purple-500/20 dark:border-rose-500/20 text-purple-600 dark:text-rose-400 font-semibold text-xs tracking-wider uppercase">
           <Sparkles className="w-3.5 h-3.5" />
           <span>Japanese Animation & Manga Adaptations</span>

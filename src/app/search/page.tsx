@@ -73,7 +73,7 @@ export default function SearchPage() {
   return (
     <div className="pt-24 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Search Bar Header */}
-      <div className="max-w-3xl mx-auto mb-10 text-center space-y-4">
+      <div className="max-w-3xl mx-auto mb-5 sm:mb-8 lg:mb-10 text-center space-y-4">
         <h1 className="text-3xl sm:text-4xl font-black text-zinc-900 dark:text-zinc-100 tracking-tight">
           Smart Catalog Search
         </h1>

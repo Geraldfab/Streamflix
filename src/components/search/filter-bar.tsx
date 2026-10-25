@@ -52,7 +52,7 @@ export function FilterBar({
 
   // Consistent control sizing and styling
   const baseSelectClass =
-    "w-full lg:w-auto min-w-0 appearance-none h-12 lg:h-10 pl-3 sm:pl-3.5 pr-8 sm:pr-8 text-xs sm:text-sm lg:text-xs font-medium rounded-xl border transition-colors cursor-pointer shadow-sm focus:outline-none focus:ring-1 truncate";
+    "w-full lg:w-auto min-w-0 appearance-none h-[36px] sm:h-10 lg:h-10 pl-2.5 sm:pl-3.5 pr-7 sm:pr-8 text-[11.5px] sm:text-xs lg:text-xs font-medium rounded-lg sm:rounded-xl border transition-colors cursor-pointer shadow-sm focus:outline-none focus:ring-1 truncate";
 
   const activeSelectClass =
     "border-purple-500/60 dark:border-rose-500/60 text-purple-700 dark:text-rose-400 bg-purple-50/60 dark:bg-rose-500/10 focus:ring-purple-500 dark:focus:ring-rose-500";
@@ -61,20 +61,20 @@ export function FilterBar({
     "border-zinc-200 dark:border-white/10 text-zinc-800 dark:text-zinc-200 bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-900/90 dark:hover:bg-zinc-800/80 hover:border-purple-500/40 dark:hover:border-rose-500/40 focus:ring-purple-500 dark:focus:ring-rose-500";
 
   const chevronClass = (isActive: boolean) =>
-    `w-3.5 h-3.5 sm:w-4 sm:h-4 absolute right-2.5 sm:right-3 top-1/2 -translate-y-1/2 pointer-events-none transition-colors ${
+    `w-3.5 h-3.5 absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 pointer-events-none transition-colors ${
       isActive ? "text-purple-600 dark:text-rose-400" : "text-zinc-400 dark:text-zinc-500"
     }`;
 
   return (
-    <div className="w-full bg-white dark:bg-[#121216] rounded-2xl p-3.5 sm:p-4 mb-6 sm:mb-8 border border-zinc-200/90 dark:border-white/10 shadow-sm">
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:flex lg:items-center lg:gap-3 gap-2.5 sm:gap-3">
+    <div className="w-full bg-white dark:bg-[#121216] rounded-[14px] sm:rounded-2xl p-2.5 sm:p-3.5 lg:p-4 mb-3.5 sm:mb-6 lg:mb-8 border border-zinc-200/90 dark:border-white/10 shadow-sm">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:flex lg:items-center lg:gap-3 gap-2 sm:gap-2.5 lg:gap-3">
         {/* Optional Media Type Toggle (Full width on mobile/tablet, inline left on desktop) */}
         {!hideMediaType && onMediaTypeChange && (
-          <div className="col-span-2 md:col-span-4 lg:col-auto lg:w-auto flex rounded-xl p-1 bg-zinc-100 dark:bg-black/40 border border-zinc-200/80 dark:border-white/10 text-xs font-medium w-full">
+          <div className="col-span-2 md:col-span-4 lg:col-auto lg:w-auto flex rounded-lg sm:rounded-xl p-0.5 sm:p-1 bg-zinc-100 dark:bg-black/40 border border-zinc-200/80 dark:border-white/10 text-[11px] sm:text-xs font-medium w-full">
             <button
               type="button"
               onClick={() => onMediaTypeChange("all")}
-              className={`flex-1 lg:flex-none px-3 py-1.5 rounded-lg transition-all ${
+              className={`flex-1 lg:flex-none px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-md sm:rounded-lg transition-all ${
                 mediaType === "all"
                   ? "bg-purple-600 dark:bg-rose-600 text-white font-semibold shadow-sm"
                   : "text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
@@ -85,7 +85,7 @@ export function FilterBar({
             <button
               type="button"
               onClick={() => onMediaTypeChange("movie")}
-              className={`flex-1 lg:flex-none px-3 py-1.5 rounded-lg transition-all ${
+              className={`flex-1 lg:flex-none px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-md sm:rounded-lg transition-all ${
                 mediaType === "movie"
                   ? "bg-purple-600 dark:bg-rose-600 text-white font-semibold shadow-sm"
                   : "text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
@@ -96,7 +96,7 @@ export function FilterBar({
             <button
               type="button"
               onClick={() => onMediaTypeChange("tv")}
-              className={`flex-1 lg:flex-none px-3 py-1.5 rounded-lg transition-all ${
+              className={`flex-1 lg:flex-none px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-md sm:rounded-lg transition-all ${
                 mediaType === "tv"
                   ? "bg-purple-600 dark:bg-rose-600 text-white font-semibold shadow-sm"
                   : "text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
@@ -197,11 +197,11 @@ export function FilterBar({
 
         {/* Reset Button (Full width row on mobile, end-aligned on tablet, inline right on desktop) */}
         {hasActiveFilters && (
-          <div className="col-span-2 md:col-span-4 lg:col-auto flex items-center justify-center md:justify-end lg:justify-start pt-1 md:pt-1.5 lg:pt-0">
+          <div className="col-span-2 md:col-span-4 lg:col-auto flex items-center justify-center md:justify-end lg:justify-start pt-0.5 sm:pt-1 lg:pt-0">
             <button
               type="button"
               onClick={onReset}
-              className="w-full sm:w-auto h-11 sm:h-12 lg:h-10 flex items-center justify-center gap-1.5 px-4 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 dark:text-rose-400 dark:hover:bg-rose-500/10 border border-rose-200/90 dark:border-rose-500/30 transition-all shadow-sm active:scale-95"
+              className="w-full sm:w-auto h-[36px] sm:h-10 lg:h-10 flex items-center justify-center gap-1.5 px-3 sm:px-4 rounded-lg sm:rounded-xl text-[11.5px] sm:text-xs font-semibold text-rose-600 hover:bg-rose-50 dark:text-rose-400 dark:hover:bg-rose-500/10 border border-rose-200/90 dark:border-rose-500/30 transition-all shadow-sm active:scale-95"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Reset Filters</span>

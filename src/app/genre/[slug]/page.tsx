@@ -67,7 +67,7 @@ export default function GenrePage() {
   return (
     <div className="pt-24 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Genre Header */}
-      <div className="mb-8 space-y-2">
+      <div className="mb-3.5 sm:mb-6 lg:mb-8 space-y-1.5 sm:space-y-2">
         <div className="flex items-center gap-2 text-rose-500 font-semibold text-xs uppercase tracking-wider">
           <Layers className="w-4 h-4" />
           <span>Genre Collection</span>
