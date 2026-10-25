@@ -209,30 +209,25 @@
 }
 
 /* ========================================================
-   Desktop Poster Card - Hover-Revealed Metadata
-   Desktop-only refinement: applies strictly to devices with
-   (min-width: 1024px) AND (hover: hover) AND (pointer: fine).
-   Preserves mobile & tablet interfaces with permanent metadata below posters.
+   Poster Card - Centered Metadata (Mobile & Desktop)
+   Clean cinematic styling: applied universally across all devices.
+   Removes permanently visible metadata below posters and displays
+   title, release year, category, and action controls in the center.
    ======================================================== */
-@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
-  /* Remove permanently visible metadata underneath poster on desktop */
-  .media-card-bottom-info {
-    display: none !important;
-  }
+.media-card-bottom-info {
+  display: none !important;
+}
 
-  /* Reveal centered metadata overlay on desktop when card is hovered or focused */
-  .media-card-desktop-overlay {
-    display: flex !important;
-  }
+.media-card-desktop-overlay,
+.media-card-overlay {
+  display: flex !important;
+}
 
-  /* Hide the legacy mobile bottom overlay on desktop so it does not conflict */
-  .media-card-mobile-overlay {
-    display: none !important;
-  }
+.media-card-mobile-overlay {
+  display: none !important;
+}
 
-  /* Ensure card hugs the poster aspect ratio without residual space */
-  .media-card-container {
-    height: auto !important;
-  }
+.media-card-container {
+  height: auto !important;
 }
 

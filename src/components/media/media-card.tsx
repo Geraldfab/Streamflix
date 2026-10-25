@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Play, Plus, Check, Star, Info, Film, Tv } from "lucide-react";
 import { MediaItem } from "@/types/media";
-import { getTmdbImageUrl } from "@/lib/utils";
+import { getTmdbImageUrl, cn } from "@/lib/utils";
 import { useMedia } from "@/components/providers/media-context";
 import { GENRES_LIST } from "@/lib/constants";
 
@@ -19,6 +19,9 @@ export function MediaCard({ item, priority = false }: MediaCardProps) {
   const router = useRouter();
   const { isInWatchlist, toggleWatchlist, openQuickView, continueWatching } = useMedia();
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [isTouchActive, setIsTouchActive] = useState(false);
+  const touchStartPos = useRef<{ x: number; y: number } | null>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   const inWatchlist = isInWatchlist(item.id);
 
@@ -31,26 +34,77 @@ export function MediaCard({ item, priority = false }: MediaCardProps) {
     (item.genreIds?.[0] ? GENRES_LIST.find((g) => g.id === item.genreIds?.[0])?.name : null) ||
     (item.mediaType === "movie" ? "Movie" : "Series");
 
-  const handlePlayClick = (e: React.MouseEvent) => {
+  const handlePlayClick = (e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
     e.stopPropagation();
     router.push(`/watch/${item.id}?type=${item.mediaType}`);
   };
 
-  const handleQuickViewClick = (e: React.MouseEvent) => {
+  const handleQuickViewClick = (e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
     e.stopPropagation();
     openQuickView(item);
   };
 
-  const handleWatchlistClick = (e: React.MouseEvent) => {
+  const handleWatchlistClick = (e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
     e.stopPropagation();
     toggleWatchlist(item);
   };
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartPos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!touchStartPos.current) return;
+    const deltaX = Math.abs(e.changedTouches[0].clientX - touchStartPos.current.x);
+    const deltaY = Math.abs(e.changedTouches[0].clientY - touchStartPos.current.y);
+    // Ignore swipe / scroll gestures (movement > 8px)
+    if (deltaX > 8 || deltaY > 8) return;
+
+    // It was a tap on touch device: toggle overlay
+    if (!isTouchActive) {
+      e.preventDefault();
+      setIsTouchActive(true);
+    }
+  };
+
+  // Close overlay on touch/click outside or scroll
+  useEffect(() => {
+    if (!isTouchActive) return;
+
+    const handleOutsideInteraction = (e: MouseEvent | TouchEvent) => {
+      if (cardRef.current && !cardRef.current.contains(e.target as Node)) {
+        setIsTouchActive(false);
+      }
+    };
+
+    const handleScroll = () => {
+      setIsTouchActive(false);
+    };
+
+    document.addEventListener("touchstart", handleOutsideInteraction, { passive: true });
+    document.addEventListener("click", handleOutsideInteraction, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      document.removeEventListener("touchstart", handleOutsideInteraction);
+      document.removeEventListener("click", handleOutsideInteraction);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isTouchActive]);
+
   return (
-    <div className="media-card-container group relative flex flex-col rounded-2xl overflow-hidden bg-white dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-white/10 shadow-sm hover:shadow-xl hover:shadow-zinc-300/40 dark:hover:shadow-rose-950/20 hover:border-purple-500/50 dark:hover:border-rose-500/40 transition-all duration-300 hover:-translate-y-1.5 select-none">
+    <div
+      ref={cardRef}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      className={cn(
+        "media-card-container group relative flex flex-col rounded-2xl overflow-hidden bg-white dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-white/10 shadow-sm hover:shadow-xl hover:shadow-zinc-300/40 dark:hover:shadow-rose-950/20 hover:border-purple-500/50 dark:hover:border-rose-500/40 transition-all duration-300 hover:-translate-y-1.5 select-none",
+        isTouchActive && "border-purple-500/60 dark:border-rose-500/60 shadow-lg -translate-y-1"
+      )}
+    >
       {/* Poster Image Container */}
       <Link
         href={`/title/${item.id}?type=${item.mediaType}`}
@@ -97,8 +151,15 @@ export function MediaCard({ item, priority = false }: MediaCardProps) {
           )}
         </div>
 
-        {/* Desktop Hover Revealed Metadata Overlay (Centered Horizontally & Vertically) */}
-        <div className="media-card-desktop-overlay hidden absolute inset-0 z-10 flex-col items-center justify-center p-3 sm:p-4 text-center bg-black/65 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 ease-out pointer-events-none group-hover:pointer-events-auto">
+        {/* Centered Metadata Overlay (Revealed on hover on desktop, or tap on mobile) */}
+        <div
+          className={cn(
+            "media-card-overlay absolute inset-0 z-10 flex flex-col items-center justify-center p-3 sm:p-4 text-center bg-black/65 backdrop-blur-[2px] transition-opacity duration-200 ease-out",
+            isTouchActive
+              ? "opacity-100 pointer-events-auto"
+              : "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 pointer-events-none group-hover:pointer-events-auto"
+          )}
+        >
           <div className="flex flex-col items-center justify-center max-w-full transform transition-transform duration-200 ease-out group-hover:translate-y-0 translate-y-1">
             {/* Title */}
             <h3 className="text-xs sm:text-sm md:text-base font-bold text-white tracking-tight leading-snug line-clamp-2 px-1 drop-shadow-md">
@@ -117,6 +178,10 @@ export function MediaCard({ item, priority = false }: MediaCardProps) {
               {/* Play Button */}
               <button
                 onClick={handlePlayClick}
+                onTouchEnd={(e) => {
+                  e.stopPropagation();
+                  handlePlayClick(e);
+                }}
                 className="p-2.5 rounded-full bg-purple-600 hover:bg-purple-500 dark:bg-rose-600 dark:hover:bg-rose-500 text-white shadow-xl shadow-black/40 transform transition-transform hover:scale-110 active:scale-95 pointer-events-auto"
                 title="Play Now"
                 aria-label={`Play ${item.title}`}
@@ -127,6 +192,10 @@ export function MediaCard({ item, priority = false }: MediaCardProps) {
               {/* Quick View Button */}
               <button
                 onClick={handleQuickViewClick}
+                onTouchEnd={(e) => {
+                  e.stopPropagation();
+                  handleQuickViewClick(e);
+                }}
                 className="p-2 rounded-full bg-black/60 hover:bg-black/80 border border-white/20 text-white shadow-lg backdrop-blur-md transform transition-transform hover:scale-110 active:scale-95 pointer-events-auto"
                 title="Quick Preview"
                 aria-label={`Quick view ${item.title}`}
@@ -137,6 +206,10 @@ export function MediaCard({ item, priority = false }: MediaCardProps) {
               {/* Add to Watchlist */}
               <button
                 onClick={handleWatchlistClick}
+                onTouchEnd={(e) => {
+                  e.stopPropagation();
+                  handleWatchlistClick(e);
+                }}
                 className={`p-2 rounded-full border transition-transform hover:scale-110 active:scale-95 pointer-events-auto ${
                   inWatchlist
                     ? "bg-purple-600 dark:bg-rose-600/90 text-white border-purple-500 dark:border-rose-500"
@@ -151,42 +224,6 @@ export function MediaCard({ item, priority = false }: MediaCardProps) {
           </div>
         </div>
 
-        {/* Mobile & Touch Action Overlay (Bottom-aligned, only on non-desktop) */}
-        <div className="media-card-mobile-overlay absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-end p-3 z-10 pointer-events-none group-hover:pointer-events-auto">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <button
-              onClick={handlePlayClick}
-              className="p-3 rounded-full bg-purple-600 hover:bg-purple-500 dark:bg-rose-600 dark:hover:bg-rose-500 text-white shadow-xl shadow-black/40 transform transition-transform hover:scale-110 active:scale-95 pointer-events-auto"
-              title="Play Now"
-              aria-label={`Play ${item.title}`}
-            >
-              <Play className="w-4 h-4 fill-white translate-x-0.5" />
-            </button>
-
-            <button
-              onClick={handleQuickViewClick}
-              className="p-2.5 rounded-full bg-black/60 hover:bg-black/80 border border-white/20 text-white shadow-lg backdrop-blur-md transform transition-transform hover:scale-110 active:scale-95 pointer-events-auto"
-              title="Quick Preview"
-              aria-label={`Quick view ${item.title}`}
-            >
-              <Info className="w-4 h-4" />
-            </button>
-
-            <button
-              onClick={handleWatchlistClick}
-              className={`p-2.5 rounded-full border transition-transform hover:scale-110 active:scale-95 pointer-events-auto ${
-                inWatchlist
-                  ? "bg-purple-600 dark:bg-rose-600/90 text-white border-purple-500 dark:border-rose-500"
-                  : "bg-black/60 hover:bg-black/80 border-white/20 text-white backdrop-blur-md"
-              }`}
-              title={inWatchlist ? "Remove from List" : "Add to My List"}
-              aria-label={inWatchlist ? "Remove from My List" : "Add to My List"}
-            >
-              {inWatchlist ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-            </button>
-          </div>
-        </div>
-
         {/* In-Progress Watch Bar */}
         {progress && (
           <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-black/60 z-20 overflow-hidden">
@@ -197,28 +234,6 @@ export function MediaCard({ item, priority = false }: MediaCardProps) {
           </div>
         )}
       </Link>
-
-      {/* Card Info (Below Poster - Permanently visible on mobile/tablet, hidden on desktop) */}
-      <div className="media-card-bottom-info p-3 bg-white dark:bg-zinc-900/40 flex flex-col justify-between flex-1 border-t border-zinc-100 dark:border-white/5">
-        <div>
-          <Link
-            href={`/title/${item.id}?type=${item.mediaType}`}
-            className="text-xs sm:text-sm font-semibold text-zinc-900 dark:text-zinc-100 hover:text-purple-600 dark:hover:text-rose-400 transition-colors line-clamp-1"
-            title={item.title}
-          >
-            {item.title}
-          </Link>
-          <div className="flex items-center gap-2 text-[11px] text-zinc-500 dark:text-zinc-400 mt-1">
-            {item.releaseYear ? <span>{item.releaseYear}</span> : null}
-            {genreName ? (
-              <>
-                <span>•</span>
-                <span className="truncate">{genreName}</span>
-              </>
-            ) : null}
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
