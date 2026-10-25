@@ -23,7 +23,7 @@ export function MyListRail() {
   };
 
   return (
-    <section className="relative my-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 group/mrail">
+    <section className="content-rail-section relative my-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 group/mrail">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Bookmark className="w-5 h-5 text-purple-600 dark:text-rose-400" />
@@ -62,7 +62,8 @@ export function MyListRail() {
 
       <div
         ref={scrollRef}
-        className="flex items-stretch gap-3 sm:gap-4 overflow-x-auto no-scrollbar scroll-smooth pb-3 -mx-4 px-4 sm:mx-0 sm:px-0"
+        className="flex items-stretch gap-3 sm:gap-4 overflow-x-auto no-scrollbar scroll-smooth pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 overscroll-x-contain"
+        style={{ WebkitOverflowScrolling: "touch" }}
       >
         {watchlist.map((item) => (
           <div key={item.id} className="w-36 sm:w-44 md:w-48 lg:w-52 flex-shrink-0">

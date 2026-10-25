@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -32,6 +32,8 @@ export function HeroBanner({ featuredItems }: HeroBannerProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [logoError, setLogoError] = useState(false);
+  const [isInView, setIsInView] = useState(true);
+  const bannerRef = useRef<HTMLDivElement>(null);
 
   const items = featuredItems.length > 0 ? featuredItems.slice(0, 5) : [];
   const currentItem = items[currentIndex] || items[0];
@@ -41,14 +43,30 @@ export function HeroBanner({ featuredItems }: HeroBannerProps) {
     setLogoError(false);
   }, [currentItem?.id]);
 
-  // Auto-rotation every 7 seconds when not paused
+  // Pause rotation when hero banner is scrolled out of viewport
   useEffect(() => {
-    if (isPaused || items.length <= 1) return;
+    const el = bannerRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.05 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Auto-rotation every 7 seconds when not paused and banner is visible
+  useEffect(() => {
+    if (isPaused || !isInView || items.length <= 1) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % items.length);
     }, 7000);
     return () => clearInterval(interval);
-  }, [isPaused, items.length]);
+  }, [isPaused, isInView, items.length]);
 
   if (!currentItem) return null;
 
@@ -63,7 +81,10 @@ export function HeroBanner({ featuredItems }: HeroBannerProps) {
   };
 
   return (
-    <div className="relative w-full min-h-[60vh] sm:min-h-[72vh] md:min-h-[85vh] flex items-end justify-start overflow-hidden pt-16 sm:pt-20 pb-8 sm:pb-12 md:pb-16 select-none">
+    <div
+      ref={bannerRef}
+      className="relative w-full min-h-[60vh] sm:min-h-[72vh] md:min-h-[85vh] flex items-end justify-start overflow-hidden pt-16 sm:pt-20 pb-8 sm:pb-12 md:pb-16 select-none"
+    >
       {/* Background Backdrop Image */}
       <div className="absolute inset-0 z-0">
         <Image

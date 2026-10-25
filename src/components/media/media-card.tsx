@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo, memo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -15,7 +15,7 @@ interface MediaCardProps {
   priority?: boolean;
 }
 
-export function MediaCard({ item, priority = false }: MediaCardProps) {
+export const MediaCard = memo(function MediaCard({ item, priority = false }: MediaCardProps) {
   const router = useRouter();
   const { isInWatchlist, toggleWatchlist, openQuickView, continueWatching } = useMedia();
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -29,10 +29,13 @@ export function MediaCard({ item, priority = false }: MediaCardProps) {
   const progress = continueWatching.find((p) => String(p.mediaId) === String(item.id));
 
   // Resolve primary genre or fallback category
-  const genreName =
-    item.genres?.[0]?.name ||
-    (item.genreIds?.[0] ? GENRES_LIST.find((g) => g.id === item.genreIds?.[0])?.name : null) ||
-    (item.mediaType === "movie" ? "Movie" : "Series");
+  const genreName = useMemo(() => {
+    return (
+      item.genres?.[0]?.name ||
+      (item.genreIds?.[0] ? GENRES_LIST.find((g) => g.id === item.genreIds?.[0])?.name : null) ||
+      (item.mediaType === "movie" ? "Movie" : "Series")
+    );
+  }, [item.genres, item.genreIds, item.mediaType]);
 
   const handlePlayClick = (e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
@@ -111,7 +114,7 @@ export function MediaCard({ item, priority = false }: MediaCardProps) {
         className="relative aspect-[2/3] w-full overflow-hidden bg-zinc-900 block"
       >
         <Image
-          src={getTmdbImageUrl(item.posterPath, "w500")}
+          src={getTmdbImageUrl(item.posterPath, "w342")}
           alt={item.title}
           fill
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
@@ -154,10 +157,10 @@ export function MediaCard({ item, priority = false }: MediaCardProps) {
         {/* Centered Metadata Overlay (Revealed on hover on desktop, or tap on mobile) */}
         <div
           className={cn(
-            "media-card-overlay absolute inset-0 z-10 flex flex-col items-center justify-center p-3 sm:p-4 text-center bg-black/65 backdrop-blur-[2px] transition-opacity duration-200 ease-out",
+            "media-card-overlay absolute inset-0 z-10 flex flex-col items-center justify-center p-3 sm:p-4 text-center bg-black/65 transition-opacity duration-200 ease-out",
             isTouchActive
-              ? "opacity-100 pointer-events-auto"
-              : "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 pointer-events-none group-hover:pointer-events-auto"
+              ? "opacity-100 backdrop-blur-[2px] pointer-events-auto"
+              : "opacity-0 backdrop-filter-none group-hover:opacity-100 group-hover:backdrop-blur-[2px] group-focus-within:opacity-100 group-focus-within:backdrop-blur-[2px] pointer-events-none group-hover:pointer-events-auto"
           )}
         >
           <div className="flex flex-col items-center justify-center max-w-full transform transition-transform duration-200 ease-out group-hover:translate-y-0 translate-y-1">
@@ -236,4 +239,4 @@ export function MediaCard({ item, priority = false }: MediaCardProps) {
       </Link>
     </div>
   );
-}
+});

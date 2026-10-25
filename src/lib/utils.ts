@@ -45,7 +45,7 @@ export function truncate(text: string, maxLength: number): string {
 
 export function getTmdbImageUrl(
   path: string | null | undefined,
-  size: "w300" | "w500" | "w780" | "w1280" | "original" = "w500",
+  size: "w185" | "w300" | "w342" | "w500" | "w780" | "w1280" | "original" = "w342",
   fallbackType: "poster" | "backdrop" | "profile" = "poster"
 ): string {
   if (!path) {

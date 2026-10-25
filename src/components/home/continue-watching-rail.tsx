@@ -24,7 +24,7 @@ export function ContinueWatchingRail() {
   };
 
   return (
-    <section className="relative my-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 group/crail">
+    <section className="content-rail-section relative my-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 group/crail">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Clock className="w-5 h-5 text-purple-600 dark:text-rose-400" />
@@ -62,7 +62,8 @@ export function ContinueWatchingRail() {
 
       <div
         ref={scrollRef}
-        className="flex items-stretch gap-4 overflow-x-auto no-scrollbar scroll-smooth pb-2 -mx-4 px-4 sm:mx-0 sm:px-0"
+        className="flex items-stretch gap-4 overflow-x-auto no-scrollbar scroll-smooth pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 overscroll-x-contain"
+        style={{ WebkitOverflowScrolling: "touch" }}
       >
         {continueWatching.map((item) => {
           const watchHref = item.mediaType === "tv"

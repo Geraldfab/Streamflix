@@ -44,9 +44,17 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
   const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -72,7 +80,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
     <>
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-40 transition-all duration-300",
+          "fixed top-0 left-0 right-0 z-40 transition-all duration-300 transform-gpu",
           resolvedTheme === "light"
             ? "bg-white/85 backdrop-blur-xl border-b border-zinc-200/80 shadow-sm shadow-zinc-950/5 py-3"
             : isScrolled

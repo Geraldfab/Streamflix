@@ -231,3 +231,14 @@
   height: auto !important;
 }
 
+/* ========================================================
+   Content Rail & Section Performance Containment
+   Skips rendering/layout computation for offscreen rails
+   until approached during scrolling.
+   ======================================================== */
+.content-rail-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 340px;
+}
+
+

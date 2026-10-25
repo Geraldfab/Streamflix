@@ -36,7 +36,7 @@ export function ContentRail({
   };
 
   return (
-    <section className="relative my-8 sm:my-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 group/rail">
+    <section className="content-rail-section relative my-8 sm:my-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 group/rail">
       {/* Header Row */}
       <div className="flex items-center justify-between mb-4">
         <div>
@@ -92,7 +92,8 @@ export function ContentRail({
       {/* Horizontal Scrollable Rail */}
       <div
         ref={scrollRef}
-        className="flex items-stretch gap-3 sm:gap-4 overflow-x-auto no-scrollbar scroll-smooth pb-3 -mx-4 px-4 sm:mx-0 sm:px-0"
+        className="flex items-stretch gap-3 sm:gap-4 overflow-x-auto no-scrollbar scroll-smooth pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 overscroll-x-contain"
+        style={{ WebkitOverflowScrolling: "touch" }}
       >
         {items.map((item) => (
           <div
