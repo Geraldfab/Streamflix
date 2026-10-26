@@ -89,7 +89,7 @@ export function Footer() {
           {/* Preferences & Tech */}
           <div>
             <h4 className="text-xs font-semibold uppercase tracking-wider text-zinc-900 dark:text-zinc-200 mb-3">
-              Platform
+              Platform & Legal
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
@@ -103,13 +103,18 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <span className="text-zinc-400 dark:text-zinc-500">
-                  Adaptive Bitrate HLS.js 4K
-                </span>
+                <Link href="/terms" className="hover:text-purple-600 dark:hover:text-rose-500 transition-colors">
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy" className="hover:text-purple-600 dark:hover:text-rose-500 transition-colors">
+                  Privacy Policy
+                </Link>
               </li>
               <li>
                 <span className="text-zinc-400 dark:text-zinc-500">
-                  Glassmorphism Design System
+                  Adaptive Bitrate HLS.js 4K
                 </span>
               </li>
             </ul>
@@ -117,11 +122,28 @@ export function Footer() {
         </div>
 
         {/* Bottom copyright & attribution */}
-        <div className="pt-8 border-t border-zinc-200 dark:border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
-          <p>
-            © {new Date().getFullYear()} StreamFlix Cinema Studio. All rights reserved.
-          </p>
-          <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-[11px] text-zinc-500">
+        <div className="pt-8 border-t border-zinc-200 dark:border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-1">
+            <p>
+              © {new Date().getFullYear()} StreamFlix Cinema Studio. All rights reserved.
+            </p>
+            <span className="hidden sm:inline text-zinc-300 dark:text-zinc-700">•</span>
+            <Link
+              href="/terms"
+              className="text-zinc-500 hover:text-purple-600 dark:text-zinc-400 dark:hover:text-rose-400 transition-colors"
+            >
+              Terms of Service
+            </Link>
+            <span className="text-zinc-300 dark:text-zinc-700">•</span>
+            <Link
+              href="/privacy"
+              className="text-zinc-500 hover:text-purple-600 dark:text-zinc-400 dark:hover:text-rose-400 transition-colors"
+            >
+              Privacy Policy
+            </Link>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-3 sm:gap-4 text-[11px] text-zinc-500">
             <a
               href="mailto:geraldfabre282@gmail.com?subject=StreamFlix%20Feedback"
               className="text-zinc-500 hover:text-purple-600 dark:text-zinc-400 dark:hover:text-rose-400 transition-colors underline-offset-2 hover:underline"
