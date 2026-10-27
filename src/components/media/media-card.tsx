@@ -104,8 +104,8 @@ export const MediaCard = memo(function MediaCard({ item, priority = false }: Med
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       className={cn(
-        "media-card-container group relative flex flex-col rounded-2xl overflow-hidden bg-white dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-white/10 shadow-sm hover:shadow-xl hover:shadow-zinc-300/40 dark:hover:shadow-rose-950/20 hover:border-purple-500/50 dark:hover:border-rose-500/40 transition-all duration-300 hover:-translate-y-1.5 select-none",
-        isTouchActive && "border-purple-500/60 dark:border-rose-500/60 shadow-lg -translate-y-1"
+        "media-card-container group relative flex flex-col rounded-2xl overflow-hidden bg-white dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-white/10 shadow-sm hover:shadow-xl hover:shadow-zinc-300/40 dark:hover:shadow-rose-950/20 hover:border-red-500/50 dark:hover:border-rose-500/40 transition-all duration-300 hover:-translate-y-1.5 select-none",
+        isTouchActive && "border-red-500/60 dark:border-rose-500/60 shadow-lg -translate-y-1"
       )}
     >
       {/* Poster Image Container */}
@@ -185,7 +185,7 @@ export const MediaCard = memo(function MediaCard({ item, priority = false }: Med
                   e.stopPropagation();
                   handlePlayClick(e);
                 }}
-                className="p-2.5 rounded-full bg-purple-600 hover:bg-purple-500 dark:bg-rose-600 dark:hover:bg-rose-500 text-white shadow-xl shadow-black/40 transform transition-transform hover:scale-110 active:scale-95 pointer-events-auto"
+                className="p-2.5 rounded-full bg-red-600 hover:bg-red-500 dark:bg-rose-600 dark:hover:bg-rose-500 text-white shadow-xl shadow-black/40 transform transition-transform hover:scale-110 active:scale-95 pointer-events-auto"
                 title="Play Now"
                 aria-label={`Play ${item.title}`}
               >
@@ -215,7 +215,7 @@ export const MediaCard = memo(function MediaCard({ item, priority = false }: Med
                 }}
                 className={`p-2 rounded-full border transition-transform hover:scale-110 active:scale-95 pointer-events-auto ${
                   inWatchlist
-                    ? "bg-purple-600 dark:bg-rose-600/90 text-white border-purple-500 dark:border-rose-500"
+                    ? "bg-red-600 dark:bg-rose-600/90 text-white border-red-500 dark:border-rose-500"
                     : "bg-black/60 hover:bg-black/80 border-white/20 text-white backdrop-blur-md"
                 }`}
                 title={inWatchlist ? "Remove from List" : "Add to My List"}

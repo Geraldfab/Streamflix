@@ -48,7 +48,7 @@ export default function TermsOfServicePage() {
     <div className="pt-24 pb-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Page Header */}
       <header className="space-y-3 mb-10">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-purple-500/10 text-purple-600 dark:text-rose-400 border border-purple-500/20 dark:border-rose-500/20">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-red-500/10 text-red-600 dark:text-rose-400 border border-red-500/20 dark:border-rose-500/20">
           <Scale className="w-3.5 h-3.5" />
           <span>Legal Agreement</span>
         </div>
@@ -73,9 +73,9 @@ export default function TermsOfServicePage() {
       </header>
 
       {/* Quick Summary / Key Highlights Callout */}
-      <aside className="mb-12 p-6 rounded-3xl bg-gradient-to-br from-purple-50/70 via-white to-zinc-50/70 dark:from-zinc-900/90 dark:via-zinc-900/50 dark:to-zinc-950 border border-purple-200/70 dark:border-rose-500/20 shadow-sm space-y-3">
-        <div className="flex items-center gap-2.5 text-xs font-bold uppercase tracking-wider text-purple-700 dark:text-rose-400">
-          <Sparkles className="w-4 h-4 text-purple-600 dark:text-rose-500" />
+      <aside className="mb-12 p-6 rounded-3xl bg-gradient-to-br from-red-50/70 via-white to-zinc-50/70 dark:from-zinc-900/90 dark:via-zinc-900/50 dark:to-zinc-950 border border-red-200/70 dark:border-rose-500/20 shadow-sm space-y-3">
+        <div className="flex items-center gap-2.5 text-xs font-bold uppercase tracking-wider text-red-700 dark:text-rose-400">
+          <Sparkles className="w-4 h-4 text-red-600 dark:text-rose-500" />
           <span>At-a-Glance Summary (Non-Binding Overview)</span>
         </div>
         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-zinc-600 dark:text-zinc-300">
@@ -101,7 +101,7 @@ export default function TermsOfServicePage() {
       {/* Table of Contents */}
       <nav aria-label="Table of Contents" className="mb-12 p-6 rounded-3xl bg-white dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-white/10 shadow-sm">
         <h2 className="text-sm font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-100 mb-4 flex items-center gap-2">
-          <FileText className="w-4 h-4 text-purple-600 dark:text-rose-500" />
+          <FileText className="w-4 h-4 text-red-600 dark:text-rose-500" />
           <span>Table of Contents</span>
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
@@ -109,7 +109,7 @@ export default function TermsOfServicePage() {
             <a
               key={item.id}
               href={`#${item.id}`}
-              className="text-zinc-600 dark:text-zinc-400 hover:text-purple-600 dark:hover:text-rose-400 transition-colors py-1 flex items-center gap-1.5"
+              className="text-zinc-600 dark:text-zinc-400 hover:text-red-600 dark:hover:text-rose-400 transition-colors py-1 flex items-center gap-1.5"
             >
               <span className="text-zinc-400 dark:text-zinc-500">•</span>
               <span>{item.title}</span>
@@ -123,7 +123,7 @@ export default function TermsOfServicePage() {
         {/* Section 1 */}
         <section id="acceptance" className="scroll-mt-24 space-y-4">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono font-bold text-purple-600 dark:text-rose-400 bg-purple-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-purple-200 dark:border-rose-900/50">
+            <span className="text-xs font-mono font-bold text-red-600 dark:text-rose-400 bg-red-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-red-200 dark:border-rose-900/50">
               01
             </span>
             <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
@@ -132,14 +132,14 @@ export default function TermsOfServicePage() {
           </div>
           <p>
             Welcome to <strong>StreamFlix Cinema Studio</strong> (&ldquo;StreamFlix&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;, or &ldquo;our&rdquo;),
-            accessible at <a href="https://streamflixmedia.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-purple-600 dark:text-rose-400 underline underline-offset-2 hover:text-purple-700 dark:hover:text-rose-300">https://streamflixmedia.vercel.app/</a>.
+            accessible at <a href="https://streamflixmedia.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-red-600 dark:text-rose-400 underline underline-offset-2 hover:text-red-700 dark:hover:text-rose-300">https://streamflixmedia.vercel.app/</a>.
             StreamFlix is an independent web application engineered to deliver a responsive, minimalist interface for discovering cinematic titles,
             browsing rich film and television metadata, and accessing third-party media players.
           </p>
           <p>
             By accessing, browsing, interacting with, or using any feature of StreamFlix, you acknowledge that you have read,
             understood, and agree to be bound by these Terms of Service (&ldquo;Terms&rdquo;) and our accompanying{" "}
-            <Link href="/privacy" className="text-purple-600 dark:text-rose-400 underline underline-offset-2 hover:text-purple-700 dark:hover:text-rose-300">
+            <Link href="/privacy" className="text-red-600 dark:text-rose-400 underline underline-offset-2 hover:text-red-700 dark:hover:text-rose-300">
               Privacy Policy
             </Link>. If you do not agree to these Terms in their entirety, you must discontinue your use of the website immediately.
           </p>
@@ -152,7 +152,7 @@ export default function TermsOfServicePage() {
         {/* Section 2 */}
         <section id="service-description" className="scroll-mt-24 space-y-4">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono font-bold text-purple-600 dark:text-rose-400 bg-purple-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-purple-200 dark:border-rose-900/50">
+            <span className="text-xs font-mono font-bold text-red-600 dark:text-rose-400 bg-red-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-red-200 dark:border-rose-900/50">
               02
             </span>
             <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
@@ -197,7 +197,7 @@ export default function TermsOfServicePage() {
         {/* Section 3 */}
         <section id="eligibility-acceptable-use" className="scroll-mt-24 space-y-4">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono font-bold text-purple-600 dark:text-rose-400 bg-purple-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-purple-200 dark:border-rose-900/50">
+            <span className="text-xs font-mono font-bold text-red-600 dark:text-rose-400 bg-red-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-red-200 dark:border-rose-900/50">
               03
             </span>
             <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
@@ -233,7 +233,7 @@ export default function TermsOfServicePage() {
         {/* Section 4 */}
         <section id="intellectual-property" className="scroll-mt-24 space-y-4">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono font-bold text-purple-600 dark:text-rose-400 bg-purple-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-purple-200 dark:border-rose-900/50">
+            <span className="text-xs font-mono font-bold text-red-600 dark:text-rose-400 bg-red-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-red-200 dark:border-rose-900/50">
               04
             </span>
             <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
@@ -268,7 +268,7 @@ export default function TermsOfServicePage() {
         {/* Section 5 */}
         <section id="notice-and-takedown" className="scroll-mt-24 space-y-4">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono font-bold text-purple-600 dark:text-rose-400 bg-purple-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-purple-200 dark:border-rose-900/50">
+            <span className="text-xs font-mono font-bold text-red-600 dark:text-rose-400 bg-red-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-red-200 dark:border-rose-900/50">
               05
             </span>
             <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
@@ -309,15 +309,15 @@ export default function TermsOfServicePage() {
               </li>
             </ol>
           </div>
-          <div className="p-4 rounded-2xl bg-purple-50/60 dark:bg-rose-950/20 border border-purple-200 dark:border-rose-900/40 flex items-start gap-3">
-            <Mail className="w-5 h-5 text-purple-600 dark:text-rose-400 shrink-0 mt-0.5" />
+          <div className="p-4 rounded-2xl bg-red-50/60 dark:bg-rose-950/20 border border-red-200 dark:border-rose-900/40 flex items-start gap-3">
+            <Mail className="w-5 h-5 text-red-600 dark:text-rose-400 shrink-0 mt-0.5" />
             <div className="space-y-1 text-xs">
               <p className="font-bold text-zinc-900 dark:text-zinc-100">
                 Designated Copyright Notice Contact:
               </p>
               <p className="text-zinc-600 dark:text-zinc-300">
                 Please email all notices directly to:{" "}
-                <a href="mailto:geraldfabre282@gmail.com?subject=StreamFlix%20Copyright%20Notice" className="font-mono font-semibold text-purple-600 dark:text-rose-400 hover:underline">
+                <a href="mailto:geraldfabre282@gmail.com?subject=StreamFlix%20Copyright%20Notice" className="font-mono font-semibold text-red-600 dark:text-rose-400 hover:underline">
                   geraldfabre282@gmail.com
                 </a>
               </p>
@@ -331,7 +331,7 @@ export default function TermsOfServicePage() {
         {/* Section 6 */}
         <section id="third-party-services" className="scroll-mt-24 space-y-4">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono font-bold text-purple-600 dark:text-rose-400 bg-purple-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-purple-200 dark:border-rose-900/50">
+            <span className="text-xs font-mono font-bold text-red-600 dark:text-rose-400 bg-red-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-red-200 dark:border-rose-900/50">
               06
             </span>
             <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
@@ -364,7 +364,7 @@ export default function TermsOfServicePage() {
         {/* Section 7 */}
         <section id="developer-tips" className="scroll-mt-24 space-y-4">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono font-bold text-purple-600 dark:text-rose-400 bg-purple-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-purple-200 dark:border-rose-900/50">
+            <span className="text-xs font-mono font-bold text-red-600 dark:text-rose-400 bg-red-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-red-200 dark:border-rose-900/50">
               07
             </span>
             <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
@@ -387,7 +387,7 @@ export default function TermsOfServicePage() {
         {/* Section 8 */}
         <section id="service-modifications" className="scroll-mt-24 space-y-4">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono font-bold text-purple-600 dark:text-rose-400 bg-purple-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-purple-200 dark:border-rose-900/50">
+            <span className="text-xs font-mono font-bold text-red-600 dark:text-rose-400 bg-red-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-red-200 dark:border-rose-900/50">
               08
             </span>
             <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
@@ -412,7 +412,7 @@ export default function TermsOfServicePage() {
         {/* Section 9 */}
         <section id="disclaimers-liability" className="scroll-mt-24 space-y-4">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono font-bold text-purple-600 dark:text-rose-400 bg-purple-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-purple-200 dark:border-rose-900/50">
+            <span className="text-xs font-mono font-bold text-red-600 dark:text-rose-400 bg-red-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-red-200 dark:border-rose-900/50">
               09
             </span>
             <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
@@ -450,7 +450,7 @@ export default function TermsOfServicePage() {
         {/* Section 10 */}
         <section id="governing-law" className="scroll-mt-24 space-y-4">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono font-bold text-purple-600 dark:text-rose-400 bg-purple-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-purple-200 dark:border-rose-900/50">
+            <span className="text-xs font-mono font-bold text-red-600 dark:text-rose-400 bg-red-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-red-200 dark:border-rose-900/50">
               10
             </span>
             <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
@@ -463,7 +463,7 @@ export default function TermsOfServicePage() {
           </p>
           <p>
             <strong>Informal Resolution First:</strong> In the event of any controversy or dispute, you agree to first contact the operator in good faith at{" "}
-            <a href="mailto:geraldfabre282@gmail.com?subject=StreamFlix%20Dispute%20Inquiry" className="text-purple-600 dark:text-rose-400 hover:underline">
+            <a href="mailto:geraldfabre282@gmail.com?subject=StreamFlix%20Dispute%20Inquiry" className="text-red-600 dark:text-rose-400 hover:underline">
               geraldfabre282@gmail.com
             </a>{" "}
             with a detailed description of the issue to allow for an amicable, non-judicial resolution.
@@ -477,7 +477,7 @@ export default function TermsOfServicePage() {
         {/* Section 11 */}
         <section id="changes-contact" className="scroll-mt-24 space-y-4">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono font-bold text-purple-600 dark:text-rose-400 bg-purple-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-purple-200 dark:border-rose-900/50">
+            <span className="text-xs font-mono font-bold text-red-600 dark:text-rose-400 bg-red-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-red-200 dark:border-rose-900/50">
               11
             </span>
             <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
@@ -491,7 +491,7 @@ export default function TermsOfServicePage() {
           </p>
           <div className="p-6 rounded-3xl bg-white dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-white/10 shadow-sm space-y-3">
             <h3 className="text-base font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
-              <Mail className="w-4 h-4 text-purple-600 dark:text-rose-500" />
+              <Mail className="w-4 h-4 text-red-600 dark:text-rose-500" />
               <span>Operator & Contact Details</span>
             </h3>
             <p className="text-xs text-zinc-600 dark:text-zinc-300">
@@ -505,7 +505,7 @@ export default function TermsOfServicePage() {
                 <strong>Email:</strong>{" "}
                 <a
                   href="mailto:geraldfabre282@gmail.com?subject=StreamFlix%20Terms%20Inquiry"
-                  className="font-mono text-purple-600 dark:text-rose-400 hover:underline"
+                  className="font-mono text-red-600 dark:text-rose-400 hover:underline"
                 >
                   geraldfabre282@gmail.com
                 </a>
@@ -519,7 +519,7 @@ export default function TermsOfServicePage() {
       <div className="mt-16 pt-8 border-t border-zinc-200 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
         <Link
           href="/privacy"
-          className="text-purple-600 dark:text-rose-400 hover:underline flex items-center gap-1 font-semibold"
+          className="text-red-600 dark:text-rose-400 hover:underline flex items-center gap-1 font-semibold"
         >
           <span>View Privacy Policy</span>
           <span>→</span>

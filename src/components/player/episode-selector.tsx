@@ -97,7 +97,7 @@ export function EpisodeSelector({
             <select
               value={selectedSeasonNumber}
               onChange={(e) => setSelectedSeasonNumber(Number(e.target.value))}
-              className="appearance-none bg-zinc-100 dark:bg-zinc-900 border border-zinc-300 dark:border-white/20 hover:border-purple-500 dark:hover:border-rose-500 rounded-xl px-3 py-1.5 pr-8 text-xs font-medium text-zinc-800 dark:text-white focus:outline-none cursor-pointer"
+              className="appearance-none bg-zinc-100 dark:bg-zinc-900 border border-zinc-300 dark:border-white/20 hover:border-red-500 dark:hover:border-rose-500 rounded-xl px-3 py-1.5 pr-8 text-xs font-medium text-zinc-800 dark:text-white focus:outline-none cursor-pointer"
             >
               {seasons.map((season) => (
                 <option key={season.id || season.seasonNumber} value={season.seasonNumber}>
@@ -131,7 +131,7 @@ export function EpisodeSelector({
                 onClick={() => onSelectEpisode(ep.seasonNumber, ep.episodeNumber)}
                 className={`w-full text-left p-2.5 rounded-xl transition-all flex items-start gap-3 group ${
                   isPlaying
-                    ? "bg-purple-50 dark:bg-rose-600/20 border border-purple-300 dark:border-rose-500/40 shadow-sm"
+                    ? "bg-red-50 dark:bg-rose-600/20 border border-red-300 dark:border-rose-500/40 shadow-sm"
                     : "hover:bg-zinc-100/80 dark:hover:bg-white/5 border border-transparent"
                 }`}
               >
@@ -145,11 +145,11 @@ export function EpisodeSelector({
                     sizes="96px"
                   />
                   {isPlaying ? (
-                    <div className="absolute inset-0 bg-purple-950/70 dark:bg-rose-950/70 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-red-950/70 dark:bg-rose-950/70 flex items-center justify-center">
                       <div className="flex items-end gap-0.5 h-4">
-                        <span className="w-1 bg-purple-300 dark:bg-rose-400 rounded-full animate-pulse h-3" />
-                        <span className="w-1 bg-purple-300 dark:bg-rose-400 rounded-full animate-pulse h-4 delay-75" />
-                        <span className="w-1 bg-purple-300 dark:bg-rose-400 rounded-full animate-pulse h-2 delay-150" />
+                        <span className="w-1 bg-red-300 dark:bg-rose-400 rounded-full animate-pulse h-3" />
+                        <span className="w-1 bg-red-300 dark:bg-rose-400 rounded-full animate-pulse h-4 delay-75" />
+                        <span className="w-1 bg-red-300 dark:bg-rose-400 rounded-full animate-pulse h-2 delay-150" />
                       </div>
                     </div>
                   ) : (
@@ -165,7 +165,7 @@ export function EpisodeSelector({
                 {/* Details */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-[11px] font-bold text-purple-600 dark:text-rose-400">
+                    <span className="text-[11px] font-bold text-red-600 dark:text-rose-400">
                       E{ep.episodeNumber}
                     </span>
                     <span className="text-xs font-semibold text-zinc-900 dark:text-zinc-100 truncate">

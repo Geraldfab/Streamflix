@@ -99,7 +99,7 @@ export default function AnimePage() {
     <div className="pt-24 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Page Header */}
       <div className="mb-3.5 sm:mb-6 lg:mb-8 space-y-2 sm:space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 dark:bg-rose-500/10 border border-purple-500/20 dark:border-rose-500/20 text-purple-600 dark:text-rose-400 font-semibold text-xs tracking-wider uppercase">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 dark:bg-rose-500/10 border border-red-500/20 dark:border-rose-500/20 text-red-600 dark:text-rose-400 font-semibold text-xs tracking-wider uppercase">
           <Sparkles className="w-3.5 h-3.5" />
           <span>Japanese Animation & Manga Adaptations</span>
         </div>
@@ -117,7 +117,7 @@ export default function AnimePage() {
             className={cn(
               "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-sm",
               mediaType === "tv"
-                ? "bg-purple-600 dark:bg-rose-600 text-white shadow-purple-600/20 dark:shadow-rose-600/30 scale-102"
+                ? "bg-red-600 dark:bg-rose-600 text-white shadow-red-600/20 dark:shadow-rose-600/30 scale-102"
                 : "bg-zinc-100 dark:bg-white/5 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-white/10"
             )}
           >
@@ -129,7 +129,7 @@ export default function AnimePage() {
             className={cn(
               "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-sm",
               mediaType === "movie"
-                ? "bg-purple-600 dark:bg-rose-600 text-white shadow-purple-600/20 dark:shadow-rose-600/30 scale-102"
+                ? "bg-red-600 dark:bg-rose-600 text-white shadow-red-600/20 dark:shadow-rose-600/30 scale-102"
                 : "bg-zinc-100 dark:bg-white/5 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-white/10"
             )}
           >
@@ -141,7 +141,7 @@ export default function AnimePage() {
             className={cn(
               "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-sm",
               mediaType === "all"
-                ? "bg-purple-600 dark:bg-rose-600 text-white shadow-purple-600/20 dark:shadow-rose-600/30 scale-102"
+                ? "bg-red-600 dark:bg-rose-600 text-white shadow-red-600/20 dark:shadow-rose-600/30 scale-102"
                 : "bg-zinc-100 dark:bg-white/5 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-white/10"
             )}
           >
@@ -185,7 +185,7 @@ export default function AnimePage() {
           <button
             onClick={handleLoadMore}
             disabled={isLoading}
-            className="px-8 py-3 rounded-2xl bg-white hover:bg-purple-600 hover:text-white dark:bg-white/5 dark:hover:bg-rose-600 text-zinc-800 dark:text-zinc-200 font-semibold text-xs tracking-wider uppercase border border-zinc-200/80 dark:border-white/10 shadow-sm transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
+            className="px-8 py-3 rounded-2xl bg-white hover:bg-red-600 hover:text-white dark:bg-white/5 dark:hover:bg-rose-600 text-zinc-800 dark:text-zinc-200 font-semibold text-xs tracking-wider uppercase border border-zinc-200/80 dark:border-white/10 shadow-sm transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
           >
             {isLoading ? "Loading more anime..." : "Load More Anime"}
           </button>

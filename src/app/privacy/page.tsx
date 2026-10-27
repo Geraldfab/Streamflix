@@ -197,7 +197,7 @@ export default function PrivacyPolicyPage() {
 
             <div className="p-4 rounded-2xl bg-white dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-white/10 shadow-sm space-y-2">
               <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
-                <Server className="w-4 h-4 text-purple-600 dark:text-rose-400" />
+                <Server className="w-4 h-4 text-red-600 dark:text-rose-400" />
                 <span>2. Voluntary Server-Side Feedback & Reaction Data</span>
               </h3>
               <p className="text-xs text-zinc-600 dark:text-zinc-300">

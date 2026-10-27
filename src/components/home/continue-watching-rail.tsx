@@ -27,11 +27,11 @@ export function ContinueWatchingRail() {
     <section className="content-rail-section relative my-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 group/crail">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Clock className="w-5 h-5 text-purple-600 dark:text-rose-400" />
+          <Clock className="w-5 h-5 text-red-600 dark:text-rose-400" />
           <h2 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
             Continue Watching
           </h2>
-          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 text-purple-700 dark:bg-rose-600 dark:text-white">
+          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-100 text-red-700 dark:bg-rose-600 dark:text-white">
             {continueWatching.length}
           </span>
         </div>
@@ -39,7 +39,7 @@ export function ContinueWatchingRail() {
         <div className="flex items-center gap-2">
           <Link
             href="/continue-watching"
-            className="text-xs font-semibold text-purple-600 hover:text-purple-700 dark:text-rose-400 dark:hover:text-rose-300 mr-2"
+            className="text-xs font-semibold text-red-600 hover:text-red-700 dark:text-rose-400 dark:hover:text-rose-300 mr-2"
           >
             Manage All →
           </Link>
@@ -73,7 +73,7 @@ export function ContinueWatchingRail() {
           return (
             <div
               key={item.id}
-              className="w-64 sm:w-72 flex-shrink-0 group rounded-2xl bg-white dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-white/10 shadow-sm overflow-hidden relative transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:border-purple-500/40 dark:hover:border-rose-500/40"
+              className="w-64 sm:w-72 flex-shrink-0 group rounded-2xl bg-white dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-white/10 shadow-sm overflow-hidden relative transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:border-red-500/40 dark:hover:border-rose-500/40"
             >
               {/* Backdrop image */}
               <Link href={watchHref} className="relative aspect-video w-full block bg-zinc-900 overflow-hidden">
@@ -113,7 +113,7 @@ export function ContinueWatchingRail() {
                 <div>
                   <Link
                     href={watchHref}
-                    className="text-xs sm:text-sm font-semibold text-zinc-900 dark:text-zinc-100 truncate block hover:text-purple-600 dark:hover:text-rose-400 transition-colors"
+                    className="text-xs sm:text-sm font-semibold text-zinc-900 dark:text-zinc-100 truncate block hover:text-red-600 dark:hover:text-rose-400 transition-colors"
                   >
                     {item.title}
                   </Link>
@@ -125,7 +125,7 @@ export function ContinueWatchingRail() {
                 </div>
                 <div className="flex items-center justify-between text-[10px] text-zinc-500 mt-2">
                   <span>{formatTime(item.currentTime)} left</span>
-                  <span className="font-semibold text-purple-600 dark:text-rose-400">{item.percentage}% watched</span>
+                  <span className="font-semibold text-red-600 dark:text-rose-400">{item.percentage}% watched</span>
                 </div>
               </div>
             </div>

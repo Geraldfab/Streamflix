@@ -87,7 +87,7 @@ export default function SeriesPage() {
     <div className="pt-24 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Page Header */}
       <div className="mb-3.5 sm:mb-6 lg:mb-8 space-y-1.5 sm:space-y-2">
-        <div className="flex items-center gap-2 text-purple-600 dark:text-rose-500 font-semibold text-xs uppercase tracking-wider">
+        <div className="flex items-center gap-2 text-red-600 dark:text-rose-500 font-semibold text-xs uppercase tracking-wider">
           <Tv className="w-4 h-4" />
           <span>Television & Serial Dramas</span>
         </div>
@@ -130,7 +130,7 @@ export default function SeriesPage() {
           <button
             onClick={handleLoadMore}
             disabled={isLoading}
-            className="px-8 py-3 rounded-2xl bg-white hover:bg-purple-600 hover:text-white dark:bg-white/5 dark:hover:bg-rose-600 text-zinc-800 dark:text-zinc-200 font-semibold text-xs tracking-wider uppercase border border-zinc-200/80 dark:border-white/10 shadow-sm transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
+            className="px-8 py-3 rounded-2xl bg-white hover:bg-red-600 hover:text-white dark:bg-white/5 dark:hover:bg-rose-600 text-zinc-800 dark:text-zinc-200 font-semibold text-xs tracking-wider uppercase border border-zinc-200/80 dark:border-white/10 shadow-sm transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
           >
             {isLoading ? "Loading more series..." : "Load More TV Series"}
           </button>

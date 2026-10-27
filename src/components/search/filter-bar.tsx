@@ -55,14 +55,14 @@ export function FilterBar({
     "w-full lg:w-auto min-w-0 appearance-none h-[36px] sm:h-10 lg:h-10 pl-2.5 sm:pl-3.5 pr-7 sm:pr-8 text-[11.5px] sm:text-xs lg:text-xs font-medium rounded-lg sm:rounded-xl border transition-colors cursor-pointer shadow-sm focus:outline-none focus:ring-1 truncate";
 
   const activeSelectClass =
-    "border-purple-500/60 dark:border-rose-500/60 text-purple-700 dark:text-rose-400 bg-purple-50/60 dark:bg-rose-500/10 focus:ring-purple-500 dark:focus:ring-rose-500";
+    "border-red-500/60 dark:border-rose-500/60 text-red-700 dark:text-rose-400 bg-red-50/60 dark:bg-rose-500/10 focus:ring-red-500 dark:focus:ring-rose-500";
 
   const inactiveSelectClass =
-    "border-zinc-200 dark:border-white/10 text-zinc-800 dark:text-zinc-200 bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-900/90 dark:hover:bg-zinc-800/80 hover:border-purple-500/40 dark:hover:border-rose-500/40 focus:ring-purple-500 dark:focus:ring-rose-500";
+    "border-zinc-200 dark:border-white/10 text-zinc-800 dark:text-zinc-200 bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-900/90 dark:hover:bg-zinc-800/80 hover:border-red-500/40 dark:hover:border-rose-500/40 focus:ring-red-500 dark:focus:ring-rose-500";
 
   const chevronClass = (isActive: boolean) =>
     `w-3.5 h-3.5 absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 pointer-events-none transition-colors ${
-      isActive ? "text-purple-600 dark:text-rose-400" : "text-zinc-400 dark:text-zinc-500"
+      isActive ? "text-red-600 dark:text-rose-400" : "text-zinc-400 dark:text-zinc-500"
     }`;
 
   return (
@@ -76,7 +76,7 @@ export function FilterBar({
               onClick={() => onMediaTypeChange("all")}
               className={`flex-1 lg:flex-none px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-md sm:rounded-lg transition-all ${
                 mediaType === "all"
-                  ? "bg-purple-600 dark:bg-rose-600 text-white font-semibold shadow-sm"
+                  ? "bg-red-600 dark:bg-rose-600 text-white font-semibold shadow-sm"
                   : "text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
               }`}
             >
@@ -87,7 +87,7 @@ export function FilterBar({
               onClick={() => onMediaTypeChange("movie")}
               className={`flex-1 lg:flex-none px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-md sm:rounded-lg transition-all ${
                 mediaType === "movie"
-                  ? "bg-purple-600 dark:bg-rose-600 text-white font-semibold shadow-sm"
+                  ? "bg-red-600 dark:bg-rose-600 text-white font-semibold shadow-sm"
                   : "text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
               }`}
             >
@@ -98,7 +98,7 @@ export function FilterBar({
               onClick={() => onMediaTypeChange("tv")}
               className={`flex-1 lg:flex-none px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-md sm:rounded-lg transition-all ${
                 mediaType === "tv"
-                  ? "bg-purple-600 dark:bg-rose-600 text-white font-semibold shadow-sm"
+                  ? "bg-red-600 dark:bg-rose-600 text-white font-semibold shadow-sm"
                   : "text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
               }`}
             >

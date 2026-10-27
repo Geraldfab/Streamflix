@@ -146,7 +146,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                   <span className={cn(
                     "text-xl font-black tracking-tight bg-clip-text text-transparent",
                     resolvedTheme === "light"
-                      ? "bg-gradient-to-r from-zinc-950 via-zinc-800 to-purple-600"
+                      ? "bg-gradient-to-r from-zinc-950 via-zinc-800 to-red-600"
                       : isScrolled
                         ? "bg-gradient-to-r from-white via-zinc-200 to-rose-400"
                         : "bg-gradient-to-r from-white via-zinc-100 to-rose-400"
@@ -155,7 +155,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                   </span>
                   <span className={cn(
                     "text-[9px] tracking-widest uppercase font-bold -mt-1",
-                    resolvedTheme === "light" ? "text-purple-600" : "text-rose-500"
+                    resolvedTheme === "light" ? "text-red-600" : "text-rose-500"
                   )}>
                     Cinema Studio
                   </span>
@@ -174,7 +174,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                         "relative px-3.5 py-1.5 rounded-xl text-sm font-medium transition-all duration-150 flex items-center gap-1.5",
                         isActive
                           ? resolvedTheme === "light"
-                            ? "text-purple-700 font-bold bg-purple-50 shadow-sm border border-purple-100"
+                            ? "text-red-700 font-bold bg-red-50 shadow-sm border border-red-100"
                             : "text-white bg-white/10 shadow-sm font-semibold"
                           : resolvedTheme === "light"
                             ? "text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100/80"
@@ -187,7 +187,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                       {link.badge ? (
                         <span className={cn(
                           "px-1.5 py-0.2 text-[10px] font-bold text-white rounded-full",
-                          resolvedTheme === "light" ? "bg-purple-600" : "bg-rose-600"
+                          resolvedTheme === "light" ? "bg-red-600" : "bg-rose-600"
                         )}>
                           {link.badge}
                         </span>
@@ -246,11 +246,11 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                 className={cn(
                   "hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all hover:scale-105 active:scale-95 shadow-sm",
                   resolvedTheme === "light"
-                    ? "text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200"
+                    ? "text-red-700 bg-red-50 hover:bg-red-100 border border-red-200"
                     : "text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30"
                 )}
               >
-                <Shuffle className={cn("w-3.5 h-3.5", resolvedTheme === "light" ? "text-purple-600" : "text-rose-400")} />
+                <Shuffle className={cn("w-3.5 h-3.5", resolvedTheme === "light" ? "text-red-600" : "text-rose-400")} />
                 <span>Surprise Me</span>
               </button>
 
@@ -267,7 +267,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                 )}
                 aria-label="Search movies and series"
               >
-                <Search className={cn("w-4 h-4 transition-colors", resolvedTheme === "light" ? "text-purple-600 group-hover:text-purple-700" : "text-zinc-400 group-hover:text-rose-400")} />
+                <Search className={cn("w-4 h-4 transition-colors", resolvedTheme === "light" ? "text-red-600 group-hover:text-red-700" : "text-zinc-400 group-hover:text-rose-400")} />
                 <span className="hidden sm:inline">Search...</span>
                 <kbd className={cn("hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono rounded", resolvedTheme === "light" ? "bg-zinc-200 text-zinc-700" : "bg-white/10 text-zinc-300")}>
                   Ctrl+K
@@ -291,7 +291,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                 {resolvedTheme === "dark" ? (
                   <Sun className="w-4 h-4 text-amber-400 animate-spin-once" />
                 ) : (
-                  <Moon className="w-4 h-4 text-purple-600" />
+                  <Moon className="w-4 h-4 text-red-600" />
                 )}
               </button>
 
@@ -303,7 +303,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                   className={cn(
                     "w-9 h-9 rounded-xl overflow-hidden border transition-all flex items-center justify-center font-bold text-xs shadow-md",
                     resolvedTheme === "light"
-                      ? "bg-gradient-to-tr from-purple-700 to-indigo-900 text-white border-purple-200 hover:ring-2 hover:ring-purple-500/50"
+                      ? "bg-gradient-to-tr from-red-600 via-rose-700 to-red-800 text-white border-red-200 hover:ring-2 hover:ring-red-500/50"
                       : "bg-gradient-to-tr from-rose-950 via-zinc-900 to-red-900 text-white border-white/20 hover:ring-2 hover:ring-rose-500/50"
                   )}
                   aria-label="User Account"
@@ -323,7 +323,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                         onClick={() => setIsProfileOpen(false)}
                         className="flex items-center gap-2.5 px-3 py-2 text-xs text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:text-white dark:hover:bg-white/10 rounded-lg transition-colors"
                       >
-                        <Bookmark className={cn("w-3.5 h-3.5", resolvedTheme === "light" ? "text-purple-600" : "text-rose-500")} />
+                        <Bookmark className={cn("w-3.5 h-3.5", resolvedTheme === "light" ? "text-red-600" : "text-rose-500")} />
                         <span>My List ({watchlist.length})</span>
                       </Link>
                       <Link
@@ -404,7 +404,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                   "px-3 py-2 rounded-xl text-sm font-medium flex items-center justify-between",
                   pathname === link.href
                     ? resolvedTheme === "light"
-                      ? "bg-purple-50 text-purple-700 font-bold border border-purple-100"
+                      ? "bg-red-50 text-red-700 font-bold border border-red-100"
                       : "bg-rose-600/30 text-rose-300 font-semibold"
                     : "text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:text-white dark:hover:bg-white/5"
                 )}
@@ -413,7 +413,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                 {link.badge ? (
                   <span className={cn(
                     "px-2 py-0.5 text-xs text-white rounded-full font-bold",
-                    resolvedTheme === "light" ? "bg-purple-600" : "bg-rose-600"
+                    resolvedTheme === "light" ? "bg-red-600" : "bg-rose-600"
                   )}>
                     {link.badge}
                   </span>

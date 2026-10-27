@@ -219,7 +219,7 @@ export function ScreenCastModal({
               <span>Casting Active</span>
             </div>
           ) : (
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-purple-500/10 dark:bg-rose-500/10 border border-purple-500/20 dark:border-rose-500/20 text-purple-700 dark:text-rose-300 text-[11px] font-semibold flex-shrink-0">
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-red-500/10 dark:bg-rose-500/10 border border-red-500/20 dark:border-rose-500/20 text-red-700 dark:text-rose-300 text-[11px] font-semibold flex-shrink-0">
               <Wifi className="w-3 h-3" />
               <span>Ready to Cast</span>
             </div>
@@ -270,14 +270,14 @@ export function ScreenCastModal({
 
         {/* Status notification banner if any */}
         {castStatus && (
-          <div className="p-3 rounded-xl bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800/40 text-xs text-purple-900 dark:text-purple-200 flex items-center justify-between gap-2">
+          <div className="p-3 rounded-xl bg-red-50 dark:bg-rose-950/30 border border-red-200 dark:border-rose-800/40 text-xs text-red-900 dark:text-rose-200 flex items-center justify-between gap-2">
             <div className="flex items-center gap-2 min-w-0">
-              <Sparkles className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400 flex-shrink-0" />
+              <Sparkles className="w-3.5 h-3.5 text-red-600 dark:text-rose-400 flex-shrink-0" />
               <span className="truncate">{castStatus}</span>
             </div>
             <button
               onClick={() => setCastStatus(null)}
-              className="p-1 hover:bg-purple-200 dark:hover:bg-purple-900/50 rounded-md transition-colors"
+              className="p-1 hover:bg-red-200 dark:hover:bg-rose-900/50 rounded-md transition-colors"
             >
               <X className="w-3 h-3" />
             </button>
@@ -292,7 +292,7 @@ export function ScreenCastModal({
               <div className="p-4 rounded-2xl border border-zinc-200 dark:border-white/10 bg-zinc-50/50 dark:bg-white/[0.02] flex flex-col justify-between space-y-3">
                 <div className="space-y-1.5">
                   <div className="flex items-center gap-2">
-                    <span className="p-2 rounded-xl bg-purple-600/10 text-purple-600 dark:text-rose-400">
+                    <span className="p-2 rounded-xl bg-red-600/10 text-red-600 dark:text-rose-400">
                       <Cast className="w-4 h-4" />
                     </span>
                     <h5 className="text-sm font-bold text-zinc-900 dark:text-zinc-100">
@@ -306,7 +306,7 @@ export function ScreenCastModal({
 
                 <button
                   onClick={handleTriggerRemotePlayback}
-                  className="w-full py-2.5 px-4 rounded-xl font-bold text-xs bg-purple-600 hover:bg-purple-700 dark:bg-rose-600 dark:hover:bg-rose-500 text-white shadow-md transition-all flex items-center justify-center gap-2"
+                  className="w-full py-2.5 px-4 rounded-xl font-bold text-xs bg-red-600 hover:bg-red-700 dark:bg-rose-600 dark:hover:bg-rose-500 text-white shadow-md transition-all flex items-center justify-center gap-2"
                 >
                   <Cast className="w-3.5 h-3.5" />
                   <span>Connect Chromecast</span>
@@ -420,7 +420,7 @@ export function ScreenCastModal({
                   />
                   <button
                     onClick={handleCopyLink}
-                    className="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-700 dark:bg-rose-600 dark:hover:bg-rose-500 text-white font-bold text-xs flex items-center gap-1.5 flex-shrink-0 transition-colors"
+                    className="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 dark:bg-rose-600 dark:hover:bg-rose-500 text-white font-bold text-xs flex items-center gap-1.5 flex-shrink-0 transition-colors"
                   >
                     {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                     <span>{copied ? "Copied!" : "Copy"}</span>
@@ -453,7 +453,7 @@ export function ScreenCastModal({
                   className={cn(
                     "px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all",
                     selectedGuide === g.id
-                      ? "bg-purple-50 dark:bg-rose-600/20 border-purple-500 dark:border-rose-500 text-purple-700 dark:text-white"
+                      ? "bg-red-50 dark:bg-rose-600/20 border-red-500 dark:border-rose-500 text-red-700 dark:text-white"
                       : "bg-zinc-100 dark:bg-white/5 border-zinc-200 dark:border-white/10 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
                   )}
                 >
@@ -467,7 +467,7 @@ export function ScreenCastModal({
               {selectedGuide === "chromecast" && (
                 <>
                   <h6 className="font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
-                    <Cast className="w-4 h-4 text-purple-600 dark:text-rose-500" />
+                    <Cast className="w-4 h-4 text-red-600 dark:text-rose-500" />
                     How to Cast with Chromecast or Android TV:
                   </h6>
                   <ol className="list-decimal list-inside space-y-1.5 text-zinc-500 dark:text-zinc-400 pl-1">

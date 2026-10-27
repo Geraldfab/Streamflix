@@ -171,7 +171,7 @@ export default function WatchPage() {
           {/* Main Info */}
           <div className="flex-1 space-y-4">
             <div className="flex flex-wrap items-center gap-2.5">
-              <span className="px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-purple-600 dark:bg-rose-600/90 text-white">
+              <span className="px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-red-600 dark:bg-rose-600/90 text-white">
                 {item.mediaType === "movie" ? "Feature Film" : "TV Series"}
               </span>
 

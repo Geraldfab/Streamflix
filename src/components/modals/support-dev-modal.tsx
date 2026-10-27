@@ -66,7 +66,7 @@ export function SupportDevModal({ isOpen, onClose }: SupportDevModalProps) {
       {/* Modal Card */}
       <div className="relative z-10 w-full max-w-lg rounded-3xl bg-white dark:bg-zinc-950 border border-zinc-200/80 dark:border-white/10 shadow-2xl overflow-hidden animate-scale-up text-zinc-900 dark:text-white max-h-[92dvh] flex flex-col">
         {/* Top Decorative Gradient Scrim */}
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-amber-500/20 via-purple-500/15 to-transparent dark:from-amber-500/15 dark:via-rose-600/15 pointer-events-none" />
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-amber-500/20 via-red-500/15 to-transparent dark:from-amber-500/15 dark:via-rose-600/15 pointer-events-none" />
 
         {/* Close Button */}
         <button
