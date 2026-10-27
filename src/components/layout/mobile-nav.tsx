@@ -43,21 +43,21 @@ export function MobileNav({ onOpenSearch }: MobileNavProps) {
               className={cn(
                 "relative flex flex-col items-center py-1.5 px-3 rounded-xl transition-all duration-200 min-h-[44px] min-w-[44px] justify-center active:scale-95",
                 isActive
-                  ? "text-rose-600 dark:text-rose-500 font-bold"
+                  ? "text-purple-600 dark:text-rose-500 font-bold"
                   : "text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-zinc-200"
               )}
             >
               <div className="relative">
                 <Icon className="w-5 h-5" />
                 {item.badge ? (
-                  <span className="absolute -top-1.5 -right-2 px-1 text-[9px] font-bold bg-rose-600 text-white rounded-full">
+                  <span className="absolute -top-1.5 -right-2 px-1 text-[9px] font-bold bg-purple-600 dark:bg-rose-600 text-white rounded-full">
                     {item.badge}
                   </span>
                 ) : null}
               </div>
               <span className="text-[10px] mt-0.5">{item.label}</span>
               {isActive && (
-                <span className="absolute bottom-0.5 w-1 h-1 rounded-full bg-rose-600 dark:bg-rose-500 shadow-sm shadow-rose-600 dark:shadow-rose-500" />
+                <span className="absolute bottom-0.5 w-1 h-1 rounded-full bg-purple-600 dark:bg-rose-500 shadow-sm shadow-purple-600 dark:shadow-rose-500" />
               )}
             </Link>
           );

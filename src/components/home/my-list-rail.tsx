@@ -26,11 +26,11 @@ export function MyListRail() {
     <section className="content-rail-section relative my-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 group/mrail">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Bookmark className="w-5 h-5 text-rose-600 dark:text-rose-400" />
+          <Bookmark className="w-5 h-5 text-purple-600 dark:text-rose-400" />
           <h2 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
             Your Watchlist
           </h2>
-          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-700 dark:bg-rose-600 dark:text-white">
+          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 text-purple-700 dark:bg-rose-600 dark:text-white">
             {watchlist.length}
           </span>
         </div>
@@ -38,7 +38,7 @@ export function MyListRail() {
         <div className="flex items-center gap-2">
           <Link
             href="/my-list"
-            className="text-xs font-semibold text-rose-600 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300 mr-2 flex items-center gap-1"
+            className="text-xs font-semibold text-purple-600 hover:text-purple-700 dark:text-rose-400 dark:hover:text-rose-300 mr-2 flex items-center gap-1"
           >
             <span>View All</span>
             <ArrowRight className="w-3.5 h-3.5" />

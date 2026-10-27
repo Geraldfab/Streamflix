@@ -41,27 +41,27 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <Link href="/" className="hover:text-rose-600 dark:hover:text-rose-500 transition-colors">
+                <Link href="/" className="hover:text-purple-600 dark:hover:text-rose-500 transition-colors">
                   Featured & Trending
                 </Link>
               </li>
               <li>
-                <Link href="/movies" className="hover:text-rose-600 dark:hover:text-rose-500 transition-colors">
+                <Link href="/movies" className="hover:text-purple-600 dark:hover:text-rose-500 transition-colors">
                   All Movies
                 </Link>
               </li>
               <li>
-                <Link href="/series" className="hover:text-rose-600 dark:hover:text-rose-500 transition-colors">
+                <Link href="/series" className="hover:text-purple-600 dark:hover:text-rose-500 transition-colors">
                   TV Series Catalog
                 </Link>
               </li>
               <li>
-                <Link href="/my-list" className="hover:text-rose-600 dark:hover:text-rose-500 transition-colors">
+                <Link href="/my-list" className="hover:text-purple-600 dark:hover:text-rose-500 transition-colors">
                   My Watchlist
                 </Link>
               </li>
               <li>
-                <Link href="/continue-watching" className="hover:text-rose-600 dark:hover:text-rose-500 transition-colors">
+                <Link href="/continue-watching" className="hover:text-purple-600 dark:hover:text-rose-500 transition-colors">
                   Continue Watching
                 </Link>
               </li>
@@ -78,7 +78,7 @@ export function Footer() {
                 <Link
                   key={genre.id}
                   href={`/genre/${genre.slug}`}
-                  className="hover:text-rose-600 dark:hover:text-rose-500 transition-colors truncate"
+                  className="hover:text-purple-600 dark:hover:text-rose-500 transition-colors truncate"
                 >
                   {genre.name}
                 </Link>
@@ -93,22 +93,22 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <Link href="/settings" className="hover:text-rose-600 dark:hover:text-rose-500 transition-colors">
+                <Link href="/settings" className="hover:text-purple-600 dark:hover:text-rose-500 transition-colors">
                   Playback & Server Settings
                 </Link>
               </li>
               <li>
-                <Link href="/history" className="hover:text-rose-600 dark:hover:text-rose-500 transition-colors">
+                <Link href="/history" className="hover:text-purple-600 dark:hover:text-rose-500 transition-colors">
                   Watch History Management
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="hover:text-rose-600 dark:hover:text-rose-500 transition-colors">
+                <Link href="/terms" className="hover:text-purple-600 dark:hover:text-rose-500 transition-colors">
                   Terms of Service
                 </Link>
               </li>
               <li>
-                <Link href="/privacy" className="hover:text-rose-600 dark:hover:text-rose-500 transition-colors">
+                <Link href="/privacy" className="hover:text-purple-600 dark:hover:text-rose-500 transition-colors">
                   Privacy Policy
                 </Link>
               </li>
@@ -130,14 +130,14 @@ export function Footer() {
             <span className="hidden sm:inline text-zinc-300 dark:text-zinc-700">•</span>
             <Link
               href="/terms"
-              className="text-zinc-500 hover:text-rose-600 dark:text-zinc-400 dark:hover:text-rose-400 transition-colors"
+              className="text-zinc-500 hover:text-purple-600 dark:text-zinc-400 dark:hover:text-rose-400 transition-colors"
             >
               Terms of Service
             </Link>
             <span className="text-zinc-300 dark:text-zinc-700">•</span>
             <Link
               href="/privacy"
-              className="text-zinc-500 hover:text-rose-600 dark:text-zinc-400 dark:hover:text-rose-400 transition-colors"
+              className="text-zinc-500 hover:text-purple-600 dark:text-zinc-400 dark:hover:text-rose-400 transition-colors"
             >
               Privacy Policy
             </Link>
@@ -146,7 +146,7 @@ export function Footer() {
           <div className="flex flex-wrap items-center justify-center md:justify-end gap-3 sm:gap-4 text-[11px] text-zinc-500">
             <a
               href="mailto:geraldfabre282@gmail.com?subject=StreamFlix%20Feedback"
-              className="text-zinc-500 hover:text-rose-600 dark:text-zinc-400 dark:hover:text-rose-400 transition-colors underline-offset-2 hover:underline"
+              className="text-zinc-500 hover:text-purple-600 dark:text-zinc-400 dark:hover:text-rose-400 transition-colors underline-offset-2 hover:underline"
               title="Send feedback or feature request to developer"
             >
               Vibecoded by Fabs • Send Feedback
