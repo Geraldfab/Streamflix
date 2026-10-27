@@ -16,8 +16,6 @@ import {
   Settings,
   ChevronDown,
   Shuffle,
-  Menu,
-  X,
   Play,
   Coffee,
   Heart,
@@ -40,8 +38,8 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isGenreOpen, setIsGenreOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
+  const [isRolling, setIsRolling] = useState(false);
 
   const genreRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
@@ -50,7 +48,6 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
   useEffect(() => {
     setIsGenreOpen(false);
     setIsProfileOpen(false);
-    setMobileMenuOpen(false);
   }, [pathname]);
 
   // Click outside and Escape key handling for dropdowns
@@ -108,6 +105,8 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
   ];
 
   const handleSurpriseMe = () => {
+    setIsRolling(true);
+    setTimeout(() => setIsRolling(false), 650);
     const title = getRandomTitle();
     if (title) openQuickView(title);
   };
@@ -238,29 +237,14 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
             </div>
 
             {/* Right: Actions */}
-            <div className="flex items-center gap-2 sm:gap-3">
-              {/* Surprise Me / Random Title */}
-              <button
-                onClick={handleSurpriseMe}
-                title="Surprise Me (Random title)"
-                className={cn(
-                  "hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all hover:scale-105 active:scale-95 shadow-sm",
-                  resolvedTheme === "light"
-                    ? "text-red-700 bg-red-50 hover:bg-red-100 border border-red-200"
-                    : "text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30"
-                )}
-              >
-                <Shuffle className={cn("w-3.5 h-3.5", resolvedTheme === "light" ? "text-red-600" : "text-rose-400")} />
-                <span>Surprise Me</span>
-              </button>
-
-              {/* Smart Search Trigger Button */}
+            <div className="flex items-center gap-2 sm:gap-2.5">
+              {/* 1. Smart Search Trigger Button */}
               <button
                 onClick={onOpenSearch}
                 className={cn(
-                  "flex items-center gap-2 px-3 py-1.5 rounded-xl transition-all group",
+                  "w-9 sm:w-auto h-9 flex items-center justify-center sm:justify-start sm:gap-2 px-0 sm:px-3 rounded-xl transition-all group",
                   resolvedTheme === "light"
-                    ? "text-xs text-zinc-700 hover:text-zinc-950 bg-zinc-100/80 hover:bg-zinc-100 border border-zinc-200/90"
+                    ? "text-xs text-zinc-700 hover:text-zinc-950 bg-zinc-100/80 hover:bg-zinc-100 border border-zinc-200/90 shadow-sm"
                     : isScrolled
                       ? "text-xs text-zinc-300 hover:text-white border-white/10 hover:bg-white/10 glass-panel"
                       : "text-xs text-zinc-200 hover:text-white border-white/20 hover:bg-white/10 glass-panel"
@@ -274,12 +258,36 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                 </kbd>
               </button>
 
-              {/* Theme Toggle Button */}
+              {/* 2. Surprise Me / Random Title (Now fully visible in mobile & desktop) */}
+              <button
+                onClick={handleSurpriseMe}
+                title="Surprise Me (Random title)"
+                aria-label="Surprise Me (Random title)"
+                className={cn(
+                  "flex relative group items-center justify-center w-9 h-9 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm",
+                  resolvedTheme === "light"
+                    ? "text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100/90 border border-red-200/90 hover:border-red-300 shadow-sm shadow-red-500/5 hover:shadow-red-500/15"
+                    : isScrolled
+                      ? "text-rose-400 hover:text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 hover:border-rose-500/50 glass-panel"
+                      : "text-rose-400 hover:text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 hover:border-rose-500/50 glass-panel"
+                )}
+              >
+                <Shuffle
+                  className={cn(
+                    "w-4 h-4 transition-transform duration-500 ease-out",
+                    isRolling
+                      ? "rotate-[360deg] scale-110 text-red-700 dark:text-rose-300"
+                      : "group-hover:rotate-45 group-hover:scale-110"
+                  )}
+                />
+              </button>
+
+              {/* 3. Theme Toggle Button */}
               <button
                 onClick={toggleTheme}
                 title={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
                 className={cn(
-                  "p-2 rounded-xl transition-all hover:scale-105 active:scale-95",
+                  "w-9 h-9 flex items-center justify-center rounded-xl transition-all hover:scale-105 active:scale-95",
                   resolvedTheme === "light"
                     ? "text-zinc-700 hover:text-zinc-950 bg-zinc-100/80 hover:bg-zinc-100 border border-zinc-200/90 shadow-sm"
                     : isScrolled
@@ -295,11 +303,10 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                 )}
               </button>
 
-              {/* Profile / Account Dropdown */}
+              {/* 4. Profile / Account Dropdown (Terminal anchor at far right) */}
               <div ref={profileRef} className="relative">
                 <button
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
-
                   className={cn(
                     "w-9 h-9 rounded-xl overflow-hidden border transition-all flex items-center justify-center font-bold text-xs shadow-md",
                     resolvedTheme === "light"
@@ -372,88 +379,9 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                   </div>
                 )}
               </div>
-
-              {/* Mobile Hamburger Menu Toggle */}
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className={cn(
-                  "md:hidden p-2 rounded-xl transition-colors",
-                  resolvedTheme === "light"
-                    ? "text-zinc-700 hover:text-zinc-950 bg-zinc-100/80 border border-zinc-200/90"
-                    : isScrolled
-                      ? "text-zinc-300 hover:text-white glass-panel"
-                      : "text-zinc-200 hover:text-white glass-panel"
-                )}
-                aria-label="Toggle mobile menu"
-              >
-                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              </button>
             </div>
           </div>
         </div>
-
-        {/* Mobile Dropdown Menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden mt-3 px-4 py-3 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl border-t border-b border-zinc-200 dark:border-white/10 animate-fade-in flex flex-col gap-2 shadow-xl">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={cn(
-                  "px-3 py-2 rounded-xl text-sm font-medium flex items-center justify-between",
-                  pathname === link.href
-                    ? resolvedTheme === "light"
-                      ? "bg-red-50 text-red-700 font-bold border border-red-100"
-                      : "bg-rose-600/30 text-rose-300 font-semibold"
-                    : "text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:text-white dark:hover:bg-white/5"
-                )}
-              >
-                <span>{link.name}</span>
-                {link.badge ? (
-                  <span className={cn(
-                    "px-2 py-0.5 text-xs text-white rounded-full font-bold",
-                    resolvedTheme === "light" ? "bg-red-600" : "bg-rose-600"
-                  )}>
-                    {link.badge}
-                  </span>
-                ) : null}
-              </Link>
-            ))}
-            <div className="pt-2 border-t border-zinc-200 dark:border-white/10 grid grid-cols-3 gap-1">
-              {GENRES_LIST.slice(0, 6).map((g) => (
-                <Link
-                  key={g.id}
-                  href={`/genre/${g.slug}`}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="px-2 py-1 text-center text-xs rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-700 hover:text-zinc-950 dark:bg-white/5 dark:text-zinc-300 dark:hover:text-white transition-colors"
-                >
-                  {g.name}
-                </Link>
-              ))}
-            </div>
-
-            {/* Mobile Support Dev Button */}
-            <div className="pt-2 border-t border-zinc-200 dark:border-white/10">
-              <button
-                type="button"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setIsSupportModalOpen(true);
-                }}
-                className="w-full px-3 py-2.5 rounded-xl text-xs font-bold flex items-center justify-between text-amber-800 dark:text-amber-300 bg-amber-50 hover:bg-amber-100 dark:bg-amber-500/15 dark:hover:bg-amber-500/25 border border-amber-200 dark:border-amber-500/30 transition-all active:scale-98 shadow-sm"
-              >
-                <span className="flex items-center gap-2">
-                  <Coffee className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                  Support StreamFlix Dev
-                </span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-800 dark:text-amber-200 font-bold">
-                  ☕ Tip Jar
-                </span>
-              </button>
-            </div>
-          </div>
-        )}
       </header>
 
       {/* Support Dev Modal */}
