@@ -691,7 +691,7 @@ export function VideoPlayer({
           {/* Right: Dedicated System Action Controls */}
           <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0 relative">
             {/* Stream Server Switcher Pill */}
-            <div className="relative">
+            <div className={cn("relative", activeMenu === "servers" && "z-50")}>
               <button
                 type="button"
                 onClick={() => setActiveMenu(activeMenu === "servers" ? "none" : "servers")}
@@ -709,12 +709,12 @@ export function VideoPlayer({
                 <>
                   {/* Backdrop for click-away dismissal on mobile and desktop */}
                   <div
-                    className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs cursor-pointer"
+                    className="fixed inset-0 z-40 bg-black/60 backdrop-blur-xs cursor-pointer"
                     onClick={() => setActiveMenu("none")}
                     aria-hidden="true"
                   />
 
-                  <div className="fixed inset-x-4 top-20 sm:top-full sm:right-0 sm:left-auto sm:inset-x-auto sm:mt-2 z-50 w-auto sm:w-72 max-w-sm sm:max-w-none p-3 rounded-2xl bg-[#141418] border border-white/20 shadow-2xl animate-scale-up flex flex-col max-h-[calc(100vh-6rem)] overflow-hidden">
+                  <div className="fixed inset-x-4 top-20 sm:absolute sm:top-full sm:right-0 sm:left-auto sm:inset-x-auto sm:mt-2 z-50 w-auto sm:w-72 max-w-sm sm:max-w-none p-3 rounded-2xl bg-[#141418] border border-white/20 shadow-2xl animate-scale-up flex flex-col max-h-[calc(100vh-6rem)] sm:max-h-[28rem] overflow-hidden">
                     <div className="flex items-center justify-between pb-2 border-b border-white/10 mb-2">
                       <div className="text-xs font-bold text-white flex items-center gap-1.5">
                         <Server className="w-3.5 h-3.5 text-rose-400" />
@@ -731,7 +731,12 @@ export function VideoPlayer({
                     </div>
 
                     <div className="space-y-1.5 overflow-y-auto pr-0.5 no-scrollbar flex-1">
-                      {STREAM_SERVERS.map((server) => {
+                      {STREAM_SERVERS.length === 0 ? (
+                        <div className="p-4 text-center text-xs text-zinc-400">
+                          No streaming servers available.
+                        </div>
+                      ) : (
+                        STREAM_SERVERS.map((server) => {
                         const isSelected = selectedServer === server.id;
                         return (
                           <button
@@ -765,7 +770,8 @@ export function VideoPlayer({
                             )}
                           </button>
                         );
-                      })}
+                      })
+                      )}
                     </div>
                   </div>
                 </>

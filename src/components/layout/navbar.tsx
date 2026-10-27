@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -42,6 +42,42 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
+
+  const genreRef = useRef<HTMLDivElement>(null);
+  const profileRef = useRef<HTMLDivElement>(null);
+
+  // Close menus on route change
+  useEffect(() => {
+    setIsGenreOpen(false);
+    setIsProfileOpen(false);
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
+  // Click outside and Escape key handling for dropdowns
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (genreRef.current && !genreRef.current.contains(event.target as Node)) {
+        setIsGenreOpen(false);
+      }
+      if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+        setIsProfileOpen(false);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsGenreOpen(false);
+        setIsProfileOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   useEffect(() => {
     let ticking = false;
@@ -161,10 +197,10 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                 })}
 
                 {/* Genres Dropdown */}
-                <div className="relative">
+                <div ref={genreRef} className="relative">
                   <button
                     onClick={() => setIsGenreOpen(!isGenreOpen)}
-                    onBlur={() => setTimeout(() => setIsGenreOpen(false), 200)}
+
                     className={cn(
                       "px-3 py-1.5 rounded-xl text-sm font-medium transition-colors flex items-center gap-1",
                       resolvedTheme === "light"
@@ -189,6 +225,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                         <Link
                           key={genre.id}
                           href={`/genre/${genre.slug || genre.name.toLowerCase()}`}
+                          onClick={() => setIsGenreOpen(false)}
                           className="px-3 py-1.5 text-xs font-medium rounded-lg text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:text-white dark:hover:bg-white/10 transition-colors"
                         >
                           {genre.name}
@@ -259,10 +296,10 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
               </button>
 
               {/* Profile / Account Dropdown */}
-              <div className="relative">
+              <div ref={profileRef} className="relative">
                 <button
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
-                  onBlur={() => setTimeout(() => setIsProfileOpen(false), 200)}
+
                   className={cn(
                     "w-9 h-9 rounded-xl overflow-hidden border transition-all flex items-center justify-center font-bold text-xs shadow-md",
                     resolvedTheme === "light"
@@ -283,6 +320,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                     <div className="py-1">
                       <Link
                         href="/my-list"
+                        onClick={() => setIsProfileOpen(false)}
                         className="flex items-center gap-2.5 px-3 py-2 text-xs text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:text-white dark:hover:bg-white/10 rounded-lg transition-colors"
                       >
                         <Bookmark className={cn("w-3.5 h-3.5", resolvedTheme === "light" ? "text-purple-600" : "text-rose-500")} />
@@ -290,6 +328,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                       </Link>
                       <Link
                         href="/continue-watching"
+                        onClick={() => setIsProfileOpen(false)}
                         className="flex items-center gap-2.5 px-3 py-2 text-xs text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:text-white dark:hover:bg-white/10 rounded-lg transition-colors"
                       >
                         <Clock className="w-3.5 h-3.5 text-blue-500" />
@@ -297,6 +336,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                       </Link>
                       <Link
                         href="/history"
+                        onClick={() => setIsProfileOpen(false)}
                         className="flex items-center gap-2.5 px-3 py-2 text-xs text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:text-white dark:hover:bg-white/10 rounded-lg transition-colors"
                       >
                         <Film className="w-3.5 h-3.5 text-emerald-500" />
@@ -304,6 +344,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                       </Link>
                       <Link
                         href="/settings"
+                        onClick={() => setIsProfileOpen(false)}
                         className="flex items-center gap-2.5 px-3 py-2 text-xs text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:text-white dark:hover:bg-white/10 rounded-lg transition-colors"
                       >
                         <Settings className="w-3.5 h-3.5 text-amber-500" />
