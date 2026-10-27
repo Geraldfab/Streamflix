@@ -45,7 +45,7 @@ export function ContentRail({
               {title}
             </h2>
             {badge && (
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-purple-50 text-purple-700 border border-purple-200 dark:bg-rose-600/20 dark:text-rose-400 dark:border-rose-500/30">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-rose-50 text-rose-700 border border-rose-200 dark:bg-rose-600/20 dark:text-rose-400 dark:border-rose-500/30">
                 {badge}
               </span>
             )}
@@ -62,7 +62,7 @@ export function ContentRail({
           {seeAllHref && (
             <Link
               href={seeAllHref}
-              className="text-xs font-semibold text-purple-600 hover:text-purple-700 dark:text-rose-400 dark:hover:text-rose-300 flex items-center gap-1 transition-colors mr-2"
+              className="text-xs font-semibold text-rose-600 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300 flex items-center gap-1 transition-colors mr-2"
             >
               <span>See All</span>
               <ArrowRight className="w-3.5 h-3.5" />

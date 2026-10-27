@@ -5,22 +5,22 @@
 @layer base {
   :root {
     color-scheme: light;
-    --bg-main: #F5F5F7;
-    --bg-secondary: #F8FAFC;
-    --bg-elevated: #F1F5F9;
-    --glass-bg: rgba(255, 255, 255, 0.82);
+    --bg-main: #F4F4F6;
+    --bg-secondary: #ECECEF;
+    --bg-elevated: #FFFFFF;
+    --glass-bg: rgba(255, 255, 255, 0.85);
     --glass-border: rgba(24, 24, 27, 0.08);
     --card-bg: #FFFFFF;
-    --card-border: #E4E4E7;
+    --card-border: #E5E7EB;
     --text-primary: #18181B;
     --text-secondary: #52525B;
     --text-muted: #71717A;
-    --border: #E4E4E7;
+    --border: #E5E7EB;
     --input: #D4D4D8;
-    --accent: #6D28D9;
-    --accent-hover: #5B21B6;
-    --accent-subtle: #F3E8FF;
-    --accent-glow: rgba(109, 40, 217, 0.22);
+    --accent: #E50914;
+    --accent-hover: #DC2626;
+    --accent-subtle: #FFF1F2;
+    --accent-glow: rgba(229, 9, 20, 0.22);
     --success: #047857;
     --warning: #92400E;
     --error: #B91C1C;

@@ -35,7 +35,7 @@ export default async function HomePage() {
       {/* Featured Hero Banner Carousel */}
       <HeroBanner featuredItems={featured} />
 
-      <div className="space-y-6 sm:space-y-8 -mt-10 sm:-mt-16 relative z-20">
+      <div className="space-y-6 sm:space-y-8 relative z-20 mt-2 sm:mt-4">
         {/* Trending Now */}
         <ContentRail
           title="Trending Now"

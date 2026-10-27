@@ -97,9 +97,10 @@ export function HeroBanner({ featuredItems }: HeroBannerProps) {
         />
 
         {/* Cinematic Multi-layered Gradients */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
-        <div className="absolute bottom-0 left-0 right-0 h-24 sm:h-32 bg-gradient-to-t from-[#F5F5F7] dark:from-[#09090B] to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/55 to-transparent pointer-events-none" />
+        <div className="absolute top-0 left-0 right-0 h-28 sm:h-36 bg-gradient-to-b from-black/75 via-black/25 to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-28 sm:h-36 bg-gradient-to-t from-black/80 via-black/35 to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-8 sm:h-12 bg-gradient-to-t from-[var(--bg-main)] to-transparent pointer-events-none" />
       </div>
 
       {/* Hero Content Container */}
@@ -147,7 +148,7 @@ export function HeroBanner({ featuredItems }: HeroBannerProps) {
           )}
 
           {/* Metadata Row */}
-          <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] sm:text-xs md:text-sm text-zinc-300 font-medium">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] sm:text-xs md:text-sm text-zinc-200 font-medium drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)]">
             {currentItem.releaseYear ? <span>{currentItem.releaseYear}</span> : null}
             {currentItem.runtime ? (
               <>
@@ -163,7 +164,7 @@ export function HeroBanner({ featuredItems }: HeroBannerProps) {
             {currentItem.maturityRating && (
               <>
                 <span>•</span>
-                <span className="px-1.5 py-0.5 rounded border border-white/30 text-[9px] sm:text-[10px] font-mono">
+                <span className="px-1.5 py-0.5 rounded border border-white/30 text-[9px] sm:text-[10px] font-mono bg-black/40">
                   {currentItem.maturityRating}
                 </span>
               </>
@@ -171,7 +172,7 @@ export function HeroBanner({ featuredItems }: HeroBannerProps) {
             {currentItem.genres && currentItem.genres.length > 0 && (
               <>
                 <span>•</span>
-                <span className="text-rose-300">
+                <span className="text-rose-400 font-semibold drop-shadow-sm">
                   {currentItem.genres.map((g) => g.name).slice(0, 2).join(", ")}
                 </span>
               </>
@@ -179,7 +180,7 @@ export function HeroBanner({ featuredItems }: HeroBannerProps) {
           </div>
 
           {/* Synopsis */}
-          <p className="text-xs sm:text-sm text-zinc-300/90 line-clamp-2 sm:line-clamp-3 max-w-xl leading-relaxed drop-shadow">
+          <p className="text-xs sm:text-sm text-zinc-200/95 line-clamp-2 sm:line-clamp-3 max-w-xl leading-relaxed drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
             {currentItem.overview}
           </p>
 
@@ -188,7 +189,7 @@ export function HeroBanner({ featuredItems }: HeroBannerProps) {
             {/* Primary Play Button */}
             <Link
               href={`/watch/${currentItem.id}?type=${currentItem.mediaType}`}
-              className="px-5 sm:px-8 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-rose-950/40 transition-all hover:scale-105 active:scale-95"
+              className="px-5 sm:px-8 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl bg-rose-600 hover:bg-rose-500 active:scale-95 text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-rose-950/40 transition-all hover:scale-105"
             >
               <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white translate-x-0.5" />
               <span>Play Now</span>
@@ -197,7 +198,7 @@ export function HeroBanner({ featuredItems }: HeroBannerProps) {
             {/* More Info Quick View Button */}
             <button
               onClick={() => openQuickView(currentItem)}
-              className="px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl bg-white/15 hover:bg-white/25 text-white font-semibold text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2 border border-white/20 backdrop-blur-md transition-all hover:scale-105 active:scale-95 shadow-md"
+              className="px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl bg-white/20 hover:bg-white/30 active:scale-95 text-white font-semibold text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2 border border-white/25 backdrop-blur-md transition-all hover:scale-105 shadow-md"
             >
               <Info className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-rose-300" />
               <span>More Info</span>
@@ -209,7 +210,7 @@ export function HeroBanner({ featuredItems }: HeroBannerProps) {
               className={`p-2.5 sm:p-3 rounded-xl sm:rounded-2xl transition-all hover:scale-105 active:scale-95 shadow-md ${
                 inWatchlist
                   ? "bg-rose-600 text-white border border-rose-500/50"
-                  : "bg-white/15 hover:bg-white/25 text-white border border-white/20 backdrop-blur-md"
+                  : "bg-white/20 hover:bg-white/30 text-white border border-white/25 backdrop-blur-md"
               }`}
               title={inWatchlist ? "In My List" : "Add to My List"}
               aria-label={inWatchlist ? "Remove from My List" : "Add to My List"}
@@ -221,7 +222,7 @@ export function HeroBanner({ featuredItems }: HeroBannerProps) {
 
         {/* Carousel Rotation Controls and Indicators */}
         {items.length > 1 && (
-          <div className="mt-4 sm:mt-6 md:mt-8 flex items-center justify-between pt-2.5 sm:pt-4 border-t border-white/15">
+          <div className="mt-5 sm:mt-7 flex items-center justify-between pt-3 sm:pt-4 border-t border-white/15">
             {/* Indicators */}
             <div className="flex items-center gap-2">
               {items.map((item, idx) => (

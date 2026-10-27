@@ -43,6 +43,9 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
 
+  const isHeroPage = pathname === "/" || pathname?.startsWith("/watch/") || pathname?.startsWith("/title/");
+  const isOverHero = isHeroPage && !isScrolled;
+
   const genreRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
 
@@ -117,11 +120,13 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
       <header
         className={cn(
           "fixed top-0 left-0 right-0 z-40 transition-all duration-300 transform-gpu",
-          resolvedTheme === "light"
-            ? "bg-white/85 backdrop-blur-xl border-b border-zinc-200/80 shadow-sm shadow-zinc-950/5 py-3"
-            : isScrolled
-              ? "glass-panel shadow-lg shadow-black/20 py-3"
-              : "bg-gradient-to-b from-black/85 via-black/40 to-transparent py-4"
+          isOverHero
+            ? "bg-gradient-to-b from-black/80 via-black/40 to-transparent py-4 text-white"
+            : resolvedTheme === "light"
+              ? "bg-[#F4F4F6]/85 backdrop-blur-xl border-b border-zinc-200/80 shadow-xs py-3 text-zinc-900"
+              : isScrolled
+                ? "glass-panel shadow-lg shadow-black/20 py-3 text-white"
+                : "bg-gradient-to-b from-black/85 via-black/40 to-transparent py-4 text-white"
         )}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -145,17 +150,21 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                 <div className="flex flex-col">
                   <span className={cn(
                     "text-xl font-black tracking-tight bg-clip-text text-transparent",
-                    resolvedTheme === "light"
-                      ? "bg-gradient-to-r from-zinc-950 via-zinc-800 to-purple-600"
-                      : isScrolled
-                        ? "bg-gradient-to-r from-white via-zinc-200 to-rose-400"
-                        : "bg-gradient-to-r from-white via-zinc-100 to-rose-400"
+                    isOverHero
+                      ? "bg-gradient-to-r from-white via-zinc-100 to-rose-400"
+                      : resolvedTheme === "light"
+                        ? "bg-gradient-to-r from-zinc-950 via-zinc-800 to-rose-600"
+                        : "bg-gradient-to-r from-white via-zinc-200 to-rose-400"
                   )}>
                     StreamFlix
                   </span>
                   <span className={cn(
                     "text-[9px] tracking-widest uppercase font-bold -mt-1",
-                    resolvedTheme === "light" ? "text-purple-600" : "text-rose-500"
+                    isOverHero
+                      ? "text-rose-400"
+                      : resolvedTheme === "light"
+                        ? "text-rose-600"
+                        : "text-rose-500"
                   )}>
                     Cinema Studio
                   </span>
@@ -173,22 +182,21 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                       className={cn(
                         "relative px-3.5 py-1.5 rounded-xl text-sm font-medium transition-all duration-150 flex items-center gap-1.5",
                         isActive
-                          ? resolvedTheme === "light"
-                            ? "text-purple-700 font-bold bg-purple-50 shadow-sm border border-purple-100"
-                            : "text-white bg-white/10 shadow-sm font-semibold"
-                          : resolvedTheme === "light"
-                            ? "text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100/80"
-                            : isScrolled
-                              ? "text-zinc-300 hover:text-white hover:bg-white/10"
-                              : "text-zinc-200 hover:text-white hover:bg-white/10"
+                          ? isOverHero
+                            ? "text-white font-bold bg-white/20 shadow-xs border border-white/25"
+                            : resolvedTheme === "light"
+                              ? "text-rose-700 font-bold bg-rose-50 shadow-xs border border-rose-200"
+                              : "text-white bg-white/10 shadow-sm font-semibold"
+                          : isOverHero
+                            ? "text-zinc-200 hover:text-white hover:bg-white/10"
+                            : resolvedTheme === "light"
+                              ? "text-zinc-600 hover:text-zinc-950 hover:bg-zinc-200/60"
+                              : "text-zinc-300 hover:text-white hover:bg-white/10"
                       )}
                     >
                       {link.name}
                       {link.badge ? (
-                        <span className={cn(
-                          "px-1.5 py-0.2 text-[10px] font-bold text-white rounded-full",
-                          resolvedTheme === "light" ? "bg-purple-600" : "bg-rose-600"
-                        )}>
+                        <span className="px-1.5 py-0.2 text-[10px] font-bold text-white rounded-full bg-rose-600">
                           {link.badge}
                         </span>
                       ) : null}
@@ -203,11 +211,11 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
 
                     className={cn(
                       "px-3 py-1.5 rounded-xl text-sm font-medium transition-colors flex items-center gap-1",
-                      resolvedTheme === "light"
-                        ? "text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100/80"
-                        : isScrolled
-                          ? "text-zinc-300 hover:text-white hover:bg-white/10"
-                          : "text-zinc-200 hover:text-white hover:bg-white/10"
+                      isOverHero
+                        ? "text-zinc-200 hover:text-white hover:bg-white/10"
+                        : resolvedTheme === "light"
+                          ? "text-zinc-600 hover:text-zinc-950 hover:bg-zinc-200/60"
+                          : "text-zinc-300 hover:text-white hover:bg-white/10"
                     )}
                   >
                     <span>Genres</span>
@@ -241,49 +249,54 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
             <div className="flex items-center gap-2 sm:gap-3">
               {/* Surprise Me / Random Title */}
               <button
+                type="button"
                 onClick={handleSurpriseMe}
                 title="Surprise Me (Random title)"
                 className={cn(
                   "hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all hover:scale-105 active:scale-95 shadow-sm",
-                  resolvedTheme === "light"
-                    ? "text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200"
-                    : "text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30"
+                  isOverHero
+                    ? "text-rose-300 bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30"
+                    : resolvedTheme === "light"
+                      ? "text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200"
+                      : "text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30"
                 )}
               >
-                <Shuffle className={cn("w-3.5 h-3.5", resolvedTheme === "light" ? "text-purple-600" : "text-rose-400")} />
+                <Shuffle className={cn("w-3.5 h-3.5", isOverHero ? "text-rose-400" : resolvedTheme === "light" ? "text-rose-600" : "text-rose-400")} />
                 <span>Surprise Me</span>
               </button>
 
               {/* Smart Search Trigger Button */}
               <button
+                type="button"
                 onClick={onOpenSearch}
                 className={cn(
                   "flex items-center gap-2 px-3 py-1.5 rounded-xl transition-all group",
-                  resolvedTheme === "light"
-                    ? "text-xs text-zinc-700 hover:text-zinc-950 bg-zinc-100/80 hover:bg-zinc-100 border border-zinc-200/90"
-                    : isScrolled
-                      ? "text-xs text-zinc-300 hover:text-white border-white/10 hover:bg-white/10 glass-panel"
-                      : "text-xs text-zinc-200 hover:text-white border-white/20 hover:bg-white/10 glass-panel"
+                  isOverHero
+                    ? "text-xs text-zinc-200 hover:text-white border-white/20 hover:bg-white/10 glass-panel"
+                    : resolvedTheme === "light"
+                      ? "text-xs text-zinc-700 hover:text-zinc-950 bg-zinc-200/60 hover:bg-zinc-200 border border-zinc-300/80"
+                      : "text-xs text-zinc-300 hover:text-white border-white/10 hover:bg-white/10 glass-panel"
                 )}
                 aria-label="Search movies and series"
               >
-                <Search className={cn("w-4 h-4 transition-colors", resolvedTheme === "light" ? "text-purple-600 group-hover:text-purple-700" : "text-zinc-400 group-hover:text-rose-400")} />
+                <Search className={cn("w-4 h-4 transition-colors", isOverHero ? "text-zinc-300 group-hover:text-rose-400" : resolvedTheme === "light" ? "text-rose-600 group-hover:text-rose-700" : "text-zinc-400 group-hover:text-rose-400")} />
                 <span className="hidden sm:inline">Search...</span>
-                <kbd className={cn("hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono rounded", resolvedTheme === "light" ? "bg-zinc-200 text-zinc-700" : "bg-white/10 text-zinc-300")}>
+                <kbd className={cn("hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono rounded", isOverHero ? "bg-white/10 text-zinc-300" : resolvedTheme === "light" ? "bg-zinc-300/80 text-zinc-700" : "bg-white/10 text-zinc-300")}>
                   Ctrl+K
                 </kbd>
               </button>
 
               {/* Theme Toggle Button */}
               <button
+                type="button"
                 onClick={toggleTheme}
                 title={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
                 className={cn(
                   "p-2 rounded-xl transition-all hover:scale-105 active:scale-95",
-                  resolvedTheme === "light"
-                    ? "text-zinc-700 hover:text-zinc-950 bg-zinc-100/80 hover:bg-zinc-100 border border-zinc-200/90 shadow-sm"
-                    : isScrolled
-                      ? "text-zinc-300 hover:text-white border-white/10 hover:bg-white/10 glass-panel"
+                  isOverHero
+                    ? "text-zinc-200 hover:text-white border-white/20 hover:bg-white/10 glass-panel"
+                    : resolvedTheme === "light"
+                      ? "text-zinc-700 hover:text-zinc-950 bg-zinc-200/60 hover:bg-zinc-200 border border-zinc-300/80 shadow-sm"
                       : "text-zinc-200 hover:text-white border-white/20 hover:bg-white/10 glass-panel"
                 )}
                 aria-label="Toggle theme"
@@ -291,20 +304,23 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                 {resolvedTheme === "dark" ? (
                   <Sun className="w-4 h-4 text-amber-400 animate-spin-once" />
                 ) : (
-                  <Moon className="w-4 h-4 text-purple-600" />
+                  <Moon className={cn("w-4 h-4", isOverHero ? "text-zinc-200" : "text-rose-600")} />
                 )}
               </button>
 
               {/* Profile / Account Dropdown */}
               <div ref={profileRef} className="relative">
                 <button
+                  type="button"
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
 
                   className={cn(
                     "w-9 h-9 rounded-xl overflow-hidden border transition-all flex items-center justify-center font-bold text-xs shadow-md",
-                    resolvedTheme === "light"
-                      ? "bg-gradient-to-tr from-purple-700 to-indigo-900 text-white border-purple-200 hover:ring-2 hover:ring-purple-500/50"
-                      : "bg-gradient-to-tr from-rose-950 via-zinc-900 to-red-900 text-white border-white/20 hover:ring-2 hover:ring-rose-500/50"
+                    isOverHero
+                      ? "bg-gradient-to-tr from-rose-950 via-zinc-900 to-red-900 text-white border-white/20 hover:ring-2 hover:ring-rose-500/50"
+                      : resolvedTheme === "light"
+                        ? "bg-gradient-to-tr from-rose-700 via-zinc-900 to-rose-950 text-white border-zinc-300 hover:ring-2 hover:ring-rose-500/50"
+                        : "bg-gradient-to-tr from-rose-950 via-zinc-900 to-red-900 text-white border-white/20 hover:ring-2 hover:ring-rose-500/50"
                   )}
                   aria-label="User Account"
                 >
@@ -323,7 +339,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                         onClick={() => setIsProfileOpen(false)}
                         className="flex items-center gap-2.5 px-3 py-2 text-xs text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:text-white dark:hover:bg-white/10 rounded-lg transition-colors"
                       >
-                        <Bookmark className={cn("w-3.5 h-3.5", resolvedTheme === "light" ? "text-purple-600" : "text-rose-500")} />
+                        <Bookmark className="w-3.5 h-3.5 text-rose-500" />
                         <span>My List ({watchlist.length})</span>
                       </Link>
                       <Link
@@ -375,14 +391,17 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
 
               {/* Mobile Hamburger Menu Toggle */}
               <button
+                type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className={cn(
                   "md:hidden p-2 rounded-xl transition-colors",
-                  resolvedTheme === "light"
-                    ? "text-zinc-700 hover:text-zinc-950 bg-zinc-100/80 border border-zinc-200/90"
-                    : isScrolled
-                      ? "text-zinc-300 hover:text-white glass-panel"
-                      : "text-zinc-200 hover:text-white glass-panel"
+                  isOverHero
+                    ? "text-zinc-200 hover:text-white hover:bg-white/10 border border-white/20 glass-panel"
+                    : resolvedTheme === "light"
+                      ? "text-zinc-700 hover:text-zinc-950 bg-zinc-200/60 hover:bg-zinc-200 border border-zinc-300/80"
+                      : isScrolled
+                        ? "text-zinc-300 hover:text-white glass-panel"
+                        : "text-zinc-200 hover:text-white glass-panel"
                 )}
                 aria-label="Toggle mobile menu"
               >
@@ -404,17 +423,14 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                   "px-3 py-2 rounded-xl text-sm font-medium flex items-center justify-between",
                   pathname === link.href
                     ? resolvedTheme === "light"
-                      ? "bg-purple-50 text-purple-700 font-bold border border-purple-100"
+                      ? "bg-rose-50 text-rose-700 font-bold border border-rose-200"
                       : "bg-rose-600/30 text-rose-300 font-semibold"
                     : "text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:text-white dark:hover:bg-white/5"
                 )}
               >
                 <span>{link.name}</span>
                 {link.badge ? (
-                  <span className={cn(
-                    "px-2 py-0.5 text-xs text-white rounded-full font-bold",
-                    resolvedTheme === "light" ? "bg-purple-600" : "bg-rose-600"
-                  )}>
+                  <span className="px-2 py-0.5 text-xs text-white rounded-full font-bold bg-rose-600">
                     {link.badge}
                   </span>
                 ) : null}
