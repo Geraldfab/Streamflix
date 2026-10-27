@@ -691,7 +691,7 @@ export function VideoPlayer({
           {/* Right: Dedicated System Action Controls */}
           <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0 relative">
             {/* Stream Server Switcher Pill */}
-            <div className={cn("relative", activeMenu === "servers" && "z-50")}>
+            <div className="relative">
               <button
                 type="button"
                 onClick={() => setActiveMenu(activeMenu === "servers" ? "none" : "servers")}
@@ -709,12 +709,12 @@ export function VideoPlayer({
                 <>
                   {/* Backdrop for click-away dismissal on mobile and desktop */}
                   <div
-                    className="fixed inset-0 z-40 bg-black/60 backdrop-blur-xs cursor-pointer"
+                    className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs cursor-pointer"
                     onClick={() => setActiveMenu("none")}
                     aria-hidden="true"
                   />
 
-                  <div className="fixed inset-x-4 top-20 sm:absolute sm:top-full sm:right-0 sm:left-auto sm:inset-x-auto sm:mt-2 z-50 w-auto sm:w-80 max-w-sm sm:max-w-none p-3 rounded-2xl bg-[#141418] border border-white/20 shadow-2xl animate-scale-up flex flex-col max-h-[calc(100vh-6rem)] sm:max-h-[28rem] overflow-hidden">
+                  <div className="fixed inset-x-4 top-20 sm:top-full sm:right-0 sm:left-auto sm:inset-x-auto sm:mt-2 z-50 w-auto sm:w-72 max-w-sm sm:max-w-none p-3 rounded-2xl bg-[#141418] border border-white/20 shadow-2xl animate-scale-up flex flex-col max-h-[calc(100vh-6rem)] overflow-hidden">
                     <div className="flex items-center justify-between pb-2 border-b border-white/10 mb-2">
                       <div className="text-xs font-bold text-white flex items-center gap-1.5">
                         <Server className="w-3.5 h-3.5 text-rose-400" />
@@ -731,47 +731,41 @@ export function VideoPlayer({
                     </div>
 
                     <div className="space-y-1.5 overflow-y-auto pr-0.5 no-scrollbar flex-1">
-                      {STREAM_SERVERS.length === 0 ? (
-                        <div className="p-4 text-center text-xs text-zinc-400">
-                          No streaming servers available.
-                        </div>
-                      ) : (
-                        STREAM_SERVERS.map((server) => {
-                          const isSelected = selectedServer === server.id;
-                          return (
-                            <button
-                              key={server.id}
-                              type="button"
-                              onClick={() => {
-                                setSelectedServer(server.id);
-                                setActiveMenu("none");
-                              }}
-                              className={`w-full text-left p-2 sm:p-2.5 rounded-xl transition-all flex items-center justify-between gap-2.5 ${
-                                isSelected
-                                  ? "bg-rose-600/30 border border-rose-500/50 text-white shadow-sm"
-                                  : "hover:bg-white/5 border border-transparent text-zinc-300"
-                              }`}
-                            >
-                              <div className="min-w-0">
-                                <div className="text-xs font-semibold flex items-center gap-1.5">
-                                  <span className="truncate">{server.name}</span>
-                                  <span className="px-1.5 py-0.5 rounded text-[9px] uppercase font-mono bg-white/10 text-rose-300 flex-shrink-0">
-                                    {server.type}
-                                  </span>
-                                </div>
-                                <div className="text-[10px] text-zinc-400 truncate mt-0.5">
-                                  {server.description}
-                                </div>
+                      {STREAM_SERVERS.map((server) => {
+                        const isSelected = selectedServer === server.id;
+                        return (
+                          <button
+                            key={server.id}
+                            type="button"
+                            onClick={() => {
+                              setSelectedServer(server.id);
+                              setActiveMenu("none");
+                            }}
+                            className={`w-full text-left p-2 sm:p-2.5 rounded-xl transition-all flex items-center justify-between gap-2.5 ${
+                              isSelected
+                                ? "bg-rose-600/30 border border-rose-500/50 text-white shadow-sm"
+                                : "hover:bg-white/5 border border-transparent text-zinc-300"
+                            }`}
+                          >
+                            <div className="min-w-0">
+                              <div className="text-xs font-semibold flex items-center gap-1.5">
+                                <span className="truncate">{server.name}</span>
+                                <span className="px-1.5 py-0.5 rounded text-[9px] uppercase font-mono bg-white/10 text-rose-300 flex-shrink-0">
+                                  {server.type}
+                                </span>
                               </div>
-                              {isSelected && (
-                                <div className="w-5 h-5 rounded-full bg-rose-600 flex items-center justify-center text-white flex-shrink-0">
-                                  <Check className="w-3 h-3 text-white" />
-                                </div>
-                              )}
-                            </button>
-                          );
-                        })
-                      )}
+                              <div className="text-[10px] text-zinc-400 truncate mt-0.5">
+                                {server.description}
+                              </div>
+                            </div>
+                            {isSelected && (
+                              <div className="w-5 h-5 rounded-full bg-rose-600 flex items-center justify-center text-white flex-shrink-0">
+                                <Check className="w-3 h-3 text-white" />
+                              </div>
+                            )}
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
                 </>
@@ -825,15 +819,6 @@ export function VideoPlayer({
             >
               <HelpCircle className="w-4 h-4" />
             </button>
-
-            {/* Playback & Server Settings Link (Desktop) */}
-            <Link
-              href="/settings"
-              className="hidden sm:flex p-2 sm:p-2.5 rounded-xl bg-zinc-900/80 hover:bg-white/10 text-zinc-300 hover:text-white border border-white/10 transition-colors shadow-sm"
-              title="Stream & Player Settings"
-            >
-              <Settings className="w-4 h-4" />
-            </Link>
           </div>
         </div>
       )}
@@ -1161,32 +1146,25 @@ export function VideoPlayer({
                 </button>
 
                 {activeMenu === "settings" && (
-                  <>
-                    <div
-                      className="fixed inset-0 z-20 cursor-default"
-                      onClick={() => setActiveMenu("none")}
-                      aria-hidden="true"
-                    />
-                    <div className="absolute bottom-12 right-0 z-30 w-48 p-2 rounded-2xl glass-panel-elevated border border-white/20 shadow-2xl animate-scale-up">
-                      <div className="px-3 py-1 text-xs font-bold text-white border-b border-white/10 mb-1">
-                        Speed
-                      </div>
-                      {[0.5, 0.75, 1, 1.25, 1.5, 2].map((s) => (
-                        <button
-                          key={s}
-                          onClick={() => handleSpeedChange(s)}
-                          className={`w-full px-3 py-1.5 text-xs text-left rounded-lg flex items-center justify-between ${
-                            playbackSpeed === s
-                              ? "bg-rose-600/30 text-rose-300 font-semibold"
-                              : "text-zinc-300 hover:bg-white/10"
-                          }`}
-                        >
-                          <span>{s === 1 ? "1x (Normal)" : `${s}x`}</span>
-                          {playbackSpeed === s && <Check className="w-3.5 h-3.5" />}
-                        </button>
-                      ))}
+                  <div className="absolute bottom-12 right-0 z-30 w-48 p-2 rounded-2xl glass-panel-elevated border border-white/20 shadow-2xl animate-scale-up">
+                    <div className="px-3 py-1 text-xs font-bold text-white border-b border-white/10 mb-1">
+                      Speed
                     </div>
-                  </>
+                    {[0.5, 0.75, 1, 1.25, 1.5, 2].map((s) => (
+                      <button
+                        key={s}
+                        onClick={() => handleSpeedChange(s)}
+                        className={`w-full px-3 py-1.5 text-xs text-left rounded-lg flex items-center justify-between ${
+                          playbackSpeed === s
+                            ? "bg-rose-600/30 text-rose-300 font-semibold"
+                            : "text-zinc-300 hover:bg-white/10"
+                        }`}
+                      >
+                        <span>{s === 1 ? "1x (Normal)" : `${s}x`}</span>
+                        {playbackSpeed === s && <Check className="w-3.5 h-3.5" />}
+                      </button>
+                    ))}
+                  </div>
                 )}
               </div>
 
