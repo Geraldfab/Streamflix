@@ -21,9 +21,10 @@ import { getStoredRecentSearches, saveStoredRecentSearches } from "@/lib/storage
 interface SearchOverlayProps {
   isOpen: boolean;
   onClose: () => void;
+  onOpen?: () => void;
 }
 
-export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
+export function SearchOverlay({ isOpen, onClose, onOpen }: SearchOverlayProps) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -47,14 +48,15 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
     }
   }, [isOpen]);
 
-  // Global hotkey Ctrl+K / Cmd+K / / to open
+  // Global hotkey Ctrl+K / Cmd+K / Escape
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+      if ((e.metaKey || e.ctrlKey) && (e.key === "k" || e.key === "K")) {
         e.preventDefault();
-        if (isOpen) onClose();
-        else {
-          // Open handled by parent, or event
+        if (isOpen) {
+          onClose();
+        } else if (onOpen) {
+          onOpen();
         }
       }
       if (e.key === "Escape" && isOpen) {
@@ -63,7 +65,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, onOpen]);
 
   // Debounced Search API call
   useEffect(() => {
@@ -176,7 +178,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
           <button
             type="button"
             onClick={onClose}
-            className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-700 dark:bg-white/10 dark:hover:bg-white/15 dark:text-zinc-300 border border-zinc-200 dark:border-white/10 transition-colors"
+            className="hidden sm:inline-flex px-2.5 py-1 text-xs font-semibold rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-700 dark:bg-white/10 dark:hover:bg-white/15 dark:text-zinc-300 border border-zinc-200 dark:border-white/10 transition-colors"
           >
             ESC
           </button>

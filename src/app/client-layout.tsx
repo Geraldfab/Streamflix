@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { MediaProvider } from "@/components/providers/media-context";
 import { PlayerProvider } from "@/components/providers/player-context";
@@ -13,6 +13,19 @@ import { MiniPlayer } from "@/components/player/mini-player";
 
 export function ClientLayout({ children }: { children: React.ReactNode }) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  // Global hotkey Ctrl+K / Cmd+K to toggle search overlay anywhere in the app
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && (e.key === "k" || e.key === "K")) {
+        e.preventDefault();
+        setIsSearchOpen((prev) => !prev);
+      }
+    };
+
+    window.addEventListener("keydown", handleGlobalKeyDown);
+    return () => window.removeEventListener("keydown", handleGlobalKeyDown);
+  }, []);
 
   return (
     <ThemeProvider>
@@ -28,6 +41,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
             {/* Global Search Overlay */}
             <SearchOverlay
               isOpen={isSearchOpen}
+              onOpen={() => setIsSearchOpen(true)}
               onClose={() => setIsSearchOpen(false)}
             />
 
